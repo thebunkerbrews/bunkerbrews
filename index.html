@@ -566,30 +566,63 @@
                 </a>
 
                 <!-- Navigation Links & Actions -->
-                <div class="flex items-center space-x-4 sm:space-x-8 font-bold">
-                    <nav class="hidden md:flex space-x-6 uppercase text-sm">
+                <div class="flex items-center space-x-2 sm:space-x-4 font-bold">
+                    <nav class="hidden lg:flex space-x-6 uppercase text-sm">
                         <a href="#rations" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Rations</a>
-                        <a href="#mixology" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Mixology Protocol</a>
+                        <a href="#recipes" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Recipe Book</a>
+                        <a href="#mixology" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Mixology</a>
                         <a href="#lore" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Lore</a>
                         <a href="#comms" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Comms Logs</a>
                     </nav>
                     
                     <!-- Auth Button -->
-                    <button id="nav-auth-btn" onclick="openAuthModal()" class="text-ink hover:text-rust transition-all uppercase text-sm flex items-center gap-2 border-2 border-transparent hover:border-ink px-2.5 py-1.5">
-                        <i class="fa-solid fa-user-circle text-lg text-rust"></i>
+                    <button id="nav-auth-btn" onclick="openAuthModal()" class="text-ink hover:text-rust transition-all uppercase text-xs sm:text-sm flex items-center gap-1.5 border-2 border-transparent hover:border-ink px-2 py-1.5">
+                        <i class="fa-solid fa-user-circle text-base sm:text-lg text-rust"></i>
                         <span id="user-badge" class="hidden sm:inline">Terminal Access</span>
                     </button>
                     
                     <!-- Cart Trigger Button -->
-                    <button onclick="toggleCartDrawer(true); playBeep();" class="bg-atomic text-parchment px-4 py-2.5 retro-border shadow-retro-sm retro-button font-bold uppercase hover:bg-atomicDark flex items-center gap-2.5 relative">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="hidden xs:inline">Crate</span>
-                        <span id="nav-cart-badge" class="bg-rust text-parchment text-xs font-bold px-2 py-0.5 rounded-full border border-ink">0</span>
+                    <button onclick="toggleCartDrawer(true); playBeep();" class="bg-atomic text-parchment px-3 sm:px-4 py-2 sm:py-2.5 retro-border shadow-retro-sm retro-button font-bold uppercase hover:bg-atomicDark flex items-center gap-1.5 sm:gap-2 relative">
+                        <i class="fa-solid fa-cart-shopping text-sm sm:text-base"></i>
+                        <span class="hidden xs:inline text-xs sm:text-sm">Crate</span>
+                        <span id="nav-cart-badge" class="bg-rust text-parchment text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-ink">0</span>
+                    </button>
+
+                    <!-- Mobile Hamburger Toggle -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" class="lg:hidden w-10 h-10 retro-border flex items-center justify-center bg-parchment text-ink hover:bg-rust hover:text-parchment transition-colors">
+                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-lg"></i>
                     </button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="fixed top-20 left-0 w-full bg-parchment border-b-[4px] border-ink z-40 hidden shadow-2xl p-5 space-y-2.5 font-bold uppercase text-xs sm:text-sm">
+        <a href="#rations" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
+            <span><i class="fa-solid fa-bottle-droplet text-rust mr-2.5"></i> Supply Requisition (Shop)</span>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </a>
+        <a href="#recipes" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
+            <span><i class="fa-solid fa-martini-glass-citrus text-atomic mr-2.5"></i> Wasteland Recipe Book</span>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </a>
+        <a href="#mixology" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
+            <span><i class="fa-solid fa-calculator text-rust mr-2.5"></i> Mixology Calculator</span>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </a>
+        <a href="#lore" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
+            <span><i class="fa-solid fa-book-bookmark text-atomic mr-2.5"></i> Vault Lore & Origins</span>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </a>
+        <a href="javascript:void(0)" onclick="openLegalModal('allergens'); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 bg-radYellow/25 text-ink hover:bg-radYellow transition-colors">
+            <span><i class="fa-solid fa-circle-info text-rust mr-2.5"></i> Allergen Advice</span>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </a>
+        <a href="javascript:void(0)" onclick="openAuthModal(); toggleMobileNav();" class="flex items-center justify-center py-3 px-3.5 bg-ink text-parchment hover:bg-rust transition-colors text-center mt-2">
+            <i class="fa-solid fa-user-shield text-radYellow mr-2"></i> Terminal Profile / Account
+        </a>
+    </div>
 
     <!-- Order Status Notification Banner (if URL has ?status=success) -->
     <div id="order-success-banner" class="hidden bg-radYellow text-ink py-4 px-4 border-b-4 border-ink pt-28 font-bold text-center relative z-40">
@@ -893,6 +926,174 @@
                         <p class="font-terminal text-lg uppercase tracking-widest text-parchment">
                             >> YIELD: ~16 SERVINGS PER 500ML BOTTLE
                         </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Wasteland Recipe Book & Mixology Showcase -->
+    <section id="recipes" class="py-24 bg-parchment relative border-b-4 border-ink overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12" data-aos="fade-up">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-rust text-parchment text-xs font-bold uppercase mb-3 retro-border shadow-retro-sm">
+                    <i class="fa-solid fa-martini-glass-citrus text-radYellow"></i> Bunker Mixology Codex
+                </div>
+                <h2 class="font-display text-5xl sm:text-6xl text-ink uppercase leading-none">Survivor Recipe Book</h2>
+                <p class="font-bold text-sm sm:text-base text-ink/75 mt-3">
+                    Handcrafted artisanal creations you can brew in your vault kitchen. From effervescent sodas and floats to speakeasy cocktails and BBQ reductions.
+                </p>
+
+                <!-- Filter Category Pills -->
+                <div class="flex flex-wrap justify-center gap-2 mt-6">
+                    <button type="button" onclick="filterRecipes('all'); playBeep();" id="filter-recipe-all" class="px-4 py-2 font-display text-lg uppercase bg-ink text-parchment retro-border shadow-retro-sm transition-all">All Elixirs (6)</button>
+                    <button type="button" onclick="filterRecipes('soda'); playBeep();" id="filter-recipe-soda" class="px-4 py-2 font-display text-lg uppercase bg-parchment text-ink hover:bg-ink/10 retro-border transition-all">Sodas & Floats</button>
+                    <button type="button" onclick="filterRecipes('cocktail'); playBeep();" id="filter-recipe-cocktail" class="px-4 py-2 font-display text-lg uppercase bg-parchment text-ink hover:bg-ink/10 retro-border transition-all">Cocktails</button>
+                    <button type="button" onclick="filterRecipes('culinary'); playBeep();" id="filter-recipe-culinary" class="px-4 py-2 font-display text-lg uppercase bg-parchment text-ink hover:bg-ink/10 retro-border transition-all">Culinary & Coffee</button>
+                </div>
+            </div>
+
+            <!-- Recipe Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Recipe 1: Classic Bunker Sparkler -->
+                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="soda" data-aos="fade-up">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-bold uppercase retro-border">BUNKER BASIC OR SCOUT</span>
+                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-clock mr-1"></i> 1 MIN</span>
+                    </div>
+                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">01. The Classic Vault Sparkler</h3>
+                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                        The definitive way to experience pure unadulterated craft cola with crisp effervescence.
+                    </p>
+                    
+                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
+                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Syrup:</span><span class="text-rust">30 ml</span></div>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Chilled Sparkling Water:</span><span>150 ml</span></div>
+                        <div class="flex justify-between"><span>• Garnish:</span><span>Ice + Lemon Wheel</span></div>
+                    </div>
+
+                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Pack a tumbler with fresh ice. Pour 30ml syrup over ice, top with icy sparkling water, and stir gently with a bar spoon. Never shake!</p>
+                    </div>
+                </div>
+
+                <!-- Recipe 2: The Glowing Campfire Float -->
+                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="soda" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-bold uppercase retro-border">BUNKER BASIC</span>
+                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-clock mr-1"></i> 2 MINS</span>
+                    </div>
+                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">02. Glowing Campfire Float</h3>
+                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                        A nostalgic 1950s soda fountain indulgence combining velvety vanilla bean ice cream with festive spiced cola.
+                    </p>
+                    
+                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
+                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Basic:</span><span class="text-rust">35 ml</span></div>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Sparkling Soda:</span><span>120 ml</span></div>
+                        <div class="flex justify-between"><span>• Topping:</span><span>1 Scoop Vanilla Bean Ice Cream + Nutmeg</span></div>
+                    </div>
+
+                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Mix syrup and soda water in a tall chilled glass. Gently lower a large scoop of clotted vanilla ice cream on top and dust with cracked nutmeg.</p>
+                    </div>
+                </div>
+
+                <!-- Recipe 3: Wasteland Bourbon & Spiced Cola -->
+                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="cocktail" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-bold uppercase retro-border">BUNKER BASIC</span>
+                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-cocktail mr-1"></i> COCKTAIL</span>
+                    </div>
+                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">03. Wasteland Bourbon Cola</h3>
+                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                        An elevated campfire cocktail where oak, charred barrel warmth, and cassia cinnamon harmonise.
+                    </p>
+                    
+                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
+                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Basic:</span><span class="text-rust">25 ml</span></div>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bourbon or Spiced Rum:</span><span>50 ml</span></div>
+                        <div class="flex justify-between"><span>• Club Soda & Bitters:</span><span>100 ml + 2 dashes Angostura</span></div>
+                    </div>
+
+                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Combine bourbon, syrup, and bitters in an Old Fashioned glass with a large ice sphere. Top with soda and express a flamed orange peel over the rim.</p>
+                    </div>
+                </div>
+
+                <!-- Recipe 4: The Botanical Scout Mule -->
+                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="cocktail" data-aos="fade-up">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-bold uppercase retro-border">BUNKER SCOUT</span>
+                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-lemon mr-1"></i> REFRESHING</span>
+                    </div>
+                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-atomic transition-colors">04. The Botanical Scout Mule</h3>
+                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                        A zesty, botanical fusion pairing caramelized molasses and citrus with fiery ginger beer.
+                    </p>
+                    
+                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
+                        <span class="text-[10px] text-atomic uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Scout:</span><span class="text-atomic">30 ml</span></div>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Fiery Ginger Beer:</span><span>120 ml</span></div>
+                        <div class="flex justify-between"><span>• Fresh Lime & Mint:</span><span>15ml lime juice + slapped mint</span></div>
+                    </div>
+
+                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Pack a copper mug or highball with crushed ice. Pour Bunker Scout and fresh lime. Top with fiery ginger beer (add 50ml vodka/rum for adult ration).</p>
+                    </div>
+                </div>
+
+                <!-- Recipe 5: Vault Espresso Cola Tonic -->
+                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="culinary" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-bold uppercase retro-border">BUNKER SCOUT</span>
+                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-mug-hot mr-1"></i> KICKSTART</span>
+                    </div>
+                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-atomic transition-colors">05. Espresso Vault Tonic</h3>
+                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                        Rich roasted espresso meets cold sparkling botanical cola for an invigorating dark crema refresher.
+                    </p>
+                    
+                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
+                        <span class="text-[10px] text-atomic uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Scout:</span><span class="text-atomic">20 ml</span></div>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Fresh Double Espresso:</span><span>1 Shot (30 ml)</span></div>
+                        <div class="flex justify-between"><span>• Sparkling Mineral Water:</span><span>120 ml + Ice</span></div>
+                    </div>
+
+                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Add ice, Bunker Scout, and sparkling water into a glass. Gently float the hot espresso shot over the back of a spoon to create two striking layers.</p>
+                    </div>
+                </div>
+
+                <!-- Recipe 6: Smoked Molasses BBQ Glaze -->
+                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="culinary" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 bg-ink text-parchment text-[11px] font-bold uppercase retro-border">BUNKER SCOUT</span>
+                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-fire mr-1"></i> CULINARY</span>
+                    </div>
+                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">06. Smoked Molasses Glaze</h3>
+                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                        Transform your cooking with a sticky, caramelized cola glaze for meats, grilled halloumi, or roasted root veg.
+                    </p>
+                    
+                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
+                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Scout:</span><span class="text-rust">60 ml</span></div>
+                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Apple Cider Vinegar:</span><span>2 tbsp</span></div>
+                        <div class="flex justify-between"><span>• Mustard & Smoked Paprika:</span><span>1 tbsp Dijon + 1 tsp Paprika</span></div>
+                    </div>
+
+                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Whisk ingredients in a small pan over gentle heat for 4 minutes until thickened into a glossy syrup. Brush generously during the final 5 minutes of grilling.</p>
                     </div>
                 </div>
 
@@ -1483,81 +1684,96 @@
             btnText.innerText = 'Connecting to Square...';
             playBeep(900, 0.08);
 
-            // 1. Direct Square Payment Link for single-item checkout (zero backend)
-            if (cart.length === 1 && bottleDiscountCount === 0) {
+            // Determine promo code if bottle return discount active
+            let promoCode = '';
+            if (bottleDiscountCount > 0) {
+                promoCode = `BOTTLE${bottleDiscountCount * 150}`;
+                try {
+                    await navigator.clipboard.writeText(promoCode);
+                    showNotification(`Discount Voucher [${promoCode}] (-£${(bottleDiscountCount * 1.5).toFixed(2)}) copied to clipboard!`, 'success');
+                } catch (e) {
+                    console.log('Clipboard auto-copy fallback');
+                }
+            }
+
+            // Direct Square Payment Link for single-item checkout
+            if (cart.length === 1) {
                 const itemKey = `${cart[0].name}_${cart[0].size}`;
-                if (SQUARE_PAYMENT_LINKS[itemKey]) {
-                    window.location.href = SQUARE_PAYMENT_LINKS[itemKey];
+                const targetUrl = SQUARE_PAYMENT_LINKS[itemKey];
+                
+                if (targetUrl) {
+                    if (bottleDiscountCount > 0) {
+                        alert(
+                            `🎟️ BOTTLE RETURN DISCOUNT APPLIED (-£${(bottleDiscountCount * 1.5).toFixed(2)})\n\n` +
+                            `Your Voucher Code: ${promoCode}\n` +
+                            `(We have copied it to your clipboard!)\n\n` +
+                            `Please paste '${promoCode}' into the Coupon / Discount box on the Square checkout screen to apply your £${(bottleDiscountCount * 1.5).toFixed(2)} savings.`
+                        );
+                    }
+                    window.location.href = targetUrl;
                     return;
                 }
             }
 
-            try {
-                // 2. Attempt to call Express backend Square checkout endpoint
-                const response = await fetch('/api/create-checkout-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        items: cart,
-                        bottleDiscountCount: bottleDiscountCount,
-                        user: currentUser,
-                        proof: bottleProofData
-                    })
-                });
-
-                if (response.ok) {
-                    const session = await response.json();
-                    if (session.url) {
-                        window.location.href = session.url; // Redirect to Square Hosted Checkout
-                        return;
-                    }
-                }
-
-                // 3. Static fallback: If single item with discount or multi-item on static GitHub Pages:
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btnText.innerText = 'Proceed to Checkout (Square)';
-                    
-                    if (cart.length === 1) {
-                        const itemKey = `${cart[0].name}_${cart[0].size}`;
-                        if (SQUARE_PAYMENT_LINKS[itemKey]) {
-                            window.location.href = SQUARE_PAYMENT_LINKS[itemKey];
-                            return;
-                        }
-                    }
-
-                    const confirmed = confirm(
-                        "⚡ BUNKER BREWS SQUARE CHECKOUT ⚡\n\n" +
-                        "Cart Total: " + document.getElementById('cart-total').innerText + "\n" +
-                        "Items: " + cart.map(i => `${i.quantity}x ${i.name} (${i.size})`).join(', ') + "\n" +
-                        (bottleDiscountCount > 0 ? `Bottle Return Credit: -£${(bottleDiscountCount * 1.5).toFixed(2)} (Proof Verified)\n` : '') + "\n" +
-                        "Simulate successful Square purchase now?"
-                    );
-
-                    if (confirmed) {
-                        cart = [];
-                        bottleDiscountCount = 0;
-                        bottleProofData = null;
-                        saveCart();
-                        toggleCartDrawer(false);
-                        document.getElementById('order-success-banner').classList.remove('hidden');
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                }, 800);
-
-            } catch (err) {
-                console.warn('Backend offline, running direct Square fallback flow:', err);
-                btn.disabled = false;
-                btnText.innerText = 'Proceed to Checkout (Square)';
+            // For multi-item carts, open primary item or guide survivor
+            if (cart.length > 1) {
+                const itemKey = `${cart[0].name}_${cart[0].size}`;
+                const targetUrl = SQUARE_PAYMENT_LINKS[itemKey] || 'https://square.link/u/bcQlovqO';
                 
-                // Fallback to direct Square link for primary cart item
-                if (cart.length > 0) {
-                    const itemKey = `${cart[0].name}_${cart[0].size}`;
-                    if (SQUARE_PAYMENT_LINKS[itemKey]) {
-                        window.location.href = SQUARE_PAYMENT_LINKS[itemKey];
+                alert(
+                    `📦 MULTI-ITEM CRATE CHECKOUT 📦\n\n` +
+                    `Cart items: ${cart.map(i => `${i.quantity}x ${i.name} (${i.size})`).join(', ')}\n` +
+                    `Total: ${document.getElementById('cart-total').innerText}\n` +
+                    (bottleDiscountCount > 0 ? `\n🎟️ Voucher Code Copied: ${promoCode} (-£${(bottleDiscountCount * 1.5).toFixed(2)})\n` : '\n') +
+                    `Redirecting to secure Square checkout now!`
+                );
+                window.location.href = targetUrl;
+                return;
+            }
+
+            btn.disabled = false;
+            btnText.innerText = 'Proceed to Checkout (Square)';
+        }
+
+        /* ============================================================
+           5. MOBILE NAVIGATION & RECIPE FILTER LOGIC
+           ============================================================ */
+        function toggleMobileNav() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (menu.classList.contains('hidden')) {
+                    icon.className = 'fa-solid fa-bars text-lg';
+                } else {
+                    icon.className = 'fa-solid fa-xmark text-lg';
+                }
+                playBeep(600, 0.04);
+            }
+        }
+
+        function filterRecipes(category) {
+            const cards = document.querySelectorAll('.recipe-card');
+            const buttons = ['all', 'soda', 'cocktail', 'culinary'];
+            
+            buttons.forEach(b => {
+                const btn = document.getElementById(`filter-recipe-${b}`);
+                if (btn) {
+                    if (b === category) {
+                        btn.className = 'px-4 py-2 font-display text-lg uppercase bg-ink text-parchment retro-border shadow-retro-sm transition-all';
+                    } else {
+                        btn.className = 'px-4 py-2 font-display text-lg uppercase bg-parchment text-ink hover:bg-ink/10 retro-border transition-all';
                     }
                 }
-            }
+            });
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
         }
 
         /* ============================================================
