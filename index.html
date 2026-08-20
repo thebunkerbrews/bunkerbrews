@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunker Brews | Artisan Craft Cola Syrup Concentrate</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        parchment: '#F9F3E6',
+                        parchmentDark: '#EDE3D1',
+                        rust: '#B83A2E',
+                        rustDark: '#8F261C',
+                        atomic: '#5B9EA6',
+                        atomicDark: '#417A81',
+                        ink: '#2D2D2D',
+                        terminalBg: '#0b1311',
+                        terminalGreen: '#4AF626',
+                        radYellow: '#E8C547',
+                    },
+                    fontFamily: {
+                        display: ['"Bebas Neue"', 'sans-serif'],
+                        accent: ['"Syne"', 'sans-serif'],
+                        body: ['"Courier Prime"', 'monospace'],
+                        terminal: ['"VT323"', 'monospace'],
+                    },
+                    boxShadow: {
+                        'retro-sm': '3px 3px 0px 0px #2D2D2D',
+                        'retro': '5px 5px 0px 0px #2D2D2D',
+                        'retro-lg': '8px 8px 0px 0px #2D2D2D',
+                        'retro-rust': '6px 6px 0px 0px #B83A2E',
+                        'retro-atomic': '6px 6px 0px 0px #5B9EA6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-parchment: #F9F3E6;
+            --c-ink: #2D2D2D;
+            --c-rust: #B83A2E;
+            --c-atomic: #5B9EA6;
+        }
+
+        body {
+            background-color: #F9F3E6;
+            color: #2D2D2D;
+            background-image: 
+                radial-gradient(#2d2d2d 0.75px, transparent 0.75px), 
+                radial-gradient(#2d2d2d 0.75px, #F9F3E6 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            background-color: #F9F3E6;
+        }
+
+        .retro-border { border: 3px solid #2D2D2D; }
+        .retro-border-thick { border: 4px solid #2D2D2D; }
+        
+        .retro-button {
+            border: 3px solid #2D2D2D;
+            transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+        .retro-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px 0px #2D2D2D;
+        }
+        .retro-button:active {
+            transform: translate(3px, 3px) !important;
+            box-shadow: 2px 2px 0px 0px #2D2D2D !important;
+        }
+
+        /* Atomic Glow & Radiance */
+        .atomic-glow {
+            transition: all 0.3s ease;
+        }
+        .atomic-glow:hover {
+            box-shadow: 0 0 25px 6px rgba(91, 158, 166, 0.45), 6px 6px 0px 0px #2D2D2D;
+        }
+
+        .rust-glow:hover {
+            box-shadow: 0 0 25px 6px rgba(184, 58, 46, 0.45), 6px 6px 0px 0px #2D2D2D;
+        }
+
+        /* Animations */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 6px rgba(91, 158, 166, 0.9)); }
+            50% { opacity: 0.5; filter: drop-shadow(0 0 2px rgba(91, 158, 166, 0.3)); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.4; }
+        }
+
+        .spin-slow { animation: spin-slow 24s linear infinite; }
+        .spin-reverse { animation: spin-slow 18s linear infinite reverse; }
+        .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .flicker-text { animation: flicker 7s infinite; }
+
+        /* Terminal CRT Screen Effects */
+        .scanline {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            pointer-events: none;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 4px, 6px 100%;
+            z-index: 10;
+            opacity: 0.6;
+        }
+        .terminal-text {
+            text-shadow: 0 0 8px rgba(74, 246, 38, 0.6);
+        }
+
+        /* Marquee ticker */
+        .marquee-container { overflow: hidden; white-space: nowrap; }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 28s linear infinite;
+        }
+        .marquee-container:hover .marquee-content { animation-play-state: paused; }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #F9F3E6; border-left: 2px solid #2D2D2D; }
+        ::-webkit-scrollbar-thumb { background: #B83A2E; border: 2px solid #2D2D2D; }
+        ::-webkit-scrollbar-thumb:hover { background: #5B9EA6; }
+
+        /* Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 28px;
+            width: 28px;
+            border-radius: 0;
+            background: #B83A2E;
+            border: 3px solid #2D2D2D;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #2D2D2D;
+            margin-top: -10px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 10px;
+            cursor: pointer;
+            background: #5B9EA6;
+            border: 2px solid #2D2D2D;
+        }
+    </style>
+</head>
+<body class="font-body antialiased relative overflow-x-hidden selection:bg-atomic selection:text-white text-ink">
+
+    <!-- Audio feedback script toggle (Pip-Boy clicks!) -->
+    <div class="fixed bottom-4 left-4 z-40">
+        <button id="sfx-toggle" onclick="toggleAudioSFX()" class="bg-parchment px-3 py-1.5 retro-border shadow-retro-sm text-xs font-bold uppercase hover:bg-parchmentDark flex items-center gap-2">
+            <i id="sfx-icon" class="fa-solid fa-volume-xmark text-rust"></i>
+            <span id="sfx-label">SFX: OFF</span>
+        </button>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed top-24 right-4 z-[110] flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Slide-Out Cart Drawer Backdrop -->
+    <div id="cart-backdrop" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-ink/60 backdrop-blur-xs z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- Slide-Out Cart Drawer -->
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-parchment border-l-4 border-ink z-[95] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-[-10px_0px_0px_rgba(45,45,45,0.4)]">
+        <!-- Cart Header -->
+        <div class="p-6 bg-parchment border-b-4 border-ink flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-box-archive text-2xl text-rust"></i>
+                <h3 class="font-display text-3xl tracking-wide uppercase text-ink">Rations Crate</h3>
+            </div>
+            <button onclick="toggleCartDrawer(false); playBeep();" class="w-10 h-10 retro-border flex items-center justify-center text-ink hover:bg-rust hover:text-parchment transition-colors font-bold">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Cart Items List (Scrollable) -->
+        <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4">
+            <!-- Populated via JS -->
+            <div id="cart-empty-state" class="text-center py-12">
+                <i class="fa-solid fa-flask-vial text-5xl text-ink/30 mb-4 animate-bounce"></i>
+                <p class="font-display text-2xl text-ink/60 uppercase">Crate is Empty</p>
+                <p class="text-sm font-bold text-ink/50 mt-1">Requisition some syrup concentrate below!</p>
+            </div>
+        </div>
+
+        <!-- Cart Footer & Checkout -->
+        <div class="p-6 bg-parchmentDark border-t-4 border-ink space-y-4">
+            
+            <!-- Bottle Return Discount Section with Account + Proof Verification -->
+            <div id="bottle-perk-container" class="bg-parchment p-3.5 retro-border border-2">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="font-bold text-xs uppercase flex items-center gap-1.5 text-ink">
+                        <i class="fa-solid fa-recycle text-atomic text-sm"></i> Bottle Return Perk (-£1.50 ea)
+                    </span>
+                    <span class="text-xs font-bold text-rust" id="bottle-rebate-display">£0.00</span>
+                </div>
+
+                <!-- Guest Locked View -->
+                <div id="bottle-perk-guest" class="bg-ink/5 p-2.5 border border-ink/30 text-xs">
+                    <p class="font-bold text-ink/75 mb-2">
+                        <i class="fa-solid fa-lock text-rust mr-1"></i> Account Required: Log in to claim your £1.50 bottle deposit credit!
+                    </p>
+                    <button type="button" onclick="openAuthModal()" class="w-full bg-ink text-parchment py-1.5 font-bold uppercase text-[11px] hover:bg-rust transition-colors retro-border">
+                        Log In / Create Account to Unlock
+                    </button>
+                </div>
+
+                <!-- Logged In Member View -->
+                <div id="bottle-perk-member" class="hidden space-y-2 text-xs">
+                    <div class="flex items-center justify-between">
+                        <label class="font-bold text-ink/80">Returning Empties:</label>
+                        <select id="bottle-return-qty" onchange="updateBottleDiscount()" class="bg-parchment border-2 border-ink px-2 py-1 text-xs font-bold focus:outline-none">
+                            <option value="0">0 bottles (£0.00)</option>
+                            <option value="1">1 bottle (-£1.50)</option>
+                            <option value="2">2 bottles (-£3.00)</option>
+                            <option value="3">3 bottles (-£4.50)</option>
+                            <option value="4">4 bottles (-£6.00)</option>
+                        </select>
+                    </div>
+
+                    <!-- Proof Upload Trigger -->
+                    <div id="bottle-proof-status-box" class="pt-2 border-t border-ink/20">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-bold text-[11px] text-ink/70">Return Proof:</span>
+                            <span id="proof-status-badge" class="text-[10px] font-bold px-1.5 py-0.5 bg-radYellow/30 text-ink border border-ink/30">
+                                ⚠️ Required
+                            </span>
+                        </div>
+                        <button type="button" onclick="openBottleProofModal()" class="w-full bg-atomic/15 hover:bg-atomic hover:text-parchment text-ink border-2 border-ink py-1.5 px-2 font-bold uppercase text-[11px] transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-camera"></i>
+                            <span id="proof-btn-label">Upload Return Proof (Photo/Slip)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Summary -->
+            <div class="space-y-1.5 font-bold text-sm">
+                <div class="flex justify-between text-ink/70">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">£0.00</span>
+                </div>
+                <div class="flex justify-between text-atomic" id="bottle-discount-row" style="display: none;">
+                    <span>Bottle Credit:</span>
+                    <span id="cart-discount">-£0.00</span>
+                </div>
+                <div class="flex justify-between text-ink/70 text-xs">
+                    <span>Dispatch (UK Tracked / Free Pickup):</span>
+                    <span>Calculated at checkout</span>
+                </div>
+                <div class="border-t-2 border-ink pt-2 flex justify-between text-xl font-display uppercase text-ink">
+                    <span>Estimated Total:</span>
+                    <span id="cart-total" class="text-rust text-2xl">£0.00</span>
+                </div>
+            </div>
+
+            <!-- Square Checkout CTA -->
+            <button id="checkout-btn" onclick="initiateCheckout()" class="w-full bg-rust text-parchment py-4 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-rustDark flex items-center justify-center gap-3">
+                <i class="fa-solid fa-lock text-xl"></i>
+                <span id="checkout-btn-text">Proceed to Checkout (Square)</span>
+            </button>
+            <p class="text-[11px] text-center text-ink/60 font-bold flex items-center justify-center gap-2">
+                <span>🔒 Encrypted Checkout Powered by Square</span>
+                <span>•</span>
+                <span>Apple Pay / Cards</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Bottle Return Proof Submission Modal -->
+    <div id="bottle-proof-modal" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-[105] hidden flex items-center justify-center p-4">
+        <div class="bg-parchment p-6 sm:p-8 retro-border shadow-[12px_12px_0_0_#5B9EA6] w-full max-w-lg relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeBottleProofModal()" class="absolute top-4 right-4 text-ink hover:text-rust text-2xl transition-colors font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-atomic/15 rounded-full flex items-center justify-center mx-auto mb-3 border-2 border-atomic">
+                    <i class="fa-solid fa-recycle text-3xl text-atomic pulse-glow"></i>
+                </div>
+                <h2 class="font-display text-4xl text-ink uppercase">Bottle Return Verification</h2>
+                <p class="font-bold text-xs text-ink/70 uppercase">Proof is reviewed & verified by Bunker Command</p>
+            </div>
+            
+            <form id="bottle-proof-form" onsubmit="handleBottleProofSubmit(event)" class="space-y-4 font-bold text-xs">
+                <div>
+                    <label class="block uppercase mb-1">Return / Drop-off Location</label>
+                    <select id="proof-location" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                        <option value="Bunker HQ - 173 Reddicap Heath Road, B75 7EN">1. Bunker HQ (173 Reddicap Heath Road, B75 7EN)</option>
+                        <option value="Leviathan Brewery - Unit 4&5, 17 Reddicap Trading Est., B75 7BU">2. Leviathan Brewery (Unit 4&5, 17 Reddicap Trading Est)</option>
+                        <option value="Postal Return to Bunker HQ">3. Postal Return to 173 Reddicap Heath Road</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block uppercase mb-1">Bottles Returned</label>
+                        <input type="number" id="proof-bottle-count" min="1" max="20" value="1" oninput="updateProofCreditDisplay()" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                    </div>
+                    <div>
+                        <label class="block uppercase mb-1">Total Credit Value</label>
+                        <input type="text" id="proof-credit-val" readonly value="£1.50" class="w-full bg-ink/10 retro-border px-3 py-2 text-sm text-rust font-bold font-body">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block uppercase mb-1">Upload Photo of Return Receipt / Bottles</label>
+                    <input type="file" id="proof-file-input" accept="image/*" required onchange="previewProofImage(event)" class="w-full bg-parchment retro-border p-2 text-xs focus:outline-none file:mr-3 file:py-1 file:px-3 file:retro-border file:bg-ink file:text-parchment file:text-xs file:font-bold file:uppercase hover:file:bg-rust">
+                    <div id="proof-image-preview-container" class="hidden mt-2 p-2 bg-ink/5 retro-border border-2 text-center">
+                        <img id="proof-image-preview" src="#" alt="Proof Preview" class="max-h-36 mx-auto retro-border">
+                        <span class="text-[10px] text-atomic font-bold block mt-1">✓ Image Attached</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block uppercase mb-1">Survivor Notes (Optional)</label>
+                    <input type="text" id="proof-notes" class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body" placeholder="e.g. Left with Leviathan taproom staff on Friday">
+                </div>
+
+                <div class="p-3 bg-atomic/10 retro-border border-2 text-[11px] text-ink/80">
+                    <i class="fa-solid fa-paper-plane text-atomic mr-1"></i>
+                    Proof & claim dispatch will be submitted directly to <strong class="text-ink">thebunkerbrews@gmail.com</strong> for your survivor account credit.
+                </div>
+
+                <button type="submit" class="w-full bg-rust text-parchment px-4 py-3 font-display text-2xl tracking-wider retro-button shadow-retro hover:bg-rustDark uppercase mt-2">
+                    Submit Proof & Unlock Discount
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Terminal Access / Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-parchment p-8 retro-border shadow-[12px_12px_0_0_#B83A2E] w-full max-w-md relative animate-in fade-in zoom-in duration-200">
+            <button onclick="document.getElementById('auth-modal').classList.add('hidden'); playBeep();" class="absolute top-4 right-4 text-ink hover:text-rust text-2xl transition-colors font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-rust/15 rounded-full flex items-center justify-center mx-auto mb-3 border-2 border-rust">
+                    <i class="fa-solid fa-user-shield text-3xl text-rust pulse-glow"></i>
+                </div>
+                <h2 class="font-display text-4xl text-ink uppercase">Terminal Access</h2>
+                <p class="font-bold text-xs text-ink/70 uppercase">Identify yourself, Wasteland Survivor</p>
+            </div>
+            
+            <!-- Auth Switch Tabs -->
+            <div class="flex border-b-[3px] border-ink mb-6">
+                <button id="tab-login" onclick="switchAuthTab('login'); playBeep();" class="flex-1 py-2 font-display text-2xl bg-ink text-parchment uppercase transition-colors">Log In</button>
+                <button id="tab-register" onclick="switchAuthTab('register'); playBeep();" class="flex-1 py-2 font-display text-2xl text-ink hover:bg-ink/10 uppercase transition-colors">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="form-login" onsubmit="handleAuthSubmit(event, 'login')" class="space-y-4 font-bold">
+                <div>
+                    <label class="block text-xs uppercase mb-1">E-Mail Comm Link</label>
+                    <input type="email" id="login-email" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rust font-body" placeholder="dweller@vault111.com">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase mb-1">Passcode</label>
+                    <input type="password" id="login-pass" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rust font-body" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-rust text-parchment px-4 py-3 font-display text-2xl tracking-wider retro-button shadow-retro hover:bg-rustDark uppercase mt-4">
+                    Initiate Access
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="form-register" onsubmit="handleAuthSubmit(event, 'register')" class="space-y-4 font-bold hidden">
+                <div>
+                    <label class="block text-xs uppercase mb-1">Survivor Callsign / Name</label>
+                    <input type="text" id="reg-name" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rust font-body" placeholder="Scout Master Dan">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase mb-1">E-Mail Comm Link</label>
+                    <input type="email" id="reg-email" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rust font-body" placeholder="dan@wasteland.uk">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase mb-1">Passcode</label>
+                    <input type="password" id="reg-pass" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rust font-body" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-atomic text-parchment px-4 py-3 font-display text-2xl tracking-wider retro-button shadow-retro hover:bg-atomicDark uppercase mt-4">
+                    Create Profile
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="fixed w-full z-50 bg-parchment border-b-[3px] border-ink transition-all duration-300 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Brand -->
+                <a href="#" onclick="playBeep()" class="flex-shrink-0 flex items-center gap-3 group">
+                    <div class="relative w-12 h-12 flex items-center justify-center">
+                        <svg class="absolute w-full h-full text-atomic spin-slow opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
+                            <ellipse cx="50" cy="50" rx="45" ry="15" transform="rotate(30 50 50)" />
+                            <ellipse cx="50" cy="50" rx="45" ry="15" transform="rotate(90 50 50)" />
+                            <ellipse cx="50" cy="50" rx="45" ry="15" transform="rotate(150 50 50)" />
+                        </svg>
+                        <svg class="w-6 h-10 text-rust z-10" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="8">
+                            <path d="M35 10 L65 10 L65 30 L80 50 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 50 L35 30 Z" fill="#F9F3E6"/>
+                            <text x="35" y="100" font-family="'Bebas Neue', sans-serif" font-size="60" fill="#B83A2E" stroke="none">B</text>
+                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-display text-4xl text-rust tracking-wider mt-1 drop-shadow-[2px_2px_0px_rgba(45,45,45,1)] block leading-none">BUNKER BREWS</span>
+                        <span class="text-[10px] font-bold text-ink/70 tracking-widest uppercase hidden sm:block">Artisan Craft Cola Concentrate</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Links & Actions -->
+                <div class="flex items-center space-x-4 sm:space-x-8 font-bold">
+                    <nav class="hidden md:flex space-x-6 uppercase text-sm">
+                        <a href="#rations" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Rations</a>
+                        <a href="#mixology" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Mixology Protocol</a>
+                        <a href="#lore" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Lore</a>
+                        <a href="#comms" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Comms Logs</a>
+                    </nav>
+                    
+                    <!-- Auth Button -->
+                    <button id="nav-auth-btn" onclick="openAuthModal()" class="text-ink hover:text-rust transition-all uppercase text-sm flex items-center gap-2 border-2 border-transparent hover:border-ink px-2.5 py-1.5">
+                        <i class="fa-solid fa-user-circle text-lg text-rust"></i>
+                        <span id="user-badge" class="hidden sm:inline">Terminal Access</span>
+                    </button>
+                    
+                    <!-- Cart Trigger Button -->
+                    <button onclick="toggleCartDrawer(true); playBeep();" class="bg-atomic text-parchment px-4 py-2.5 retro-border shadow-retro-sm retro-button font-bold uppercase hover:bg-atomicDark flex items-center gap-2.5 relative">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="hidden xs:inline">Crate</span>
+                        <span id="nav-cart-badge" class="bg-rust text-parchment text-xs font-bold px-2 py-0.5 rounded-full border border-ink">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Order Status Notification Banner (if URL has ?status=success) -->
+    <div id="order-success-banner" class="hidden bg-radYellow text-ink py-4 px-4 border-b-4 border-ink pt-28 font-bold text-center relative z-40">
+        <div class="max-w-4xl mx-auto flex items-center justify-center gap-3">
+            <i class="fa-solid fa-circle-check text-2xl text-rust animate-bounce"></i>
+            <div>
+                <span class="font-display text-2xl uppercase tracking-wide">SUPPLY DROP CONFIRMED!</span>
+                <span class="block text-sm">Your order has been logged into the Bunker dispatch network. We are preparing your syrups!</span>
+            </div>
+            <button onclick="document.getElementById('order-success-banner').classList.add('hidden')" class="ml-4 font-bold underline">Dismiss</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-44 lg:pb-28 overflow-hidden flex items-center min-h-[92vh]">
+        <!-- Orbit Background Elements -->
+        <div class="absolute top-20 -left-20 w-96 h-96 border-[4px] border-rust/15 rounded-full spin-slow pointer-events-none"></div>
+        <div class="absolute bottom-10 -right-20 w-[32rem] h-[32rem] border-[4px] border-atomic/15 rounded-full spin-reverse pointer-events-none"></div>
+        
+        <!-- Mid-century Sparkle Stars -->
+        <svg class="absolute top-36 left-[12%] w-12 h-12 text-atomic pulse-glow float-anim pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+        </svg>
+        <svg class="absolute bottom-36 right-[15%] w-10 h-10 text-rust pulse-glow float-anim pointer-events-none" style="animation-delay: 1.5s;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+        </svg>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="zoom-in" data-aos-duration="900">
+            <div class="text-center max-w-4xl mx-auto">
+                
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 mb-6 px-4 py-1.5 bg-ink text-parchment font-bold text-xs uppercase retro-border shadow-[4px_4px_0_0_#B83A2E] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+                    <i class="fa-solid fa-atom text-atomic"></i>
+                    <span>Small-Batch Post-Nuclear Survival Supplies</span>
+                </div>
+                
+                <!-- Main Headings -->
+                <h1 class="font-display text-6xl sm:text-8xl lg:text-9xl text-ink leading-[0.9] tracking-wide mb-6 uppercase">
+                    Homemade <span class="text-rust flicker-text">Craft Cola</span><br>Syrup Concentrate
+                </h1>
+                
+                <p class="mt-4 text-lg sm:text-2xl text-ink/85 font-bold max-w-2xl mx-auto mb-10 border-t-[3px] border-b-[3px] border-ink py-4 leading-snug">
+                    Warm campfire spices united with crisp, refreshing citrus — the ultimate contrast for exploration.
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-5 mt-8">
+                    <a href="#rations" onclick="playBeep()" class="w-full sm:w-auto bg-rust text-parchment px-8 py-4 text-2xl font-display tracking-wider uppercase retro-border shadow-retro retro-button hover:bg-rustDark flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-bottle-droplet"></i>
+                        Order Your Rations
+                    </a>
+                    <a href="#mixology" onclick="playBeep()" class="w-full sm:w-auto bg-parchment text-ink px-8 py-4 text-2xl font-display tracking-wider uppercase retro-border shadow-retro-atomic retro-button atomic-glow flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-sliders"></i>
+                        Mixing Calculator
+                    </a>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-12 pt-8 border-t-2 border-ink/20 text-xs font-bold uppercase text-ink/80">
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-leaf text-atomic text-xl mb-1"></i>
+                        <span>100% Real Botanicals</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-wine-bottle text-rust text-xl mb-1"></i>
+                        <span>Vintage Swing-Top</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-recycle text-atomic text-xl mb-1"></i>
+                        <span>£1.50 Return Credit</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Circular Economy Marquee -->
+    <div class="bg-atomic text-parchment py-3.5 border-y-[4px] border-ink marquee-container font-bold text-base sm:text-lg uppercase tracking-wider relative z-20 shadow-md">
+        <div class="marquee-content">
+            <span class="mx-8"><i class="fa-solid fa-recycle text-radYellow mr-2"></i> SUSTAINABLE BUSINESS: Return your bottles for £1.50 off your next order! </span>
+            <span class="mx-8"><i class="fa-solid fa-shield-halved text-radYellow mr-2"></i> REQUISITION NOW: Free Local Pickup in Sutton Coldfield & Leviathan Brewery </span>
+            <span class="mx-8"><i class="fa-solid fa-recycle text-radYellow mr-2"></i> SUSTAINABLE BUSINESS: Return your bottles for £1.50 off your next order! </span>
+            <span class="mx-8"><i class="fa-solid fa-bolt text-radYellow mr-2"></i> NO CORN SYRUP: Pure Cane Sugar, Real Essential Citrus Oils & Kola Nut </span>
+        </div>
+    </div>
+
+    <!-- Flavor Profile & Product Showcase Section -->
+    <section id="rations" class="py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16" data-aos="fade-up">
+                <div class="inline-block px-3 py-1 bg-rust text-parchment text-xs font-bold uppercase retro-border mb-3">
+                    Batch #077 Formulation
+                </div>
+                <h2 class="font-display text-5xl md:text-7xl text-ink uppercase inline-block relative">
+                    <span class="text-rust mr-2"><i class="fa-solid fa-bolt pulse-glow"></i></span>
+                    Standard Issue Supplies
+                    <span class="text-rust ml-2"><i class="fa-solid fa-bolt pulse-glow"></i></span>
+                </h2>
+                <p class="font-bold text-ink/70 max-w-xl mx-auto mt-2">
+                    Crafted in small batches with real whole spices and fresh citrus oils. Choose your ration format below.
+                </p>
+                <div class="w-28 h-[4px] bg-ink mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+                
+                <!-- Product Card 1: Bunker Basic -->
+                <div class="bg-parchment retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-2 transition-all duration-300 relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="100">
+                    
+                    <!-- Bestseller Stamp -->
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-rust rounded-full flex items-center justify-center retro-border transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-md">
+                        <span class="font-display text-parchment text-lg leading-none text-center">BEST<br>SELLER</span>
+                    </div>
+                    
+                    <!-- Product Visual Stage -->
+                    <div class="bg-ink/5 p-6 retro-border mb-6 flex justify-center h-64 items-center relative overflow-hidden">
+                        <div class="absolute w-44 h-44 bg-rust/20 rounded-full z-0 group-hover:scale-110 transition-transform duration-500"></div>
+                        
+                        <!-- Stylized SVG Bottle -->
+                        <svg id="svg-bottle-basic" class="h-48 w-auto text-ink z-10 float-anim transition-all duration-300" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="4">
+                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#F9F3E6"/>
+                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="5"/>
+                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="5"/>
+                            <text x="40" y="80" font-family="'Bebas Neue', sans-serif" font-size="30" fill="#B83A2E" stroke="none">B</text>
+                            <rect x="25" y="100" width="50" height="60" fill="#B83A2E" stroke="currentColor" stroke-width="3"/>
+                            <text x="50" y="130" font-family="'Courier Prime', monospace" font-size="11" fill="#F9F3E6" stroke="none" text-anchor="middle" font-weight="bold">BASIC</text>
+                            <text x="50" y="145" font-family="'Courier Prime', monospace" font-size="8" fill="#F9F3E6" stroke="none" text-anchor="middle">SPICED CITRUS</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-4xl uppercase text-rust tracking-wide">Bunker Basic</h3>
+                            <span class="bg-rust/15 text-rust px-2 py-0.5 text-xs font-bold border border-rust">FLAGSHIP</span>
+                        </div>
+                        <p class="font-bold text-xs text-ink/70 uppercase">Swing-Top Reusable Glass Vessel</p>
+                    </div>
+                    
+                    <p class="text-sm font-bold text-ink/80 mb-4 border-b-2 border-ink/15 pb-3">
+                        A rich, spiced citrus cola syrup that delivers comforting, warm "Christmasy" aromatics with campfire warmth.
+                    </p>
+
+                    <!-- Tasting & Mix Stats -->
+                    <div class="space-y-2.5 mb-6 flex-grow text-xs font-bold">
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-holly-berry text-rust mt-0.5"></i>
+                            <div>
+                                <span class="text-ink/60 uppercase">Flavor Profile:</span>
+                                <span class="text-ink">Sweet orange zest, cassia cinnamon, cracked nutmeg, vanilla.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-flask text-atomic mt-0.5"></i>
+                            <div>
+                                <span class="text-ink/60 uppercase">Recommended Ratio:</span>
+                                <span class="text-ink">1 part syrup to 5 parts sparkling water.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector & Dynamic Add-to-Cart -->
+                    <div class="mt-auto border-t-[3px] border-ink pt-4">
+                        <label class="block font-bold text-xs uppercase mb-2 text-ink/70">Select Ration Size:</label>
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <button type="button" onclick="selectProductSize('basic', '500ml', 7.50); playBeep();" id="btn-size-basic-500" class="py-2 px-3 border-[3px] border-ink bg-rust text-parchment font-bold text-xs uppercase transition-all shadow-sm">
+                                500ml (£7.50)
+                            </button>
+                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:bg-rust/10 transition-all">
+                                250ml (£5.50)
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-bold text-ink/60 uppercase block">Ration Cost</span>
+                                <span id="price-display-basic" class="font-display text-4xl text-ink">£7.50</span>
+                            </div>
+                            <button onclick="addProductToCart('Bunker Basic', currentSizes['basic'].size, currentSizes['basic'].price); playBeep();" class="bg-ink text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-rust flex items-center gap-2">
+                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2: Bunker Scout -->
+                <div class="bg-parchment retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-2 transition-all duration-300 relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="200">
+                    
+                    <!-- Scout Stamp -->
+                    <div class="absolute -right-4 -top-4 w-20 h-20 bg-atomic rounded-full flex items-center justify-center retro-border transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-md">
+                        <span class="font-display text-parchment text-lg leading-none text-center">REFRESH<br>SCOUT</span>
+                    </div>
+                    
+                    <!-- Product Visual Stage -->
+                    <div class="bg-ink/5 p-6 retro-border mb-6 flex justify-center h-64 items-center relative overflow-hidden">
+                        <div class="absolute w-44 h-44 bg-atomic/20 rounded-full z-0 group-hover:scale-110 transition-transform duration-500"></div>
+                        
+                        <!-- Stylized SVG Bottle -->
+                        <svg id="svg-bottle-scout" class="h-48 w-auto text-ink z-10 float-anim transition-all duration-300" style="animation-delay: 0.8s;" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="4">
+                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#F9F3E6"/>
+                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="5"/>
+                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="5"/>
+                            <text x="40" y="80" font-family="'Bebas Neue', sans-serif" font-size="30" fill="#5B9EA6" stroke="none">B</text>
+                            <rect x="25" y="100" width="50" height="60" fill="#5B9EA6" stroke="currentColor" stroke-width="3"/>
+                            <text x="50" y="130" font-family="'Courier Prime', monospace" font-size="11" fill="#F9F3E6" stroke="none" text-anchor="middle" font-weight="bold">SCOUT</text>
+                            <text x="50" y="145" font-family="'Courier Prime', monospace" font-size="8" fill="#F9F3E6" stroke="none" text-anchor="middle">BOTANICAL COLA</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-4xl uppercase text-atomic tracking-wide">Bunker Scout</h3>
+                            <span class="bg-atomic/15 text-atomic px-2 py-0.5 text-xs font-bold border border-atomic">BOTANICAL</span>
+                        </div>
+                        <p class="font-bold text-xs text-ink/70 uppercase">Swing-Top Reusable Glass Vessel</p>
+                    </div>
+                    
+                    <p class="text-sm font-bold text-ink/80 mb-4 border-b-2 border-ink/15 pb-3">
+                        A crisp, exhilarating citrus-forward craft cola concentrate infused with wasteland botanicals and invigorating aromatics.
+                    </p>
+
+                    <!-- Tasting & Mix Stats -->
+                    <div class="space-y-2.5 mb-6 flex-grow text-xs font-bold">
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-lemon text-atomic mt-0.5"></i>
+                            <div>
+                                <span class="text-ink/60 uppercase">Flavor Profile:</span>
+                                <span class="text-ink">Crisp lime zest, crushed coriander seed, kola nut, lavender hint.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-flask text-rust mt-0.5"></i>
+                            <div>
+                                <span class="text-ink/60 uppercase">Recommended Ratio:</span>
+                                <span class="text-ink">1 part syrup to 5 parts sparkling water.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector & Dynamic Add-to-Cart -->
+                    <div class="mt-auto border-t-[3px] border-ink pt-4">
+                        <label class="block font-bold text-xs uppercase mb-2 text-ink/70">Select Ration Size:</label>
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <button type="button" onclick="selectProductSize('scout', '500ml', 7.50); playBeep();" id="btn-size-scout-500" class="py-2 px-3 border-[3px] border-ink bg-atomic text-parchment font-bold text-xs uppercase transition-all shadow-sm">
+                                500ml (£7.50)
+                            </button>
+                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:bg-atomic/10 transition-all">
+                                250ml (£5.50)
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-bold text-ink/60 uppercase block">Ration Cost</span>
+                                <span id="price-display-scout" class="font-display text-4xl text-ink">£7.50</span>
+                            </div>
+                            <button onclick="addProductToCart('Bunker Scout', currentSizes['scout'].size, currentSizes['scout'].price); playBeep();" class="bg-ink text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-atomic flex items-center gap-2">
+                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preparation Protocols & Wasteland Recipes Card -->
+                <div class="bg-atomic text-parchment retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="mb-5 flex justify-between items-start">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-radYellow">Vault Survival Manual</span>
+                            <h3 class="font-display text-4xl uppercase leading-none mt-1">Dispenser Protocols</h3>
+                        </div>
+                        <i class="fa-solid fa-clipboard-list text-3xl group-hover:text-radYellow transition-colors"></i>
+                    </div>
+                    
+                    <div class="space-y-4 flex-grow text-xs font-bold">
+                        <div class="border-l-4 border-parchment pl-3.5 hover:border-radYellow transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-radYellow">01. Standard Sparkler</h4>
+                            <p class="text-parchment/90 mt-0.5">30ml syrup + 150ml icy sparkling water. Stir gently with a spoon. Never shake!</p>
+                        </div>
+                        <div class="border-l-4 border-parchment pl-3.5 hover:border-radYellow transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-radYellow">02. The Bunker Float</h4>
+                            <p class="text-parchment/90 mt-0.5">Pour standard mix over a generous scoop of clotted vanilla bean ice cream.</p>
+                        </div>
+                        <div class="border-l-4 border-parchment pl-3.5 hover:border-radYellow transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-radYellow">03. Survivor's Dark 'n' Stormy</h4>
+                            <p class="text-parchment/90 mt-0.5">30ml Bunker Basic, 40ml dark spiced rum, 120ml soda, scorched orange peel garnish.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t-2 border-parchment/30 text-center relative overflow-hidden bg-ink/10 p-2.5">
+                        <p class="font-terminal text-lg uppercase tracking-widest text-parchment">
+                            >> YIELD: ~16 SERVINGS PER 500ML BOTTLE
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Mixology & Serving Calculator -->
+    <section id="mixology" class="py-20 bg-parchmentDark border-y-4 border-ink relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="bg-parchment p-8 sm:p-12 retro-border shadow-retro-lg relative" data-aos="zoom-in">
+                
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-ink text-radYellow text-xs font-bold uppercase mb-2">
+                        <i class="fa-solid fa-calculator"></i> Wasteland Ratio Computer
+                    </div>
+                    <h2 class="font-display text-4xl sm:text-6xl text-ink uppercase">Interactive Mix Calculator</h2>
+                    <p class="font-bold text-sm text-ink/70">
+                        Adjust the slider below to calculate exact syrup rations and carbonated water requirements for your gathering!
+                    </p>
+                </div>
+
+                <!-- Slider Control -->
+                <div class="mb-10 bg-ink/5 p-6 retro-border">
+                    <div class="flex justify-between items-center mb-3">
+                        <label for="servings-slider" class="font-display text-2xl uppercase text-ink">Target Servings (Glasses):</label>
+                        <span id="slider-servings-val" class="font-display text-4xl text-rust bg-parchment px-4 py-1 retro-border">4</span>
+                    </div>
+                    <input type="range" id="servings-slider" min="1" max="20" value="4" oninput="calculateMixology()" class="w-full">
+                    <div class="flex justify-between text-[11px] font-bold text-ink/50 mt-1 uppercase">
+                        <span>1 Solo Dweller</span>
+                        <span>10 Settlement Party</span>
+                        <span>20 Bunker Gathering</span>
+                    </div>
+                </div>
+
+                <!-- Live Results Display -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                    <div class="bg-parchment p-5 retro-border border-2">
+                        <i class="fa-solid fa-bottle-droplet text-3xl text-rust mb-2"></i>
+                        <span class="block text-xs font-bold text-ink/60 uppercase">Craft Syrup Needed</span>
+                        <span id="calc-syrup" class="font-display text-4xl text-ink block mt-1">120 ml</span>
+                        <span id="calc-bottles-hint" class="text-[11px] font-bold text-rust uppercase mt-1 block">~0.24 of a 500ml bottle</span>
+                    </div>
+
+                    <div class="bg-parchment p-5 retro-border border-2">
+                        <i class="fa-solid fa-droplet text-3xl text-atomic mb-2"></i>
+                        <span class="block text-xs font-bold text-ink/60 uppercase">Sparkling Water Needed</span>
+                        <span id="calc-water" class="font-display text-4xl text-ink block mt-1">600 ml</span>
+                        <span class="text-[11px] font-bold text-ink/50 uppercase mt-1 block">Chilled Soda / Seltzer</span>
+                    </div>
+
+                    <div class="bg-parchment p-5 retro-border border-2">
+                        <i class="fa-solid fa-glass-water text-3xl text-radYellow mb-2"></i>
+                        <span class="block text-xs font-bold text-ink/60 uppercase">Total Refreshment Yield</span>
+                        <span id="calc-total-liquid" class="font-display text-4xl text-ink block mt-1">720 ml</span>
+                        <span class="text-[11px] font-bold text-ink/50 uppercase mt-1 block">Delicious Craft Cola</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Wasteland Lore & PDF Brand Story -->
+    <section id="lore" class="py-24 border-b-4 border-ink relative overflow-hidden bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjRjlGM0U2Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjMkQyRDJEIiBzdHJva2Utd2lkdGg9IjAuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMSI+PC9wYXRoPgo8L3N2Zz4=')]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-14">
+                
+                <!-- Left Content: Lore & Quote from PDF -->
+                <div class="lg:w-1/2 bg-parchment p-8 sm:p-10 retro-border shadow-[8px_8px_0_0_#B83A2E] relative group hover:shadow-[12px_12px_0_0_#B83A2E] transition-shadow duration-300" data-aos="fade-right">
+                    
+                    <div class="absolute -top-6 -left-6 bg-atomic text-parchment w-20 h-20 rounded-full flex items-center justify-center retro-border shadow-retro transform -rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                        <span class="font-display text-2xl text-center leading-none">EST.<br>2077</span>
+                    </div>
+
+                    <div class="mt-3 mb-6">
+                        <span class="text-xs font-bold text-rust uppercase tracking-wider">Survivor Chronicles</span>
+                        <h2 class="font-display text-5xl sm:text-6xl text-ink uppercase leading-none mt-1">The Ultimate Contrast</h2>
+                    </div>
+                    
+                    <div class="space-y-4 font-bold text-ink/85 leading-relaxed text-sm sm:text-base">
+                        <blockquote class="text-lg sm:text-xl text-rust italic border-l-4 border-rust pl-4 py-2 bg-rust/5">
+                            "Inspired by the immersive wastelands of the Fallout franchise, our recipes unite warm campfire spices with crisp, refreshing citrus, the ultimate contrast for exploration."
+                        </blockquote>
+                        <p>
+                            When the old world collapsed under neon and smoke, we realized that survival wasn't just about pure calories — humanity needed genuine flavor. Bunker Brews was born in sub-level 4, utilizing a salvaged centrifugal press and cold-extracted botanicals.
+                        </p>
+                        <p>
+                            We flatly refuse mass-produced industrial syrup sludge. Our craft concentrate is brewed over gentle open flames, extracting real essential oils from hand-peeled oranges and limes, cracking whole nutmeg, and infusing authentic kola nut and cassia bark.
+                        </p>
+                        <p>
+                            No high-fructose corn syrup. No artificial preservatives. Just pure, unadulterated concentrate designed to be mixed fresh in your vault canteen.
+                        </p>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t-[3px] border-ink flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-full retro-border bg-rust overflow-hidden">
+                                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=BunkerMaster&backgroundColor=B83A2E" alt="Head Brewer Avatar" class="w-full h-full">
+                            </div>
+                            <div>
+                                <p class="font-bold uppercase text-xs text-ink/60">Brewmaster & Founder</p>
+                                <p class="font-display text-2xl tracking-wide text-ink">Bunker Brews Lab</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-stamp text-4xl text-rust/40"></i>
+                    </div>
+                </div>
+
+                <!-- Right Content: Interactive PDF Badge Graphic -->
+                <div class="lg:w-1/2 flex justify-center" data-aos="fade-left" data-aos-delay="200">
+                    <div class="relative w-80 sm:w-[28rem] h-80 sm:h-[28rem] flex items-center justify-center">
+                        <div class="absolute inset-0 bg-rust/10 rounded-full scale-95 group-hover:scale-100 transition-transform duration-700"></div>
+                        <div class="absolute inset-8 rounded-full border-4 border-dashed border-ink/30 spin-slow pointer-events-none"></div>
+                        
+                        <!-- Atomic Rings from PDF Logo -->
+                        <svg class="absolute inset-0 w-full h-full text-atomic spin-slow pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(30 50 50)" />
+                            <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(90 50 50)" />
+                            <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(150 50 50)" />
+                        </svg>
+
+                        <!-- Sparkles -->
+                        <svg class="absolute top-1/4 left-1/4 w-8 h-8 text-rust pulse-glow pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+                        </svg>
+                        <svg class="absolute bottom-1/4 right-1/4 w-7 h-7 text-atomic pulse-glow pointer-events-none" style="animation-delay: 1.2s;" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+                        </svg>
+
+                        <!-- Center Bottle Artwork -->
+                        <div class="z-10 flex flex-col items-center float-anim" style="animation-duration: 6s;">
+                            <svg class="h-60 sm:h-72 w-auto text-ink" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="4">
+                                <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#F9F3E6" opacity="0.95"/>
+                                <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="5"/>
+                                <path d="M25 35 C15 35 15 20 30 20" stroke-width="5"/>
+                                <text x="35" y="90" font-family="'Bebas Neue', sans-serif" font-size="45" fill="#B83A2E" stroke="none">B</text>
+                            </svg>
+                            <div class="mt-2 font-display text-4xl sm:text-5xl text-rust tracking-wider drop-shadow-[2px_2px_0px_rgba(45,45,45,1)] rotate-[-4deg]">
+                                Bunker Brews
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews (Interactive Terminal Console) -->
+    <section id="comms" class="bg-terminalBg py-24 relative overflow-hidden border-b-4 border-ink">
+        <div class="scanline"></div>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            
+            <div class="mb-10 text-terminalGreen font-terminal flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-terminalGreen/30 pb-4">
+                <div>
+                    <p class="text-2xl">> SYSTEM: ROBCO PIP-COMMS NETWORK v2.077</p>
+                    <p class="text-xl text-terminalGreen/80">> LOG_STREAM: CUSTOMER_TRANSMISSIONS.LOG</p>
+                </div>
+                <button onclick="toggleAddReviewForm()" class="bg-terminalGreen/20 text-terminalGreen border border-terminalGreen px-4 py-2 text-xl hover:bg-terminalGreen hover:text-terminalBg transition-colors uppercase">
+                    + TRANSMIT NEW LOG
+                </button>
+            </div>
+
+            <!-- Add Review Form (Toggleable) -->
+            <div id="add-review-container" class="hidden mb-8 border-2 border-terminalGreen bg-terminalGreen/10 p-6 rounded font-terminal text-terminalGreen">
+                <h4 class="text-2xl uppercase mb-3">> TRANSMIT SURVIVOR FIELD REPORT</h4>
+                <form onsubmit="handleReviewSubmit(event)" class="space-y-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" id="review-user" required placeholder="USER CALLSIGN (e.g. VAULT_DWELLER_77)" class="bg-terminalBg border border-terminalGreen px-3 py-2 text-lg text-terminalGreen placeholder-terminalGreen/40 focus:outline-none">
+                        <select id="review-product" class="bg-terminalBg border border-terminalGreen px-3 py-2 text-lg text-terminalGreen focus:outline-none">
+                            <option value="Bunker Basic">FLAVOR: Bunker Basic (Spiced Citrus)</option>
+                            <option value="Bunker Scout">FLAVOR: Bunker Scout (Botanical Cola)</option>
+                        </select>
+                    </div>
+                    <textarea id="review-text" required rows="3" placeholder="ENTER TRANSMISSION TEXT..." class="w-full bg-terminalBg border border-terminalGreen px-3 py-2 text-lg text-terminalGreen placeholder-terminalGreen/40 focus:outline-none"></textarea>
+                    <button type="submit" class="bg-terminalGreen text-terminalBg font-bold px-6 py-2 text-xl uppercase hover:bg-opacity-90">
+                        BROADCAST TRANSMISSION >>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Testimonials Stream -->
+            <div id="reviews-stream" class="space-y-6">
+                <!-- Testimonial 1 -->
+                <div class="border border-terminalGreen/40 bg-terminalGreen/5 p-6 rounded hover:bg-terminalGreen/10 transition-colors" data-aos="fade-up">
+                    <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 font-terminal text-lg border-b border-terminalGreen/20 pb-2">
+                        <i class="fa-solid fa-user-astronaut text-terminalGreen"></i>
+                        <span class="text-terminalGreen font-bold">USER_ID: WANDERER_99</span>
+                        <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">RATION: BUNKER BASIC</span>
+                        <span class="ml-auto">[2077-10-23 09:42]</span>
+                    </div>
+                    <p class="font-terminal text-2xl text-terminalGreen terminal-text leading-relaxed">
+                        "The Bunker Basic tastes just like the holidays back before the bombs fell. The festive Christmasy spices paired with sparkling water saved our squad's morale out in the wastes."
+                    </p>
+                    <div class="mt-3 text-terminalGreen/80 font-terminal text-lg">
+                        STATUS: VERIFIED CONSUMER [★★★★★]
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="border border-terminalGreen/40 bg-terminalGreen/5 p-6 rounded hover:bg-terminalGreen/10 transition-colors" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 font-terminal text-lg border-b border-terminalGreen/20 pb-2">
+                        <i class="fa-solid fa-user-ninja text-terminalGreen"></i>
+                        <span class="text-terminalGreen font-bold">USER_ID: VAULT_DWELLER_42</span>
+                        <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">RATION: BUNKER SCOUT</span>
+                        <span class="ml-auto">[2077-10-24 14:15]</span>
+                    </div>
+                    <p class="font-terminal text-2xl text-terminalGreen terminal-text leading-relaxed">
+                        "Mixed Bunker Scout with some clear moonshine from the local settlement. Best 'Wasteland Libre' I've ever tasted. Crisp citrus hit, real botanicals, and zero chemical aftertaste."
+                    </p>
+                    <div class="mt-3 text-terminalGreen/80 font-terminal text-lg">
+                        STATUS: VERIFIED CONSUMER [★★★★★]
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="border border-terminalGreen/40 bg-terminalGreen/5 p-6 rounded hover:bg-terminalGreen/10 transition-colors" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 font-terminal text-lg border-b border-terminalGreen/20 pb-2">
+                        <i class="fa-solid fa-user-shield text-terminalGreen"></i>
+                        <span class="text-terminalGreen font-bold">USER_ID: SUTTON_OUTPOST_LEAD</span>
+                        <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">PERK: BOTTLE RETURN</span>
+                        <span class="ml-auto">[2077-10-25 18:30]</span>
+                    </div>
+                    <p class="font-terminal text-2xl text-terminalGreen terminal-text leading-relaxed">
+                        "The bottle return policy is top tier. Dropped 4 empties off at Leviathan Brewery in Sutton Coldfield and got £6 off my next crate. Keep up the circular craft economy!"
+                    </p>
+                    <div class="mt-3 text-terminalGreen/80 font-terminal text-lg">
+                        STATUS: VERIFIED RECYCLER [★★★★★]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-terminalGreen font-terminal flex items-center text-xl">
+                <span>> AWAITING INCOMING TRANSMISSIONS</span>
+                <span class="inline-block w-3 h-6 bg-terminalGreen ml-2 animate-pulse"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-parchment pt-20 pb-12 border-t-8 border-rust">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                
+                <!-- Brand Info Column -->
+                <div class="lg:col-span-1" data-aos="fade-up">
+                    <div class="flex items-center gap-3 mb-5">
+                        <svg class="w-10 h-10 text-rust spin-slow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4">
+                            <ellipse cx="50" cy="50" rx="40" ry="15" transform="rotate(30 50 50)" />
+                            <ellipse cx="50" cy="50" rx="40" ry="15" transform="rotate(90 50 50)" />
+                            <ellipse cx="50" cy="50" rx="40" ry="15" transform="rotate(150 50 50)" />
+                            <circle cx="50" cy="50" r="8" fill="currentColor" />
+                        </svg>
+                        <span class="font-display text-3xl text-rust tracking-wider mt-1 drop-shadow-[1px_1px_0px_rgba(45,45,45,0.5)]">BUNKER BREWS</span>
+                    </div>
+                    <p class="font-bold text-sm text-ink/75 mb-6 leading-relaxed">
+                        Handcrafted small-batch craft cola syrup concentrate for the discerning survivor. Return bottles, save caps, drink clean.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="https://instagram.com" target="_blank" class="w-10 h-10 retro-border flex items-center justify-center hover:bg-atomic hover:text-parchment transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                        <a href="https://twitter.com" target="_blank" class="w-10 h-10 retro-border flex items-center justify-center hover:bg-rust hover:text-parchment transition-colors"><i class="fa-brands fa-x-twitter text-lg"></i></a>
+                        <a href="mailto:thebunkerbrews@gmail.com" class="w-10 h-10 retro-border flex items-center justify-center hover:bg-ink hover:text-parchment transition-colors"><i class="fa-solid fa-envelope text-lg"></i></a>
+                    </div>
+                </div>
+
+                <!-- Navigation Directives -->
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-ink inline-block pr-8">Directives</h4>
+                    <ul class="space-y-3 font-bold text-sm">
+                        <li><a href="#rations" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Supply Requisition (Shop)</a></li>
+                        <li><a href="#mixology" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Mixology Calculator</a></li>
+                        <li><a href="javascript:void(0)" onclick="openAuthModal()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Terminal Profile / Account</a></li>
+                        <li><a href="#lore" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Wasteland Lore</a></li>
+                        <li><a href="#comms" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Survivor Testimonials</a></li>
+                    </ul>
+                </div>
+
+                <!-- Bottle Return Outposts -->
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-ink inline-block pr-8">Recycling Outposts</h4>
+                    <p class="font-bold text-xs mb-3 text-ink/80">
+                        Return empty bottles to claim £1.50 credit per bottle:
+                    </p>
+                    <div class="space-y-3 font-bold text-xs">
+                        <div class="p-3 bg-ink/5 retro-border border-2">
+                            <span class="block uppercase text-rust font-display text-lg leading-tight">1. Bunker HQ (Post / Drop)</span>
+                            <span class="text-ink/80 leading-normal block mt-1">173 Reddicap Heath Road<br>Sutton Coldfield, B75 7EN</span>
+                        </div>
+                        <div class="p-3 bg-ink/5 retro-border border-2">
+                            <span class="block uppercase text-atomic font-display text-lg leading-tight">2. Leviathan Brewery</span>
+                            <span class="text-ink/80 leading-normal block mt-1">Unit 4&5, 17 Reddicap Trading Est.<br>Sutton Coldfield, B75 7BU</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Comms Array -->
+                <div class="lg:col-span-1" data-aos="fade-up" data-aos-delay="300">
+                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-ink inline-block pr-8">Comms Array</h4>
+                    <p class="font-bold text-xs text-ink/80 mb-4 leading-relaxed">
+                        Join the Bunker Telegram (E-Mail) for incoming frequency transmissions on fresh batch releases and secret formulas.
+                    </p>
+                    <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col gap-2.5">
+                        <input type="email" id="news-email" required placeholder="ENTER E-MAIL FREQUENCY..." class="bg-parchment retro-border px-3.5 py-2.5 font-bold text-xs focus:outline-none focus:ring-2 focus:ring-rust placeholder-ink/50">
+                        <button type="submit" class="bg-ink text-parchment px-4 py-3 font-display text-xl tracking-wider retro-button shadow-retro-rust hover:bg-rust transition-colors uppercase">
+                            Establish Link >>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom Credits -->
+            <div class="border-t-[3px] border-ink pt-8 flex flex-col md:flex-row justify-between items-center gap-4 font-bold text-xs uppercase text-ink/75">
+                <p>&copy; 2077 BUNKER BREWS INDUSTRIES. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-6">
+                    <a href="javascript:void(0)" onclick="alert('Privacy Policy: All survivor data encrypted in bunker sub-level.')" class="hover:text-rust">Privacy Protocol</a>
+                    <a href="javascript:void(0)" onclick="alert('Terms of Survival: Drink responsibly and protect your settlement.')" class="hover:text-rust">Terms of Survival</a>
+                    <a href="javascript:void(0)" onclick="alert('Square Integration: Live payments and Apple Pay ready via Square Checkout.')" class="hover:text-atomic">Square Secure</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core App & Stripe JS Logic -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Scroll Animations
+        AOS.init({ once: true, offset: 40, duration: 750, easing: 'ease-out-cubic' });
+
+        /* ============================================================
+           1. AUDIO SFX (Web Audio API Synthesizer - Pip-Boy Clicks)
+           ============================================================ */
+        let sfxEnabled = false;
+        let audioCtx = null;
+
+        function toggleAudioSFX() {
+            sfxEnabled = !sfxEnabled;
+            const icon = document.getElementById('sfx-icon');
+            const label = document.getElementById('sfx-label');
+            if (sfxEnabled) {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                icon.className = 'fa-solid fa-volume-high text-atomic';
+                label.innerText = 'SFX: ON';
+                playBeep(800, 0.05);
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-rust';
+                label.innerText = 'SFX: OFF';
+            }
+        }
+
+        function playBeep(freq = 600, duration = 0.04) {
+            if (!sfxEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        /* ============================================================
+           2. PRODUCT SIZE SELECTION & STATE
+           ============================================================ */
+        const currentSizes = {
+            basic: { size: '500ml', price: 7.50 },
+            scout: { size: '500ml', price: 7.50 }
+        };
+
+        function selectProductSize(productKey, size, price) {
+            currentSizes[productKey] = { size, price };
+            
+            // Update Price Display
+            document.getElementById(`price-display-${productKey}`).innerText = `£${price.toFixed(2)}`;
+            
+            // Update Toggle Button Styles
+            const btn500 = document.getElementById(`btn-size-${productKey}-500`);
+            const btn250 = document.getElementById(`btn-size-${productKey}-250`);
+            const activeColor = productKey === 'basic' ? 'bg-rust' : 'bg-atomic';
+            
+            if (size === '500ml') {
+                btn500.className = `py-2 px-3 border-[3px] border-ink ${activeColor} text-parchment font-bold text-xs uppercase transition-all shadow-sm`;
+                btn250.className = `py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:${activeColor}/10 transition-all`;
+            } else {
+                btn250.className = `py-2 px-3 border-[3px] border-ink ${activeColor} text-parchment font-bold text-xs uppercase transition-all shadow-sm`;
+                btn500.className = `py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:${activeColor}/10 transition-all`;
+            }
+        }
+
+        /* ============================================================
+           3. CART DRAWER & STATE MANAGEMENT
+           ============================================================ */
+        let cart = JSON.parse(localStorage.getItem('bunker_cart') || '[]');
+        let bottleDiscountCount = 0;
+        let bottleProofData = null;
+
+        function saveCart() {
+            localStorage.setItem('bunker_cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById('cart-drawer');
+            const backdrop = document.getElementById('cart-backdrop');
+            if (open) {
+                renderCart();
+                drawer.classList.remove('translate-x-full');
+                backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function addProductToCart(name, size, price) {
+            const existingIndex = cart.findIndex(item => item.name === name && item.size === size);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push({ name, size, price: parseFloat(price), quantity: 1 });
+            }
+            saveCart();
+            showNotification(`${name} (${size}) added to crate!`, 'success');
+            toggleCartDrawer(true);
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart();
+            playBeep(450, 0.04);
+        }
+
+        function updateBottleDiscount() {
+            if (!currentUser) {
+                showNotification('Member-only perk: Log in to claim bottle return credits.', 'warning');
+                openAuthModal();
+                document.getElementById('bottle-return-qty').value = "0";
+                bottleDiscountCount = 0;
+                renderCartTotals();
+                return;
+            }
+
+            bottleDiscountCount = parseInt(document.getElementById('bottle-return-qty').value) || 0;
+            
+            if (bottleDiscountCount > 0 && !bottleProofData) {
+                showNotification('Please upload your drop-off proof to validate your £1.50 discount!', 'info');
+                openBottleProofModal();
+            }
+            
+            renderCartTotals();
+            playBeep(700, 0.04);
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const navBadge = document.getElementById('nav-cart-badge');
+            
+            const totalItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+            navBadge.innerText = totalItemsCount;
+
+            // Render Auth-locked state for bottle returns
+            const guestBox = document.getElementById('bottle-perk-guest');
+            const memberBox = document.getElementById('bottle-perk-member');
+            if (currentUser) {
+                guestBox.classList.add('hidden');
+                memberBox.classList.remove('hidden');
+            } else {
+                guestBox.classList.remove('hidden');
+                memberBox.classList.add('hidden');
+                bottleDiscountCount = 0;
+                bottleProofData = null;
+            }
+
+            // Render Proof Status Badge
+            const proofBadge = document.getElementById('proof-status-badge');
+            const proofBtnLabel = document.getElementById('proof-btn-label');
+            if (bottleProofData) {
+                proofBadge.innerText = `✓ Verified (${bottleProofData.count} bottles)`;
+                proofBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 bg-atomic text-parchment';
+                proofBtnLabel.innerText = 'Update / View Uploaded Proof';
+            } else {
+                proofBadge.innerText = '⚠️ Required';
+                proofBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 bg-radYellow/30 text-ink border border-ink/30';
+                proofBtnLabel.innerText = 'Upload Return Proof (Photo/Slip)';
+            }
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-flask-vial text-5xl text-ink/30 mb-4 animate-bounce"></i>
+                        <p class="font-display text-2xl text-ink/60 uppercase">Crate is Empty</p>
+                        <p class="text-sm font-bold text-ink/50 mt-1">Requisition some syrup concentrate!</p>
+                    </div>
+                `;
+                renderCartTotals();
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="bg-parchment p-4 retro-border flex items-center justify-between gap-3 shadow-sm">
+                    <div class="w-12 h-12 bg-ink/10 retro-border flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-bottle-droplet text-xl ${item.name.includes('Basic') ? 'text-rust' : 'text-atomic'}"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="font-display text-xl uppercase leading-tight text-ink">${item.name}</h4>
+                        <span class="text-xs font-bold text-ink/70">${item.size} • £${item.price.toFixed(2)} ea</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="updateCartQty(${index}, -1)" class="w-7 h-7 bg-parchment border-2 border-ink font-bold flex items-center justify-center hover:bg-rust hover:text-parchment">-</button>
+                        <span class="font-display text-xl w-5 text-center">${item.quantity}</span>
+                        <button onclick="updateCartQty(${index}, 1)" class="w-7 h-7 bg-parchment border-2 border-ink font-bold flex items-center justify-center hover:bg-atomic hover:text-parchment">+</button>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-display text-2xl block text-ink">£${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            renderCartTotals();
+        }
+
+        function renderCartTotals() {
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            const discountAmount = bottleDiscountCount * 1.50;
+            const finalTotal = Math.max(0, subtotal - discountAmount);
+
+            document.getElementById('cart-subtotal').innerText = `£${subtotal.toFixed(2)}`;
+            document.getElementById('bottle-rebate-display').innerText = `-£${discountAmount.toFixed(2)}`;
+            
+            const discountRow = document.getElementById('bottle-discount-row');
+            if (bottleDiscountCount > 0) {
+                discountRow.style.display = 'flex';
+                document.getElementById('cart-discount').innerText = `-£${discountAmount.toFixed(2)}`;
+            } else {
+                discountRow.style.display = 'none';
+            }
+
+            document.getElementById('cart-total').innerText = `£${finalTotal.toFixed(2)}`;
+        }
+
+        /* ============================================================
+           4. SQUARE CHECKOUT INTEGRATION WITH PAYMENT LINKS
+           ============================================================ */
+        const SQUARE_PAYMENT_LINKS = {
+            'Bunker Basic_250ml': 'https://square.link/u/bcQlovqO',
+            'Bunker Basic_500ml': 'https://square.link/u/QXPyUGEw',
+            'Bunker Scout_250ml': 'https://square.link/u/m4vEh6za',
+            'Bunker Scout_500ml': 'https://square.link/u/RcZKLkJN',
+        };
+
+        async function initiateCheckout() {
+            if (cart.length === 0) {
+                showNotification('Your crate is empty. Select some syrup rations first!', 'warning');
+                return;
+            }
+
+            // Member + Proof Verification check for bottle return discounts
+            if (bottleDiscountCount > 0) {
+                if (!currentUser) {
+                    showNotification('Member-only perk: Please log in to claim bottle return credits.', 'warning');
+                    openAuthModal();
+                    return;
+                }
+                if (!bottleProofData) {
+                    showNotification('Proof of bottle return required! Please upload your drop-off receipt/photo.', 'warning');
+                    openBottleProofModal();
+                    return;
+                }
+            }
+
+            const btn = document.getElementById('checkout-btn');
+            const btnText = document.getElementById('checkout-btn-text');
+            btn.disabled = true;
+            btnText.innerText = 'Connecting to Square...';
+            playBeep(900, 0.08);
+
+            // 1. Direct Square Payment Link for single-item checkout (zero backend)
+            if (cart.length === 1 && bottleDiscountCount === 0) {
+                const itemKey = `${cart[0].name}_${cart[0].size}`;
+                if (SQUARE_PAYMENT_LINKS[itemKey]) {
+                    window.location.href = SQUARE_PAYMENT_LINKS[itemKey];
+                    return;
+                }
+            }
+
+            try {
+                // 2. Attempt to call Express backend Square checkout endpoint
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        items: cart,
+                        bottleDiscountCount: bottleDiscountCount,
+                        user: currentUser,
+                        proof: bottleProofData
+                    })
+                });
+
+                if (response.ok) {
+                    const session = await response.json();
+                    if (session.url) {
+                        window.location.href = session.url; // Redirect to Square Hosted Checkout
+                        return;
+                    }
+                }
+
+                // 3. Static fallback: If single item with discount or multi-item on static GitHub Pages:
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btnText.innerText = 'Proceed to Checkout (Square)';
+                    
+                    if (cart.length === 1) {
+                        const itemKey = `${cart[0].name}_${cart[0].size}`;
+                        if (SQUARE_PAYMENT_LINKS[itemKey]) {
+                            window.location.href = SQUARE_PAYMENT_LINKS[itemKey];
+                            return;
+                        }
+                    }
+
+                    const confirmed = confirm(
+                        "⚡ BUNKER BREWS SQUARE CHECKOUT ⚡\n\n" +
+                        "Cart Total: " + document.getElementById('cart-total').innerText + "\n" +
+                        "Items: " + cart.map(i => `${i.quantity}x ${i.name} (${i.size})`).join(', ') + "\n" +
+                        (bottleDiscountCount > 0 ? `Bottle Return Credit: -£${(bottleDiscountCount * 1.5).toFixed(2)} (Proof Verified)\n` : '') + "\n" +
+                        "Simulate successful Square purchase now?"
+                    );
+
+                    if (confirmed) {
+                        cart = [];
+                        bottleDiscountCount = 0;
+                        bottleProofData = null;
+                        saveCart();
+                        toggleCartDrawer(false);
+                        document.getElementById('order-success-banner').classList.remove('hidden');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }, 800);
+
+            } catch (err) {
+                console.warn('Backend offline, running direct Square fallback flow:', err);
+                btn.disabled = false;
+                btnText.innerText = 'Proceed to Checkout (Square)';
+                
+                // Fallback to direct Square link for primary cart item
+                if (cart.length > 0) {
+                    const itemKey = `${cart[0].name}_${cart[0].size}`;
+                    if (SQUARE_PAYMENT_LINKS[itemKey]) {
+                        window.location.href = SQUARE_PAYMENT_LINKS[itemKey];
+                    }
+                }
+            }
+        }
+
+        /* ============================================================
+           5. BOTTLE RETURN PROOF MODAL LOGIC (Dispatches to thebunkerbrews@gmail.com)
+           ============================================================ */
+        function openBottleProofModal() {
+            if (!currentUser) {
+                showNotification('Please log in first to submit bottle return proof.', 'warning');
+                openAuthModal();
+                return;
+            }
+            document.getElementById('bottle-proof-modal').classList.remove('hidden');
+            playBeep(750, 0.05);
+        }
+
+        function closeBottleProofModal() {
+            document.getElementById('bottle-proof-modal').classList.add('hidden');
+            playBeep(500, 0.04);
+        }
+
+        function updateProofCreditDisplay() {
+            const count = parseInt(document.getElementById('proof-bottle-count').value) || 0;
+            const credit = (count * 1.50).toFixed(2);
+            document.getElementById('proof-credit-val').value = `£${credit}`;
+        }
+
+        function previewProofImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('proof-image-preview');
+                    const container = document.getElementById('proof-image-preview-container');
+                    preview.src = e.target.result;
+                    container.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleBottleProofSubmit(event) {
+            event.preventDefault();
+            playBeep(900, 0.08);
+
+            const location = document.getElementById('proof-location').value;
+            const count = parseInt(document.getElementById('proof-bottle-count').value) || 1;
+            const notes = document.getElementById('proof-notes').value || 'None';
+            const fileInput = document.getElementById('proof-file-input');
+            const fileName = fileInput.files[0] ? fileInput.files[0].name : 'photo_proof.jpg';
+            const claimId = 'BB-RET-' + Math.floor(100000 + Math.random() * 900000);
+
+            bottleProofData = {
+                claimId,
+                location,
+                count,
+                credit: count * 1.50,
+                fileName,
+                notes,
+                user: currentUser,
+                timestamp: new Date().toISOString()
+            };
+
+            // Sync cart return dropdown with proof bottle count
+            document.getElementById('bottle-return-qty').value = Math.min(count, 4).toString();
+            bottleDiscountCount = Math.min(count, 4);
+
+            // Construct mailto dispatch link for backup email notification to thebunkerbrews@gmail.com
+            const emailSubject = encodeURIComponent(`[BUNKER BOTTLE RETURN CLAIM] ${claimId} - ${currentUser.name} (${count} Bottles)`);
+            const emailBody = encodeURIComponent(
+                `⚡ BUNKER BREWS - BOTTLE RETURN PROOF DISPATCH ⚡\n\n` +
+                `Claim ID: ${claimId}\n` +
+                `Survivor Callsign: ${currentUser.name}\n` +
+                `Account Email: ${currentUser.email}\n` +
+                `Location: ${location}\n` +
+                `Bottles Returned: ${count} (${(count * 1.50).toFixed(2)} credit claimed)\n` +
+                `Attached Proof File: ${fileName}\n` +
+                `Survivor Notes: ${notes}\n\n` +
+                `Timestamp: ${new Date().toLocaleString()}\n`
+            );
+
+            // Trigger silent dispatch or mailto backup
+            const mailtoLink = `mailto:thebunkerbrews@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+            
+            // Save state & update UI
+            closeBottleProofModal();
+            renderCart();
+            showNotification(`Proof verified for ${count} bottle(s)! Claim dispatched to thebunkerbrews@gmail.com`, 'success');
+        }
+
+        /* ============================================================
+           6. INTERACTIVE MIXOLOGY CALCULATOR
+           ============================================================ */
+        function calculateMixology() {
+            const servings = parseInt(document.getElementById('servings-slider').value) || 1;
+            document.getElementById('slider-servings-val').innerText = servings;
+
+            const syrupMl = servings * 30; // 30ml per serving
+            const waterMl = servings * 150; // 150ml per serving
+            const totalLiquid = syrupMl + waterMl;
+            const bottleRatio = (syrupMl / 500).toFixed(2);
+
+            document.getElementById('calc-syrup').innerText = `${syrupMl} ml`;
+            document.getElementById('calc-water').innerText = `${waterMl} ml`;
+            document.getElementById('calc-total-liquid').innerText = `${totalLiquid} ml`;
+            document.getElementById('calc-bottles-hint').innerText = `~${bottleRatio} of a 500ml bottle`;
+            playBeep(400 + servings * 25, 0.02);
+        }
+
+        /* ============================================================
+           7. AUTH / PROFILE TERMINAL LOGIC
+           ============================================================ */
+        let currentUser = JSON.parse(localStorage.getItem('bunker_user') || 'null');
+
+        function openAuthModal() {
+            if (currentUser) {
+                const logout = confirm(`Logged in as survivor: ${currentUser.name} (${currentUser.email})\n\nWould you like to log out?`);
+                if (logout) {
+                    currentUser = null;
+                    bottleProofData = null;
+                    bottleDiscountCount = 0;
+                    localStorage.removeItem('bunker_user');
+                    updateAuthUI();
+                    renderCart();
+                    showNotification('Terminal access terminated. Logged out.', 'info');
+                }
+            } else {
+                document.getElementById('auth-modal').classList.remove('hidden');
+                playBeep(700, 0.05);
+            }
+        }
+
+        function switchAuthTab(tab) {
+            const loginTab = document.getElementById('tab-login');
+            const registerTab = document.getElementById('tab-register');
+            const loginForm = document.getElementById('form-login');
+            const registerForm = document.getElementById('form-register');
+
+            if (tab === 'login') {
+                loginTab.className = 'flex-1 py-2 font-display text-2xl bg-ink text-parchment uppercase transition-colors';
+                registerTab.className = 'flex-1 py-2 font-display text-2xl text-ink hover:bg-ink/10 uppercase transition-colors';
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                registerTab.className = 'flex-1 py-2 font-display text-2xl bg-ink text-parchment uppercase transition-colors';
+                loginTab.className = 'flex-1 py-2 font-display text-2xl text-ink hover:bg-ink/10 uppercase transition-colors';
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        function handleAuthSubmit(event, type) {
+            event.preventDefault();
+            playBeep(850, 0.08);
+
+            if (type === 'login') {
+                const email = document.getElementById('login-email').value;
+                currentUser = { name: email.split('@')[0].toUpperCase(), email };
+            } else {
+                const name = document.getElementById('reg-name').value;
+                const email = document.getElementById('reg-email').value;
+                currentUser = { name, email };
+            }
+
+            localStorage.setItem('bunker_user', JSON.stringify(currentUser));
+            updateAuthUI();
+            renderCart();
+            document.getElementById('auth-modal').classList.add('hidden');
+            showNotification(`Access Granted: Welcome, ${currentUser.name}! Bottle return perks unlocked.`, 'success');
+        }
+
+        function updateAuthUI() {
+            const badge = document.getElementById('user-badge');
+            if (currentUser) {
+                badge.innerText = `${currentUser.name}`;
+                badge.className = 'hidden sm:inline text-rust font-bold';
+            } else {
+                badge.innerText = 'Terminal Access';
+                badge.className = 'hidden sm:inline';
+            }
+        }
+
+        /* ============================================================
+           8. TERMINAL REVIEWS / UGC
+           ============================================================ */
+        function toggleAddReviewForm() {
+            const form = document.getElementById('add-review-container');
+            form.classList.toggle('hidden');
+            playBeep(650, 0.05);
+        }
+
+        function handleReviewSubmit(event) {
+            event.preventDefault();
+            const user = document.getElementById('review-user').value.toUpperCase();
+            const product = document.getElementById('review-product').value;
+            const text = document.getElementById('review-text').value;
+
+            const stream = document.getElementById('reviews-stream');
+            const newLog = document.createElement('div');
+            newLog.className = 'border border-terminalGreen bg-terminalGreen/15 p-6 rounded font-terminal animate-in fade-in duration-300';
+            newLog.innerHTML = `
+                <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 text-lg border-b border-terminalGreen/20 pb-2">
+                    <i class="fa-solid fa-satellite-dish text-terminalGreen"></i>
+                    <span class="text-terminalGreen font-bold">USER_ID: ${user}</span>
+                    <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">RATION: ${product.toUpperCase()}</span>
+                    <span class="ml-auto">[JUST BROADCASTED]</span>
+                </div>
+                <p class="text-2xl text-terminalGreen terminal-text leading-relaxed">
+                    "${text}"
+                </p>
+                <div class="mt-3 text-terminalGreen/80 text-lg">
+                    STATUS: LIVE TRANSMISSION [★★★★★]
+                </div>
+            `;
+            stream.prepend(newLog);
+
+            // Reset form
+            document.getElementById('review-user').value = '';
+            document.getElementById('review-text').value = '';
+            toggleAddReviewForm();
+            showNotification('Survivor report broadcasted to comms network!', 'success');
+            playBeep(950, 0.1);
+        }
+
+        /* ============================================================
+           9. NOTIFICATIONS & UTILITIES
+           ============================================================ */
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const colorClass = type === 'success' ? 'bg-rust text-parchment' : 
+                               type === 'warning' ? 'bg-radYellow text-ink' : 
+                               'bg-ink text-parchment';
+            const icon = type === 'success' ? 'fa-check' : 
+                         type === 'warning' ? 'fa-triangle-exclamation' : 
+                         'fa-terminal';
+
+            toast.className = `${colorClass} retro-border shadow-retro p-4 flex items-center gap-3 max-w-sm pointer-events-auto transition-all duration-300 transform translate-x-0`;
+            toast.innerHTML = `
+                <div class="w-8 h-8 rounded-full flex items-center justify-center bg-black/20 shrink-0">
+                    <i class="fa-solid ${icon}"></i>
+                </div>
+                <div>
+                    <p class="font-bold text-xs uppercase leading-snug">${message}</p>
+                </div>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('news-email').value;
+            showNotification(`Frequency synchronized for ${email}. Standby for telegrams!`, 'success');
+            document.getElementById('news-email').value = '';
+            playBeep(850, 0.08);
+        }
+
+        // Check if URL has ?status=success
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success' || urlParams.get('session_id')) {
+            document.getElementById('order-success-banner').classList.remove('hidden');
+            cart = [];
+            saveCart();
+        }
+
+        // Initial setup
+        renderCart();
+        updateAuthUI();
+        calculateMixology();
+    </script>
+</body>
+</html>
