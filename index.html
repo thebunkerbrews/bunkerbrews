@@ -1544,10 +1544,13 @@
                         <span id="cb-payout-total" class="font-display text-4xl text-rust">£1.50</span>
                     </div>
 
-                    <!-- Payout Method -->
-                    <div>
-                        <label class="block uppercase mb-1 text-ink">Payout Destination Details (Bank or PayPal) <span class="text-rust">*</span></label>
-                        <input type="text" id="cb-payout-details" required placeholder="Enter PayPal Email OR UK Bank Sort Code & Account Number" class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                    <!-- Direct Square Partial Card Refund Notice -->
+                    <div class="p-3.5 bg-ink/5 retro-border border-2 flex items-center gap-3">
+                        <i class="fa-solid fa-credit-card text-atomic text-2xl shrink-0"></i>
+                        <div>
+                            <span class="text-xs uppercase font-bold text-ink block">Direct Square Partial Card Refund</span>
+                            <span class="text-[11px] text-ink/70 font-normal">No bank details needed! Your £1.50/bottle refund is processed directly back to your original payment card via Square using your matched order receipt.</span>
+                        </div>
                     </div>
 
                     <!-- File Uploads: 1. Proof of Return, 2. Online Proof of Purchase -->
@@ -2151,7 +2154,6 @@
             const email = document.getElementById('cb-email').value.trim();
             const location = document.getElementById('cb-location').value;
             const count = parseInt(document.getElementById('cb-bottle-count').value) || 1;
-            const payoutDetails = document.getElementById('cb-payout-details').value.trim();
             const notes = document.getElementById('cb-notes').value.trim() || 'None';
             const returnProofInput = document.getElementById('cb-return-proof');
             const purchaseProofInput = document.getElementById('cb-purchase-proof');
@@ -2171,7 +2173,7 @@
                 location,
                 count,
                 payoutAmount: `£${payoutAmount}`,
-                payoutDetails,
+                refundMethod: 'Square Partial Card Refund',
                 returnProofName,
                 purchaseProofName,
                 notes,
@@ -2188,7 +2190,7 @@
                         location: location,
                         count: count,
                         payout_amount: payoutAmount,
-                        payout_details: payoutDetails,
+                        payout_details: 'Square Partial Card Refund',
                         notes: notes,
                         created_at: new Date().toISOString()
                     }]);
@@ -2200,16 +2202,16 @@
                 localStorage.setItem('bunker_cashback_claims', JSON.stringify(localClaims));
 
                 // 3. Prepare email dispatch link to thebunkerbrews@gmail.com
-                const subject = encodeURIComponent(`[BUNKER BOTTLE CASHBACK CLAIM] ${claimId} - ${name} (${count} Bottles / £${payoutAmount})`);
+                const subject = encodeURIComponent(`[BUNKER BOTTLE RETURN REFUND] ${claimId} - ${name} (${count} Bottles / £${payoutAmount})`);
                 const body = encodeURIComponent(
-                    `⚡ BUNKER BREWS - BOTTLE RETURN CASHBACK CLAIM ⚡\n\n` +
+                    `⚡ BUNKER BREWS - BOTTLE RETURN SQUARE CARD REFUND CLAIM ⚡\n\n` +
                     `Claim ID: ${claimId}\n` +
                     `Survivor Callsign: ${name}\n` +
-                    `Email: ${email}\n` +
+                    `Customer Email (Match in Square): ${email}\n` +
                     `Drop-off Location: ${location}\n` +
                     `Bottles Returned: ${count}\n` +
-                    `Cashback Due: £${payoutAmount}\n` +
-                    `Payout Destination: ${payoutDetails}\n` +
+                    `Square Card Refund Due: £${payoutAmount}\n` +
+                    `Refund Action: Process partial card refund in Square Dashboard for £${payoutAmount}\n` +
                     `Return Proof File: ${returnProofName}\n` +
                     `Purchase Proof File: ${purchaseProofName}\n` +
                     `Survivor Notes: ${notes}\n\n` +
@@ -2219,13 +2221,14 @@
                 // Show on-screen confirmation banner
                 document.getElementById('cb-success-msg').innerHTML = `
                     Claim <strong>${claimId}</strong> for <strong>£${payoutAmount}</strong> (${count} bottles) recorded! Transmission dispatched to <strong>thebunkerbrews@gmail.com</strong>.<br><br>
+                    Refund will be credited directly to your original card via Square within <strong>10 working days</strong>.<br><br>
                     <a href="mailto:thebunkerbrews@gmail.com?subject=${subject}&body=${body}" class="inline-block bg-rust text-parchment px-4 py-1.5 retro-border text-xs uppercase font-bold hover:bg-rustDark mt-2">
                         <i class="fa-solid fa-envelope mr-1"></i> Send Backup Verification Email
                     </a>
                 `;
                 document.getElementById('cb-success-banner').classList.remove('hidden');
                 
-                showNotification(`🎉 Cashback claim ${claimId} logged! Payout: £${payoutAmount}`, 'success');
+                showNotification(`🎉 Bottle return claim ${claimId} logged! Card refund: £${payoutAmount}`, 'success');
                 playBeep(950, 0.15);
 
                 // Reset form fields
