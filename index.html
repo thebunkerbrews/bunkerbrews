@@ -118,16 +118,73 @@
             50% { transform: translateY(-12px) rotate(1deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
-        @keyframes flicker {
-            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
-            20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.4; }
+        /* Authentic 1950s Atomic Neon Sign Flicker */
+        .neon-flicker {
+            color: #FF3B2B;
+            text-shadow: 
+                0 0 4px #FFFFFF,
+                0 0 10px #FF5A3D,
+                0 0 24px #E83620,
+                0 0 45px #B83A2E,
+                0 0 75px #8F261C;
+            animation: neonSignPulse 5.5s infinite;
+            display: inline-block;
+            transition: all 0.1s ease;
+        }
+
+        @keyframes neonSignPulse {
+            0%, 17%, 21.5%, 23.5%, 52.5%, 55.5%, 72.5%, 74.5%, 100% {
+                color: #FF3B2B;
+                text-shadow: 
+                    0 0 4px #FFFFFF,
+                    0 0 10px #FF5A3D,
+                    0 0 24px #E83620,
+                    0 0 48px #B83A2E,
+                    0 0 80px #8F261C;
+                opacity: 1;
+            }
+            18%, 21% {
+                color: #4A1B16;
+                text-shadow: none;
+                opacity: 0.3;
+            }
+            19.5% {
+                color: #FF3B2B;
+                text-shadow: 0 0 6px #FF5A3D, 0 0 16px #E83620;
+                opacity: 0.85;
+            }
+            22.5% {
+                color: #38120E;
+                text-shadow: none;
+                opacity: 0.2;
+            }
+            53.5%, 55% {
+                color: #421612;
+                text-shadow: none;
+                opacity: 0.25;
+            }
+            54.2% {
+                color: #FF3B2B;
+                text-shadow: 0 0 8px #FF5A3D, 0 0 20px #E83620;
+                opacity: 0.9;
+            }
+            73.2% {
+                color: #38120E;
+                text-shadow: none;
+                opacity: 0.2;
+            }
+            73.8% {
+                color: #FF3B2B;
+                text-shadow: 0 0 12px #FF5A3D, 0 0 28px #E83620;
+                opacity: 0.95;
+            }
         }
 
         .spin-slow { animation: spin-slow 24s linear infinite; }
         .spin-reverse { animation: spin-slow 18s linear infinite reverse; }
         .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
         .float-anim { animation: float 6s ease-in-out infinite; }
-        .flicker-text { animation: flicker 7s infinite; }
+        .flicker-text { animation: neonSignPulse 5.5s infinite; }
 
         /* Terminal CRT Screen Effects */
         .scanline {
@@ -669,7 +726,7 @@
                 
                 <!-- Main Headings -->
                 <h1 class="font-display text-5xl xs:text-6xl sm:text-8xl lg:text-9xl text-ink leading-[0.95] tracking-wide mb-6 uppercase break-words">
-                    Homemade <span class="text-rust flicker-text">Craft Cola</span><br>Syrup Concentrate
+                    Homemade <span class="neon-flicker">Craft Cola</span><br>Syrup Concentrate
                 </h1>
                 
                 <p class="mt-4 text-base sm:text-2xl text-ink/85 font-bold max-w-2xl mx-auto mb-8 sm:mb-10 border-t-[3px] border-b-[3px] border-ink py-3 sm:py-4 leading-snug">
