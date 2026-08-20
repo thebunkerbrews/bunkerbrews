@@ -439,6 +439,85 @@
         </div>
     </div>
 
+    <!-- Legal & Outpost Info Modal -->
+    <div id="legal-modal" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-[105] hidden flex items-center justify-center p-4">
+        <div class="bg-parchment p-6 sm:p-8 retro-border shadow-[12px_12px_0_0_#B83A2E] w-full max-w-2xl max-h-[90vh] flex flex-col relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeLegalModal()" class="absolute top-4 right-4 text-ink hover:text-rust text-2xl transition-colors font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-4 shrink-0">
+                <h2 class="font-display text-4xl text-ink uppercase tracking-wide">Bunker Directives & Protocol</h2>
+                <p class="font-bold text-xs text-ink/70 uppercase">Official Wasteland Documentation & Guidelines</p>
+            </div>
+            
+            <!-- Legal Tabs -->
+            <div class="flex border-b-[3px] border-ink mb-4 shrink-0 overflow-x-auto text-xs sm:text-sm font-bold gap-1">
+                <button id="legal-tab-privacy" onclick="switchLegalTab('privacy')" class="py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0">Privacy Protocol</button>
+                <button id="legal-tab-terms" onclick="switchLegalTab('terms')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Terms of Survival</button>
+                <button id="legal-tab-contact" onclick="switchLegalTab('contact')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Outposts & Comms</button>
+            </div>
+
+            <!-- Scrollable Content Area -->
+            <div class="overflow-y-auto pr-2 space-y-4 text-xs sm:text-sm font-bold text-ink/85 leading-relaxed flex-grow">
+                <!-- Privacy Section -->
+                <div id="legal-sec-privacy" class="space-y-3">
+                    <h3 class="font-display text-2xl text-rust uppercase">1. UK GDPR & Data Protection</h3>
+                    <p>Bunker Brews operates in accordance with the UK Data Protection Act 2018 and UK GDPR. We collect only data strictly necessary to fulfill your syrup rations and validate bottle return perks.</p>
+                    
+                    <h4 class="font-display text-xl text-ink uppercase mt-2">2. Payment Security (Square)</h4>
+                    <p>All online debit/credit card and Apple Pay/Google Pay payments are encrypted and processed securely by <strong>Square Up (UK) Ltd</strong>. We never store raw credit card numbers on our servers.</p>
+                    
+                    <h4 class="font-display text-xl text-ink uppercase mt-2">3. Account & Local Storage</h4>
+                    <p>Survivor callsigns and local preferences are securely stored on your local browser. You may request account deletion or data exports at any time by emailing <strong>thebunkerbrews@gmail.com</strong>.</p>
+                </div>
+
+                <!-- Terms Section -->
+                <div id="legal-sec-terms" class="hidden space-y-3">
+                    <h3 class="font-display text-2xl text-rust uppercase">1. Product Usage & Storage</h3>
+                    <p>Our craft cola syrup concentrates are small-batch brewed with whole spices and natural botanical extracts. Syrups must be refrigerated after opening and mixed at the recommended 1:5 ratio (1 part syrup to 5 parts sparkling water).</p>
+                    
+                    <h4 class="font-display text-xl text-ink uppercase mt-2">2. Pricing & Dispatch</h4>
+                    <p>500ml bottles are £7.50; 250ml bottles are £5.50. Orders are dispatched via UK postal carriers or available for free local pickup in Sutton Coldfield.</p>
+
+                    <h4 class="font-display text-xl text-ink uppercase mt-2">3. Circular Bottle Return Terms</h4>
+                    <p>Return your empty, undamaged swing-top glass bottles to any registered outpost for £1.50 credit per bottle on future orders. Proof of drop-off is required via your account portal.</p>
+
+                    <h4 class="font-display text-xl text-ink uppercase mt-2">4. Refunds & Cancellations</h4>
+                    <p>Unopened bottles with unbroken security seals may be cancelled within 14 days of delivery. For items damaged in transit, contact <strong>thebunkerbrews@gmail.com</strong> with a photo for an immediate replacement.</p>
+                </div>
+
+                <!-- Contact & Outposts Section -->
+                <div id="legal-sec-contact" class="hidden space-y-4">
+                    <h3 class="font-display text-2xl text-atomic uppercase">Bunker Outposts & Contact Matrix</h3>
+                    
+                    <div class="p-4 bg-ink/5 retro-border border-2 space-y-2">
+                        <span class="font-display text-xl text-rust uppercase block">Bunker Command HQ (Post & Bottle Drop-off)</span>
+                        <p class="text-xs">173 Reddicap Heath Road<br>Sutton Coldfield, West Midlands<br>B75 7EN, United Kingdom</p>
+                        <span class="inline-block px-2 py-0.5 bg-rust text-parchment text-[10px] uppercase font-bold">Mail Orders, Post & Returns Accepted</span>
+                    </div>
+
+                    <div class="p-4 bg-ink/5 retro-border border-2 space-y-2">
+                        <span class="font-display text-xl text-atomic uppercase block">Leviathan Brewery (Partner Taproom Outpost)</span>
+                        <p class="text-xs">Unit 4 & 5, 17 Reddicap Trading Estate<br>Sutton Coldfield<br>B75 7BU, United Kingdom</p>
+                        <span class="inline-block px-2 py-0.5 bg-atomic text-parchment text-[10px] uppercase font-bold">Local Pickup & Bottle Recycling Drop-off</span>
+                    </div>
+
+                    <div class="p-4 bg-radYellow/15 retro-border border-2">
+                        <span class="font-display text-xl text-ink uppercase block">Official Electronic Frequency</span>
+                        <p class="text-xs mt-1">E-Mail Transmission: <a href="mailto:thebunkerbrews@gmail.com" class="text-rust underline font-bold">thebunkerbrews@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="mt-4 pt-3 border-t-2 border-ink flex justify-between items-center shrink-0 text-xs font-bold text-ink/70">
+                <span>© 2077 Bunker Brews Legal Division</span>
+                <button type="button" onclick="closeLegalModal()" class="bg-ink text-parchment px-4 py-1.5 font-bold uppercase hover:bg-rust transition-colors">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation Header -->
     <header class="fixed w-full z-50 bg-parchment border-b-[3px] border-ink transition-all duration-300 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1099,9 +1178,9 @@
             <div class="border-t-[3px] border-ink pt-8 flex flex-col md:flex-row justify-between items-center gap-4 font-bold text-xs uppercase text-ink/75">
                 <p>&copy; 2077 BUNKER BREWS INDUSTRIES. ALL RIGHTS RESERVED.</p>
                 <div class="flex gap-6">
-                    <a href="javascript:void(0)" onclick="alert('Privacy Policy: All survivor data encrypted in bunker sub-level.')" class="hover:text-rust">Privacy Protocol</a>
-                    <a href="javascript:void(0)" onclick="alert('Terms of Survival: Drink responsibly and protect your settlement.')" class="hover:text-rust">Terms of Survival</a>
-                    <a href="javascript:void(0)" onclick="alert('Square Integration: Live payments and Apple Pay ready via Square Checkout.')" class="hover:text-atomic">Square Secure</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('privacy')" class="hover:text-rust">Privacy Protocol</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('terms')" class="hover:text-rust">Terms of Survival</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('contact')" class="hover:text-atomic">Outposts & Comms</a>
                 </div>
             </div>
         </div>
@@ -1705,6 +1784,35 @@
             showNotification(`Frequency synchronized for ${email}. Standby for telegrams!`, 'success');
             document.getElementById('news-email').value = '';
             playBeep(850, 0.08);
+        }
+
+        /* ============================================================
+           10. LEGAL & OUTPOST MODAL LOGIC
+           ============================================================ */
+        function openLegalModal(tab = 'privacy') {
+            document.getElementById('legal-modal').classList.remove('hidden');
+            switchLegalTab(tab);
+            playBeep(700, 0.05);
+        }
+
+        function closeLegalModal() {
+            document.getElementById('legal-modal').classList.add('hidden');
+            playBeep(500, 0.04);
+        }
+
+        function switchLegalTab(tab) {
+            const tabs = ['privacy', 'terms', 'contact'];
+            tabs.forEach(t => {
+                const tabBtn = document.getElementById(`legal-tab-${t}`);
+                const sec = document.getElementById(`legal-sec-${t}`);
+                if (t === tab) {
+                    tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0';
+                    sec.classList.remove('hidden');
+                } else {
+                    tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0';
+                    sec.classList.add('hidden');
+                }
+            });
         }
 
         // Check if URL has ?status=success
