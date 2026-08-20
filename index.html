@@ -200,7 +200,7 @@
 <body class="font-body antialiased relative overflow-x-hidden selection:bg-atomic selection:text-white text-ink">
 
     <!-- Audio feedback script toggle (Pip-Boy clicks!) -->
-    <div class="fixed bottom-4 left-4 z-40">
+    <div class="fixed bottom-4 left-4 z-40 hidden sm:block">
         <button id="sfx-toggle" onclick="toggleAudioSFX()" class="bg-parchment px-3 py-1.5 retro-border shadow-retro-sm text-xs font-bold uppercase hover:bg-parchmentDark flex items-center gap-2">
             <i id="sfx-icon" class="fa-solid fa-volume-xmark text-rust"></i>
             <span id="sfx-label">SFX: OFF</span>
@@ -543,30 +543,30 @@
 
     <!-- Navigation Header -->
     <header class="fixed w-full z-50 bg-parchment border-b-[3px] border-ink transition-all duration-300 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+        <div class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
                 <!-- Logo & Brand -->
-                <a href="#" onclick="playBeep()" class="flex-shrink-0 flex items-center gap-3 group">
-                    <div class="relative w-12 h-12 flex items-center justify-center">
+                <a href="#" onclick="playBeep()" class="flex-shrink flex items-center gap-2 sm:gap-3 group min-w-0">
+                    <div class="relative w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
                         <svg class="absolute w-full h-full text-atomic spin-slow opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
                             <ellipse cx="50" cy="50" rx="45" ry="15" transform="rotate(30 50 50)" />
                             <ellipse cx="50" cy="50" rx="45" ry="15" transform="rotate(90 50 50)" />
                             <ellipse cx="50" cy="50" rx="45" ry="15" transform="rotate(150 50 50)" />
                         </svg>
-                        <svg class="w-6 h-10 text-rust z-10" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="8">
+                        <svg class="w-5 h-8 sm:w-6 sm:h-10 text-rust z-10" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="8">
                             <path d="M35 10 L65 10 L65 30 L80 50 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 50 L35 30 Z" fill="#F9F3E6"/>
                             <text x="35" y="100" font-family="'Bebas Neue', sans-serif" font-size="60" fill="#B83A2E" stroke="none">B</text>
                             <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="6"/>
                         </svg>
                     </div>
-                    <div>
-                        <span class="font-display text-4xl text-rust tracking-wider mt-1 drop-shadow-[2px_2px_0px_rgba(45,45,45,1)] block leading-none">BUNKER BREWS</span>
-                        <span class="text-[10px] font-bold text-ink/70 tracking-widest uppercase hidden sm:block">Artisan Craft Cola Concentrate</span>
+                    <div class="truncate">
+                        <span class="font-display text-2xl xs:text-3xl sm:text-4xl text-rust tracking-wider mt-0.5 drop-shadow-[1.5px_1.5px_0px_rgba(45,45,45,1)] block leading-none truncate">BUNKER BREWS</span>
+                        <span class="text-[9px] sm:text-[10px] font-bold text-ink/70 tracking-widest uppercase hidden md:block">Artisan Craft Cola Concentrate</span>
                     </div>
                 </a>
 
                 <!-- Navigation Links & Actions -->
-                <div class="flex items-center space-x-2 sm:space-x-4 font-bold">
+                <div class="flex items-center space-x-1.5 sm:space-x-4 font-bold shrink-0">
                     <nav class="hidden lg:flex space-x-6 uppercase text-sm">
                         <a href="#rations" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Rations</a>
                         <a href="#recipes" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Recipe Book</a>
@@ -576,29 +576,32 @@
                     </nav>
                     
                     <!-- Auth Button -->
-                    <button id="nav-auth-btn" onclick="openAuthModal()" class="text-ink hover:text-rust transition-all uppercase text-xs sm:text-sm flex items-center gap-1.5 border-2 border-transparent hover:border-ink px-2 py-1.5">
-                        <i class="fa-solid fa-user-circle text-base sm:text-lg text-rust"></i>
-                        <span id="user-badge" class="hidden sm:inline">Terminal Access</span>
+                    <button id="nav-auth-btn" onclick="openAuthModal()" title="Terminal Account" class="text-ink hover:text-rust transition-all uppercase text-xs sm:text-sm flex items-center gap-1.5 border-2 border-transparent hover:border-ink p-1.5 sm:px-2.5 sm:py-1.5">
+                        <i class="fa-solid fa-user-circle text-lg sm:text-xl text-rust"></i>
+                        <span id="user-badge" class="hidden md:inline">Terminal Access</span>
                     </button>
                     
                     <!-- Cart Trigger Button -->
-                    <button onclick="toggleCartDrawer(true); playBeep();" class="bg-atomic text-parchment px-3 sm:px-4 py-2 sm:py-2.5 retro-border shadow-retro-sm retro-button font-bold uppercase hover:bg-atomicDark flex items-center gap-1.5 sm:gap-2 relative">
+                    <button onclick="toggleCartDrawer(true); playBeep();" class="bg-atomic text-parchment px-2.5 sm:px-4 py-1.5 sm:py-2.5 retro-border shadow-retro-sm retro-button font-bold uppercase hover:bg-atomicDark flex items-center gap-1.5 sm:gap-2 relative">
                         <i class="fa-solid fa-cart-shopping text-sm sm:text-base"></i>
                         <span class="hidden xs:inline text-xs sm:text-sm">Crate</span>
                         <span id="nav-cart-badge" class="bg-rust text-parchment text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-ink">0</span>
                     </button>
 
                     <!-- Mobile Hamburger Toggle -->
-                    <button id="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" class="lg:hidden w-10 h-10 retro-border flex items-center justify-center bg-parchment text-ink hover:bg-rust hover:text-parchment transition-colors">
-                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-lg"></i>
+                    <button id="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 retro-border flex items-center justify-center bg-parchment text-ink hover:bg-rust hover:text-parchment transition-colors">
+                        <i id="mobile-menu-icon" class="fa-solid fa-bars text-base sm:text-lg"></i>
                     </button>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Menu Backdrop -->
+    <div id="mobile-menu-backdrop" onclick="toggleMobileNav()" class="fixed inset-0 bg-ink/60 z-30 hidden backdrop-blur-xs transition-opacity"></div>
+
     <!-- Mobile Dropdown Navigation -->
-    <div id="mobile-menu" class="fixed top-20 left-0 w-full bg-parchment border-b-[4px] border-ink z-40 hidden shadow-2xl p-5 space-y-2.5 font-bold uppercase text-xs sm:text-sm">
+    <div id="mobile-menu" class="fixed top-16 sm:top-20 left-0 w-full bg-parchment border-b-[4px] border-ink z-40 hidden shadow-2xl p-4 sm:p-5 space-y-2 font-bold uppercase text-xs sm:text-sm">
         <a href="#rations" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
             <span><i class="fa-solid fa-bottle-droplet text-rust mr-2.5"></i> Supply Requisition (Shop)</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
@@ -619,9 +622,14 @@
             <span><i class="fa-solid fa-circle-info text-rust mr-2.5"></i> Allergen Advice</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
-        <a href="javascript:void(0)" onclick="openAuthModal(); toggleMobileNav();" class="flex items-center justify-center py-3 px-3.5 bg-ink text-parchment hover:bg-rust transition-colors text-center mt-2">
-            <i class="fa-solid fa-user-shield text-radYellow mr-2"></i> Terminal Profile / Account
-        </a>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+            <button onclick="toggleAudioSFX();" class="py-2.5 px-3 bg-ink/10 border-2 border-ink text-ink font-bold uppercase text-xs flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-volume-high text-rust"></i> <span id="mobile-sfx-label">SFX TOGGLE</span>
+            </button>
+            <a href="javascript:void(0)" onclick="openAuthModal(); toggleMobileNav();" class="py-2.5 px-3 bg-ink text-parchment hover:bg-rust transition-colors text-center text-xs flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-user-shield text-radYellow"></i> Account
+            </a>
+        </div>
     </div>
 
     <!-- Order Status Notification Banner (if URL has ?status=success) -->
@@ -1740,13 +1748,15 @@
            ============================================================ */
         function toggleMobileNav() {
             const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
             const icon = document.getElementById('mobile-menu-icon');
             if (menu) {
                 menu.classList.toggle('hidden');
+                if (backdrop) backdrop.classList.toggle('hidden');
                 if (menu.classList.contains('hidden')) {
-                    icon.className = 'fa-solid fa-bars text-lg';
+                    icon.className = 'fa-solid fa-bars text-base sm:text-lg';
                 } else {
-                    icon.className = 'fa-solid fa-xmark text-lg';
+                    icon.className = 'fa-solid fa-xmark text-base sm:text-lg';
                 }
                 playBeep(600, 0.04);
             }
