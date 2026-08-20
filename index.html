@@ -19,8 +19,8 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <!-- Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
         tailwind.config = {
@@ -1633,14 +1633,57 @@
         }
 
         /* ============================================================
-           7. AUTH / PROFILE TERMINAL LOGIC
+           7. SUPABASE CLOUD AUTH & TERMINAL PROFILE LOGIC
            ============================================================ */
+        const SUPABASE_URL = 'https://floqgjqcscckszjvbger.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZsb3FnanFjc2Nja3N6anZiZ2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNDYwMjgsImV4cCI6MjEwMjgyMjAyOH0.iwhF_0qDKtk69B-jusmqpgLquleGjE835ssn--V6gEk';
+        
+        let supabaseClient = null;
+        if (window.supabase) {
+            try {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            } catch (e) {
+                console.warn('Supabase initialization warning:', e);
+            }
+        }
+
         let currentUser = JSON.parse(localStorage.getItem('bunker_user') || 'null');
 
-        function openAuthModal() {
+        // Check active Supabase Cloud Session on load
+        if (supabaseClient) {
+            supabaseClient.auth.getSession().then(({ data: { session } }) => {
+                if (session && session.user) {
+                    const callsign = session.user.user_metadata?.callsign || session.user.email.split('@')[0].toUpperCase();
+                    currentUser = { id: session.user.id, name: callsign, email: session.user.email };
+                    localStorage.setItem('bunker_user', JSON.stringify(currentUser));
+                    updateAuthUI();
+                    renderCart();
+                }
+            });
+
+            supabaseClient.auth.onAuthStateChange((event, session) => {
+                if (session && session.user) {
+                    const callsign = session.user.user_metadata?.callsign || session.user.email.split('@')[0].toUpperCase();
+                    currentUser = { id: session.user.id, name: callsign, email: session.user.email };
+                    localStorage.setItem('bunker_user', JSON.stringify(currentUser));
+                } else if (event === 'SIGNED_OUT') {
+                    currentUser = null;
+                    bottleProofData = null;
+                    bottleDiscountCount = 0;
+                    localStorage.removeItem('bunker_user');
+                }
+                updateAuthUI();
+                renderCart();
+            });
+        }
+
+        async function openAuthModal() {
             if (currentUser) {
-                const logout = confirm(`Logged in as survivor: ${currentUser.name} (${currentUser.email})\n\nWould you like to log out?`);
+                const logout = confirm(`Logged in as survivor: ${currentUser.name} (${currentUser.email})\n\nWould you like to log out from Bunker Terminal?`);
                 if (logout) {
+                    if (supabaseClient) {
+                        await supabaseClient.auth.signOut();
+                    }
                     currentUser = null;
                     bottleProofData = null;
                     bottleDiscountCount = 0;
@@ -1674,24 +1717,74 @@
             }
         }
 
-        function handleAuthSubmit(event, type) {
+        async function handleAuthSubmit(event, type) {
             event.preventDefault();
             playBeep(850, 0.08);
 
-            if (type === 'login') {
-                const email = document.getElementById('login-email').value;
-                currentUser = { name: email.split('@')[0].toUpperCase(), email };
-            } else {
-                const name = document.getElementById('reg-name').value;
-                const email = document.getElementById('reg-email').value;
-                currentUser = { name, email };
-            }
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'AUTHENTICATING...';
 
-            localStorage.setItem('bunker_user', JSON.stringify(currentUser));
-            updateAuthUI();
-            renderCart();
-            document.getElementById('auth-modal').classList.add('hidden');
-            showNotification(`Access Granted: Welcome, ${currentUser.name}! Bottle return perks unlocked.`, 'success');
+            try {
+                if (type === 'login') {
+                    const email = document.getElementById('login-email').value.trim();
+                    const password = document.getElementById('login-pass').value;
+
+                    if (supabaseClient) {
+                        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                        if (error) {
+                            showNotification(`Access Denied: ${error.message}`, 'warning');
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = originalBtnText;
+                            return;
+                        }
+                        const callsign = data.user?.user_metadata?.callsign || email.split('@')[0].toUpperCase();
+                        currentUser = { id: data.user.id, name: callsign, email };
+                    } else {
+                        currentUser = { name: email.split('@')[0].toUpperCase(), email };
+                    }
+
+                    showNotification(`Access Granted: Welcome back, ${currentUser.name}!`, 'success');
+                } else {
+                    const name = document.getElementById('reg-name').value.trim();
+                    const email = document.getElementById('reg-email').value.trim();
+                    const password = document.getElementById('reg-pass').value;
+
+                    if (supabaseClient) {
+                        const { data, error } = await supabaseClient.auth.signUp({
+                            email,
+                            password,
+                            options: {
+                                data: { callsign: name }
+                            }
+                        });
+                        if (error) {
+                            showNotification(`Vault Error: ${error.message}`, 'warning');
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = originalBtnText;
+                            return;
+                        }
+                        currentUser = { id: data.user?.id, name, email };
+                    } else {
+                        currentUser = { name, email };
+                    }
+
+                    showNotification(`Profile Registered in Cloud Vault! Welcome, ${name}!`, 'success');
+                }
+
+                localStorage.setItem('bunker_user', JSON.stringify(currentUser));
+                updateAuthUI();
+                renderCart();
+                document.getElementById('auth-modal').classList.add('hidden');
+
+            } catch (err) {
+                console.error('Auth error:', err);
+                showNotification('Authentication error. Please check your credentials.', 'warning');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalBtnText;
+            }
         }
 
         function updateAuthUI() {
