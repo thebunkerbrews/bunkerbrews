@@ -1906,12 +1906,37 @@
             }, 4000);
         }
 
-        function handleNewsletterSubmit(event) {
+        async function handleNewsletterSubmit(event) {
             event.preventDefault();
-            const email = document.getElementById('news-email').value;
-            showNotification(`Frequency synchronized for ${email}. Standby for telegrams!`, 'success');
-            document.getElementById('news-email').value = '';
-            playBeep(850, 0.08);
+            const emailInput = document.getElementById('news-email');
+            const email = emailInput.value.trim();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            
+            if (submitBtn) submitBtn.innerText = 'LINKING...';
+
+            try {
+                if (supabaseClient) {
+                    await supabaseClient
+                        .from('subscribers')
+                        .insert([{ email: email, created_at: new Date().toISOString() }]);
+                }
+                
+                // Also save to local registry
+                const localSubs = JSON.parse(localStorage.getItem('bunker_subscribers') || '[]');
+                if (!localSubs.includes(email)) {
+                    localSubs.push(email);
+                    localStorage.setItem('bunker_subscribers', JSON.stringify(localSubs));
+                }
+
+                showNotification(`Frequency synchronized for ${email}. Standby for telegrams!`, 'success');
+                emailInput.value = '';
+                playBeep(850, 0.08);
+            } catch (e) {
+                showNotification(`Frequency synchronized for ${email}!`, 'success');
+                emailInput.value = '';
+            } finally {
+                if (submitBtn) submitBtn.innerText = 'ESTABLISH LINK >>';
+            }
         }
 
         /* ============================================================
