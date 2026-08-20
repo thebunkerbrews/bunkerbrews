@@ -453,15 +453,38 @@
             
             <!-- Legal Tabs -->
             <div class="flex border-b-[3px] border-ink mb-4 shrink-0 overflow-x-auto text-xs sm:text-sm font-bold gap-1">
-                <button id="legal-tab-privacy" onclick="switchLegalTab('privacy')" class="py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0">Privacy Protocol</button>
+                <button id="legal-tab-allergens" onclick="switchLegalTab('allergens')" class="py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0">Allergens & Dietary</button>
+                <button id="legal-tab-privacy" onclick="switchLegalTab('privacy')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Privacy Protocol</button>
                 <button id="legal-tab-terms" onclick="switchLegalTab('terms')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Terms of Survival</button>
                 <button id="legal-tab-contact" onclick="switchLegalTab('contact')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Outposts & Comms</button>
             </div>
 
             <!-- Scrollable Content Area -->
             <div class="overflow-y-auto pr-2 space-y-4 text-xs sm:text-sm font-bold text-ink/85 leading-relaxed flex-grow">
+                <!-- Allergens Section -->
+                <div id="legal-sec-allergens" class="space-y-3">
+                    <h3 class="font-display text-2xl text-rust uppercase">Allergen Advice & Dietary Information</h3>
+                    <p>All Bunker Brews craft syrups are produced in small artisanal batches with natural culinary botanicals, citrus extracts, and pure sugars.</p>
+                    
+                    <div class="p-3.5 bg-ink/5 retro-border border-2 space-y-2">
+                        <span class="font-display text-xl text-ink uppercase block">Dietary Compatibility:</span>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-ink/80">
+                            <li><strong>100% Vegan & Vegetarian</strong>: No animal derivatives or bone char.</li>
+                            <li><strong>Gluten-Free</strong>: Formulated without cereals containing gluten.</li>
+                            <li><strong>Naturally Caffeine-Free</strong>: Enjoy anytime without vault sleep disruption.</li>
+                            <li><strong>No Artificial Preservatives or High-Fructose Corn Syrup</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-3.5 bg-rust/10 retro-border border-2 space-y-2">
+                        <span class="font-display text-xl text-rust uppercase block">Natural Botanical Ingredients:</span>
+                        <p class="text-xs">Contains pure cane sugar, dark brown sugar, demerara sugar, pure molasses, fresh orange & lemon citrus juice and zest, ground cinnamon, nutmeg, ground coriander, star anise, and pure vanilla extract.</p>
+                        <p class="text-[11px] text-ink/70 mt-1 italic">Free from the 14 major UK/EU allergens (Celery, Cereals containing gluten, Crustaceans, Eggs, Fish, Lupin, Milk, Molluscs, Mustard, Tree Nuts, Peanuts, Sesame, Soya, Sulphur dioxide/Sulphites).</p>
+                    </div>
+                </div>
+
                 <!-- Privacy Section -->
-                <div id="legal-sec-privacy" class="space-y-3">
+                <div id="legal-sec-privacy" class="hidden space-y-3">
                     <h3 class="font-display text-2xl text-rust uppercase">1. UK GDPR & Data Protection</h3>
                     <p>Bunker Brews operates in accordance with the UK Data Protection Act 2018 and UK GDPR. We collect only data strictly necessary to fulfill your syrup rations and validate bottle return perks.</p>
                     
@@ -708,24 +731,29 @@
                     </div>
                     
                     <p class="text-sm font-bold text-ink/80 mb-4 border-b-2 border-ink/15 pb-3">
-                        A rich, spiced citrus cola syrup that delivers comforting, warm "Christmasy" aromatics with campfire warmth.
+                        A rich, comforting spiced citrus craft cola syrup concentrate delivering festive campfire warmth and bright citrus aromatics.
                     </p>
 
                     <!-- Tasting & Mix Stats -->
-                    <div class="space-y-2.5 mb-6 flex-grow text-xs font-bold">
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold">
                         <div class="flex items-start gap-2">
                             <i class="fa-solid fa-holly-berry text-rust mt-0.5"></i>
                             <div>
-                                <span class="text-ink/60 uppercase">Flavor Profile:</span>
-                                <span class="text-ink">Sweet orange zest, cassia cinnamon, cracked nutmeg, vanilla.</span>
+                                <span class="text-ink/60 uppercase">Tasting Profile:</span>
+                                <span class="text-ink">Fresh hand-zested orange & lemon, warm ground cinnamon, cracked nutmeg, coriander, star anise & pure vanilla.</span>
                             </div>
                         </div>
                         <div class="flex items-start gap-2">
                             <i class="fa-solid fa-flask text-atomic mt-0.5"></i>
                             <div>
                                 <span class="text-ink/60 uppercase">Recommended Ratio:</span>
-                                <span class="text-ink">1 part syrup to 5 parts sparkling water.</span>
+                                <span class="text-ink">1 part syrup to 5 parts sparkling water (or to taste).</span>
                             </div>
+                        </div>
+                        <!-- Allergen Advice Badge -->
+                        <div class="p-2 bg-ink/5 border border-ink/20 mt-2">
+                            <span class="text-[10px] text-rust uppercase font-bold block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-[11px] text-ink/75 font-normal block leading-tight">Gluten-Free • 100% Vegan • Caffeine-Free • Free from all 14 major allergens. Contains natural citrus & whole spices.</span>
                         </div>
                     </div>
 
@@ -786,24 +814,29 @@
                     </div>
                     
                     <p class="text-sm font-bold text-ink/80 mb-4 border-b-2 border-ink/15 pb-3">
-                        A crisp, exhilarating citrus-forward craft cola concentrate infused with wasteland botanicals and invigorating aromatics.
+                        A deep, complex caramelized craft cola syrup concentrate infused with pure molasses, dried Seville orange peel, lemon, and whole spices.
                     </p>
 
                     <!-- Tasting & Mix Stats -->
-                    <div class="space-y-2.5 mb-6 flex-grow text-xs font-bold">
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold">
                         <div class="flex items-start gap-2">
                             <i class="fa-solid fa-lemon text-atomic mt-0.5"></i>
                             <div>
-                                <span class="text-ink/60 uppercase">Flavor Profile:</span>
-                                <span class="text-ink">Crisp lime zest, crushed coriander seed, aromatic botanicals, citrus blossom hint.</span>
+                                <span class="text-ink/60 uppercase">Tasting Profile:</span>
+                                <span class="text-ink">Caramelized demerara & molasses depth, Seville orange peel, lemon botanicals, cinnamon stick, coriander & star anise.</span>
                             </div>
                         </div>
                         <div class="flex items-start gap-2">
                             <i class="fa-solid fa-flask text-rust mt-0.5"></i>
                             <div>
                                 <span class="text-ink/60 uppercase">Recommended Ratio:</span>
-                                <span class="text-ink">1 part syrup to 5 parts sparkling water.</span>
+                                <span class="text-ink">1 part syrup to 5 parts sparkling water (or to taste).</span>
                             </div>
+                        </div>
+                        <!-- Allergen Advice Badge -->
+                        <div class="p-2 bg-ink/5 border border-ink/20 mt-2">
+                            <span class="text-[10px] text-atomic uppercase font-bold block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-[11px] text-ink/75 font-normal block leading-tight">Gluten-Free • 100% Vegan • Caffeine-Free • Free from all 14 major allergens. Contains natural citrus & whole spices.</span>
                         </div>
                     </div>
 
@@ -1178,7 +1211,8 @@
             <!-- Footer Bottom Credits -->
             <div class="border-t-[3px] border-ink pt-8 flex flex-col md:flex-row justify-between items-center gap-4 font-bold text-xs uppercase text-ink/75">
                 <p>&copy; 2026 BUNKER BREWS. ALL RIGHTS RESERVED.</p>
-                <div class="flex gap-6">
+                <div class="flex flex-wrap gap-4 sm:gap-6">
+                    <a href="javascript:void(0)" onclick="openLegalModal('allergens')" class="hover:text-radYellow font-bold"><i class="fa-solid fa-circle-info mr-1"></i>Allergen Advice</a>
                     <a href="javascript:void(0)" onclick="openLegalModal('privacy')" class="hover:text-rust">Privacy Protocol</a>
                     <a href="javascript:void(0)" onclick="openLegalModal('terms')" class="hover:text-rust">Terms of Survival</a>
                     <a href="javascript:void(0)" onclick="openLegalModal('contact')" class="hover:text-atomic">Outposts & Comms</a>
@@ -1883,7 +1917,7 @@
         /* ============================================================
            10. LEGAL & OUTPOST MODAL LOGIC
            ============================================================ */
-        function openLegalModal(tab = 'privacy') {
+        function openLegalModal(tab = 'allergens') {
             document.getElementById('legal-modal').classList.remove('hidden');
             switchLegalTab(tab);
             playBeep(700, 0.05);
@@ -1895,16 +1929,18 @@
         }
 
         function switchLegalTab(tab) {
-            const tabs = ['privacy', 'terms', 'contact'];
+            const tabs = ['allergens', 'privacy', 'terms', 'contact'];
             tabs.forEach(t => {
                 const tabBtn = document.getElementById(`legal-tab-${t}`);
                 const sec = document.getElementById(`legal-sec-${t}`);
-                if (t === tab) {
-                    tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0';
-                    sec.classList.remove('hidden');
-                } else {
-                    tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0';
-                    sec.classList.add('hidden');
+                if (tabBtn && sec) {
+                    if (t === tab) {
+                        tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0';
+                        sec.classList.remove('hidden');
+                    } else {
+                        tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0';
+                        sec.classList.add('hidden');
+                    }
                 }
             });
         }
