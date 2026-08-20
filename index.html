@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bunker Brews | Artisan Craft Cola Syrup Concentrate</title>
     
+    <!-- Primary SEO & Social Meta Tags -->
+    <meta name="description" content="Small-batch artisan craft cola syrup concentrate handcrafted in Birmingham. 100% natural spices, citrus essential oils, pure cane sugar, and reusable swing-top glass bottles.">
+    <meta name="keywords" content="craft cola, artisan cola syrup, bunker brews, birmingham craft cola, sodastream syrup, sustainable soda">
+    <meta name="author" content="Elijah and Caitlin, Bunker Brews">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bunkerbrews.co.uk/">
+    <meta property="og:title" content="Bunker Brews | Artisan Craft Cola Concentrate">
+    <meta property="og:description" content="Homemade craft concentrate brewed with love in Birmingham. Warm campfire spices united with crisp, refreshing citrus. £1.50 bottle deposit return.">
+    <meta property="og:image" content="https://bunkerbrews.co.uk/favicon.svg">
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://bunkerbrews.co.uk/">
+    <meta property="twitter:title" content="Bunker Brews | Artisan Craft Cola Concentrate">
+    <meta property="twitter:description" content="Small-batch craft cola syrup concentrate. No corn syrup, no artificial preservatives. Requisition your rations today!">
+    <meta property="twitter:image" content="https://bunkerbrews.co.uk/favicon.svg">
+
     <!-- Favicon & Mobile Web App Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" type="image/svg+xml" href="favicon.svg">
@@ -604,6 +623,63 @@
         </div>
     </div>
 
+    <!-- RobCo Vault Terminal Hacking Mini-Game Modal (Easter Egg) -->
+    <div id="terminal-hack-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[115] hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-terminalBg border-4 border-terminalGreen shadow-[0_0_40px_rgba(74,246,38,0.4)] w-full max-w-3xl flex flex-col relative font-terminal text-terminalGreen scanline p-4 sm:p-8 animate-in zoom-in duration-200 overflow-hidden">
+            
+            <!-- Terminal Header -->
+            <div class="flex justify-between items-start border-b-2 border-terminalGreen/50 pb-3 mb-4 shrink-0">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-terminalGreen terminal-text">ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL</h2>
+                    <p class="text-base sm:text-lg text-terminalGreen/80">> PASSWORD REQUIRED // REWARD: £2.00 SUPPLY VOUCHER</p>
+                </div>
+                <button onclick="closeHackModal()" class="text-terminalGreen hover:text-white text-2xl font-bold px-2 py-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Terminal Game Screen -->
+            <div class="space-y-4 text-lg sm:text-xl flex-grow overflow-y-auto">
+                <!-- Status Row -->
+                <div class="flex justify-between items-center bg-terminalGreen/10 px-3 py-2 border border-terminalGreen/30">
+                    <span id="hack-attempts-label">> ATTEMPTS REMAINING:</span>
+                    <span id="hack-attempts-icons" class="text-xl sm:text-2xl tracking-widest text-terminalGreen">■ ■ ■ ■</span>
+                </div>
+
+                <!-- Memory Buffer Grid -->
+                <div id="hack-memory-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 font-terminal text-lg sm:text-xl p-3 bg-terminalBg/80 border border-terminalGreen/40">
+                    <!-- Populated dynamically via initHackGame() -->
+                </div>
+
+                <!-- Console Output Log -->
+                <div id="hack-console" class="h-28 bg-black/80 border border-terminalGreen/40 p-3 overflow-y-auto font-terminal text-base sm:text-lg text-terminalGreen/90 space-y-1">
+                    <p>> INITIALIZING ROBCO SECURITY BYPASS...</p>
+                    <p>> SELECT A WORD TO TEST SECURITY LIKENESS.</p>
+                </div>
+
+                <!-- Victory Reward Banner (Hidden initially) -->
+                <div id="hack-victory" class="hidden p-4 bg-terminalGreen/20 border-2 border-terminalGreen text-center space-y-3 animate-pulse">
+                    <p class="text-2xl sm:text-3xl text-terminalGreen terminal-text font-bold">🎉 ACCESS GRANTED! SECURITY LOCK BYPASSED!</p>
+                    <p class="text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">VAULT200</strong> (-£2.00 OFF AT CHECKOUT)</p>
+                    <div class="flex justify-center gap-3 pt-1">
+                        <button type="button" onclick="claimHackReward()" class="bg-terminalGreen text-terminalBg px-5 py-2 text-xl font-bold uppercase hover:bg-white hover:text-black transition-colors">
+                            <i class="fa-solid fa-copy mr-1"></i> Copy £2 Voucher & Apply
+                        </button>
+                        <button type="button" onclick="initHackGame()" class="border border-terminalGreen text-terminalGreen px-4 py-2 text-lg uppercase hover:bg-terminalGreen/20">
+                            Play Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal Footer -->
+            <div class="mt-4 pt-3 border-t border-terminalGreen/40 flex justify-between items-center text-sm text-terminalGreen/70">
+                <span>[ESC] TO EXIT TERMLINK</span>
+                <span class="animate-pulse">> LINK SECURE</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation Header -->
     <header class="fixed w-full z-50 bg-parchment border-b-[3px] border-ink transition-all duration-300 shadow-md">
         <div class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8">
@@ -1001,6 +1077,137 @@
                 </div>
 
             </div>
+
+            <!-- Interactive Vault Formulation Quiz (Find Your Flavor) -->
+            <div id="flavor-quiz" class="mt-16 bg-parchmentDark p-6 sm:p-10 retro-border shadow-retro-lg max-w-4xl mx-auto" data-aos="zoom-in">
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-ink text-radYellow text-xs font-bold uppercase mb-2">
+                        <i class="fa-solid fa-clipboard-question"></i> Pip-Boy Diagnostic
+                    </div>
+                    <h3 class="font-display text-4xl sm:text-5xl text-ink uppercase">Find Your Vault Formulation</h3>
+                    <p class="text-xs sm:text-sm font-bold text-ink/70 mt-1">
+                        Not sure which ration suits your palate? Answer 3 quick field questions for an instant recommendation.
+                    </p>
+                </div>
+
+                <div id="quiz-step-container" class="space-y-6">
+                    <!-- Question 1 -->
+                    <div id="quiz-q1" class="space-y-3">
+                        <span class="font-display text-2xl text-ink uppercase block">> 01. What is your primary flavor craving?</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button type="button" onclick="answerQuiz(1, 'basic')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-rust hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
+                                <span><i class="fa-solid fa-fire-burner text-rust mr-2"></i> Cozy Campfire Warmth & Citrus Spices</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                            <button type="button" onclick="answerQuiz(1, 'scout')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-atomic hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
+                                <span><i class="fa-solid fa-lemon text-atomic mr-2"></i> Dark Caramelized Molasses & Seville Botanicals</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 (Hidden initially) -->
+                    <div id="quiz-q2" class="space-y-3 hidden">
+                        <span class="font-display text-2xl text-ink uppercase block">> 02. How do you intend to consume your syrup?</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button type="button" onclick="answerQuiz(2, 'basic')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-rust hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
+                                <span><i class="fa-solid fa-glass-water text-rust mr-2"></i> All-Day Sparkling Soda & Vintage Ice Cream Floats</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                            <button type="button" onclick="answerQuiz(2, 'scout')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-atomic hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
+                                <span><i class="fa-solid fa-martini-glass text-atomic mr-2"></i> Evening Cocktails, Spiced Rums, Espresso & BBQ Glazes</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 (Hidden initially) -->
+                    <div id="quiz-q3" class="space-y-3 hidden">
+                        <span class="font-display text-2xl text-ink uppercase block">> 03. Which sweetness and finish do you prefer?</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button type="button" onclick="answerQuiz(3, 'basic')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-rust hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
+                                <span><i class="fa-solid fa-candy-cane text-rust mr-2"></i> Bright Vanilla Bean, Lemon & Cinnamon Finish</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                            <button type="button" onclick="answerQuiz(3, 'scout')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-atomic hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
+                                <span><i class="fa-solid fa-leaf text-atomic mr-2"></i> Rich Herbal Botanicals & Dark Cane Depth</span>
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Result Display (Hidden initially) -->
+                    <div id="quiz-result" class="hidden p-6 bg-parchment retro-border space-y-4 text-center animate-in fade-in">
+                        <div id="quiz-result-badge" class="inline-block px-3 py-1 text-xs font-bold uppercase retro-border">RECOMMENDED BATCH</div>
+                        <h4 id="quiz-result-title" class="font-display text-4xl uppercase text-ink">Bunker Basic</h4>
+                        <p id="quiz-result-desc" class="text-xs sm:text-sm font-bold text-ink/80 max-w-xl mx-auto"></p>
+                        <div class="flex flex-wrap justify-center gap-4 pt-2">
+                            <button id="quiz-add-btn" onclick="" class="bg-rust text-parchment px-6 py-3 font-display text-2xl uppercase retro-button shadow-retro hover:bg-rustDark flex items-center gap-2">
+                                <i class="fa-solid fa-plus text-sm"></i> Add Recommended Formulation to Crate
+                            </button>
+                            <button type="button" onclick="resetQuiz()" class="bg-ink/10 px-4 py-3 font-display text-xl uppercase border-2 border-ink text-ink hover:bg-ink/20">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Retake Diagnostic
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eco-Impact & Money-Saving Comparison Counter -->
+            <div id="eco-impact" class="mt-16 border-t-4 border-ink pt-14">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-atomic text-parchment text-xs font-bold uppercase mb-2 retro-border">
+                        <i class="fa-solid fa-scale-balanced text-radYellow"></i> Craft Concentrate vs Industrial Big Soda
+                    </div>
+                    <h3 class="font-display text-4xl sm:text-5xl text-ink uppercase">Eco-Impact & Cost Breakdown</h3>
+                    <p class="text-xs sm:text-sm font-bold text-ink/75 mt-1">
+                        Handcrafted artisanal concentrate saves your wallet and eliminates single-use aluminum and plastic waste.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Metric 1 -->
+                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-rust text-parchment retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <span class="font-display text-5xl text-ink">~46p</span>
+                        <span class="font-display text-xl uppercase text-rust mt-1">Cost Per Drink</span>
+                        <p class="text-xs font-bold text-ink/70 mt-2">Versus £2.50+ for mass-produced store craft cola cans.</p>
+                    </div>
+
+                    <!-- Metric 2 -->
+                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-atomic text-parchment retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                            <i class="fa-solid fa-piggy-bank"></i>
+                        </div>
+                        <span class="font-display text-5xl text-ink">£32.50+</span>
+                        <span class="font-display text-xl uppercase text-atomic mt-1">Saved Per Bottle</span>
+                        <p class="text-xs font-bold text-ink/70 mt-2">Real cash retained in your vault canteen compared to buying individual soda cans.</p>
+                    </div>
+
+                    <!-- Metric 3 -->
+                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-ink text-radYellow retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                            <i class="fa-solid fa-recycle"></i>
+                        </div>
+                        <span class="font-display text-5xl text-ink">16 Cans</span>
+                        <span class="font-display text-xl uppercase text-ink mt-1">Waste Eliminated</span>
+                        <p class="text-xs font-bold text-ink/70 mt-2">16 single-use cans / plastic bottles diverted from landfill per 500ml concentrate.</p>
+                    </div>
+
+                    <!-- Metric 4 -->
+                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-rust text-parchment retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <span class="font-display text-5xl text-ink">0% HFCS</span>
+                        <span class="font-display text-xl uppercase text-rust mt-1">100% Pure Cane Sugar</span>
+                        <p class="text-xs font-bold text-ink/70 mt-2">Zero industrial chemical sludge, artificial preservatives, or high-fructose syrups.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1188,17 +1395,54 @@
                     </p>
                 </div>
 
-                <!-- Slider Control -->
-                <div class="mb-10 bg-ink/5 p-6 retro-border">
-                    <div class="flex justify-between items-center mb-3">
-                        <label for="servings-slider" class="font-display text-2xl uppercase text-ink">Target Servings (Glasses):</label>
-                        <span id="slider-servings-val" class="font-display text-4xl text-rust bg-parchment px-4 py-1 retro-border">4</span>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-10">
+                    <!-- Left: Slider Controls -->
+                    <div class="lg:col-span-7 bg-ink/5 p-6 retro-border space-y-6">
+                        <div class="flex justify-between items-center">
+                            <label for="servings-slider" class="font-display text-2xl uppercase text-ink">Target Servings (Glasses):</label>
+                            <span id="slider-servings-val" class="font-display text-4xl text-rust bg-parchment px-4 py-1 retro-border shadow-retro-sm">4</span>
+                        </div>
+                        <input type="range" id="servings-slider" min="1" max="20" value="4" oninput="calculateMixology()" class="w-full">
+                        <div class="flex justify-between text-[11px] font-bold text-ink/50 uppercase">
+                            <span>1 Solo Dweller</span>
+                            <span>10 Settlement Party</span>
+                            <span>20 Bunker Gathering</span>
+                        </div>
+
+                        <!-- Mix Ratio Badge -->
+                        <div class="p-3 bg-parchment retro-border flex items-center justify-between text-xs font-bold uppercase">
+                            <span class="text-rust"><i class="fa-solid fa-droplet mr-1.5"></i> Vault Ratio Formula:</span>
+                            <span class="bg-ink text-parchment px-2 py-0.5 text-[11px]">1 : 5 (Syrup : Water)</span>
+                        </div>
                     </div>
-                    <input type="range" id="servings-slider" min="1" max="20" value="4" oninput="calculateMixology()" class="w-full">
-                    <div class="flex justify-between text-[11px] font-bold text-ink/50 mt-1 uppercase">
-                        <span>1 Solo Dweller</span>
-                        <span>10 Settlement Party</span>
-                        <span>20 Bunker Gathering</span>
+
+                    <!-- Right: Interactive Live Fizz & Pour Glass Visualizer -->
+                    <div class="lg:col-span-5 bg-parchment retro-border p-6 flex flex-col items-center justify-center relative overflow-hidden shadow-retro">
+                        <span class="text-[10px] font-bold uppercase text-ink/60 mb-3 tracking-widest"><i class="fa-solid fa-flask text-atomic mr-1"></i> Live Pour Visualizer</span>
+                        
+                        <!-- Vintage Glass Silhouette -->
+                        <div class="w-32 h-48 border-4 border-ink rounded-b-3xl relative overflow-hidden bg-ink/5 flex flex-col justify-end shadow-inner">
+                            <!-- Foam Layer -->
+                            <div id="visualizer-foam" class="h-3 w-full bg-parchment/90 border-b border-ink/20 transition-all duration-300 relative z-20"></div>
+                            <!-- Soda / Fizz Layer with Bubbles -->
+                            <div id="visualizer-soda" class="w-full bg-gradient-to-t from-rust via-rust/90 to-radYellow/75 transition-all duration-300 relative overflow-hidden h-32 flex flex-col justify-end">
+                                <!-- Animated Carbonation Bubbles -->
+                                <div class="absolute inset-0 pointer-events-none opacity-80">
+                                    <div class="bubble bubble-1"></div>
+                                    <div class="bubble bubble-2"></div>
+                                    <div class="bubble bubble-3"></div>
+                                    <div class="bubble bubble-4"></div>
+                                </div>
+                                <!-- Pure Syrup Base Layer -->
+                                <div id="visualizer-syrup" class="h-8 w-full bg-[#4A1610] border-t border-ink/30 transition-all duration-300 relative z-10 flex items-center justify-center">
+                                    <span class="text-[9px] font-bold text-parchment/90 uppercase tracking-tighter">SYRUP</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span id="visualizer-caption" class="text-xs font-bold text-ink/80 mt-3 text-center uppercase">
+                            4 Glasses = 120ml Syrup + 600ml Sparkling Soda
+                        </span>
                     </div>
                 </div>
 
@@ -1327,9 +1571,14 @@
                     <p class="text-2xl">> SYSTEM: ROBCO PIP-COMMS NETWORK v2.077</p>
                     <p class="text-xl text-terminalGreen/80">> LOG_STREAM: CUSTOMER_TRANSMISSIONS.LOG</p>
                 </div>
-                <button onclick="toggleAddReviewForm()" class="bg-terminalGreen/20 text-terminalGreen border border-terminalGreen px-4 py-2 text-xl hover:bg-terminalGreen hover:text-terminalBg transition-colors uppercase">
-                    + TRANSMIT NEW LOG
-                </button>
+                <div class="flex flex-wrap items-center gap-3">
+                    <button onclick="openHackModal()" class="bg-radYellow/20 text-radYellow border border-radYellow px-4 py-2 text-xl hover:bg-radYellow hover:text-terminalBg transition-colors uppercase animate-pulse">
+                        <i class="fa-solid fa-terminal mr-1"></i> HACK SECURITY (WIN £2 VOUCHER)
+                    </button>
+                    <button onclick="toggleAddReviewForm()" class="bg-terminalGreen/20 text-terminalGreen border border-terminalGreen px-4 py-2 text-xl hover:bg-terminalGreen hover:text-terminalBg transition-colors uppercase">
+                        + TRANSMIT NEW LOG
+                    </button>
+                </div>
             </div>
 
             <!-- Add Review Form (Toggleable) -->
@@ -1459,30 +1708,116 @@
         AOS.init({ once: true, offset: 40, duration: 750, easing: 'ease-out-cubic' });
 
         /* ============================================================
-           1. AUDIO SFX (Web Audio API Synthesizer - Pip-Boy Clicks)
+           1. AUDIO SFX & PIP-BOY 1950s SWING RADIO SYNTHESIZER (ROYALTY FREE)
            ============================================================ */
-        let sfxEnabled = false;
+        let sfxEnabled = true; // Turned on by default as requested!
+        let radioPlaying = false;
         let audioCtx = null;
+        let radioInterval = null;
+
+        // 1950s Swing Jazz Chords (Cmaj7 -> Am7 -> Dm7 -> G7)
+        const SWING_CHORDS = [
+            [261.63, 329.63, 392.00, 493.88], // Cmaj7
+            [220.00, 261.63, 329.63, 392.00], // Am7
+            [293.66, 349.23, 440.00, 523.25], // Dm7
+            [196.00, 246.94, 293.66, 349.23]  // G7
+        ];
+        let chordIndex = 0;
+
+        function playSwingChord() {
+            if (!sfxEnabled || !radioPlaying || !audioCtx) return;
+            try {
+                const chord = SWING_CHORDS[chordIndex % SWING_CHORDS.length];
+                chordIndex++;
+
+                chord.forEach((freq, i) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const filter = audioCtx.createBiquadFilter();
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                    // Vintage warm radio low-pass filter
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+
+                    // Stagger note arpeggiation slightly for swing feel
+                    const startTime = audioCtx.currentTime + (i * 0.04);
+                    gain.gain.setValueAtTime(0.001, startTime);
+                    gain.gain.linearRampToValueAtTime(0.02, startTime + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 2.2);
+
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(startTime);
+                    osc.stop(startTime + 2.3);
+                });
+            } catch (e) {}
+        }
+
+        function startVaultRadio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            radioPlaying = true;
+
+            if (radioInterval) clearInterval(radioInterval);
+            playSwingChord();
+            radioInterval = setInterval(playSwingChord, 2400); // 1950s swing tempo
+        }
+
+        function stopVaultRadio() {
+            radioPlaying = false;
+            if (radioInterval) clearInterval(radioInterval);
+        }
 
         function toggleAudioSFX() {
             sfxEnabled = !sfxEnabled;
             const icon = document.getElementById('sfx-icon');
             const label = document.getElementById('sfx-label');
+            const mobileLabel = document.getElementById('mobile-sfx-label');
+
             if (sfxEnabled) {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                icon.className = 'fa-solid fa-volume-high text-atomic';
-                label.innerText = 'SFX: ON';
-                playBeep(800, 0.05);
+                startVaultRadio();
+                if (icon) icon.className = 'fa-solid fa-radio text-atomic animate-pulse';
+                if (label) label.innerText = 'RADIO: ON';
+                if (mobileLabel) mobileLabel.innerText = 'RADIO: ON';
+                showNotification('📻 Pip-Boy Vault Radio broadcast synchronized!', 'info');
             } else {
-                icon.className = 'fa-solid fa-volume-xmark text-rust';
-                label.innerText = 'SFX: OFF';
+                stopVaultRadio();
+                if (icon) icon.className = 'fa-solid fa-volume-xmark text-rust';
+                if (label) label.innerText = 'RADIO: OFF';
+                if (mobileLabel) mobileLabel.innerText = 'RADIO: OFF';
+                showNotification('📻 Vault Radio muted.', 'info');
             }
         }
+
+        // Auto-start audio on first user click/touch to comply with browser audio policies
+        function handleFirstInteraction() {
+            if (sfxEnabled && !radioPlaying) {
+                startVaultRadio();
+                const icon = document.getElementById('sfx-icon');
+                const label = document.getElementById('sfx-label');
+                if (icon) icon.className = 'fa-solid fa-radio text-atomic animate-pulse';
+                if (label) label.innerText = 'RADIO: ON';
+            }
+            window.removeEventListener('click', handleFirstInteraction);
+            window.removeEventListener('touchstart', handleFirstInteraction);
+        }
+        window.addEventListener('click', handleFirstInteraction);
+        window.addEventListener('touchstart', handleFirstInteraction);
 
         function playBeep(freq = 600, duration = 0.04) {
             if (!sfxEnabled) return;
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
@@ -1896,7 +2231,7 @@
         }
 
         /* ============================================================
-           6. INTERACTIVE MIXOLOGY CALCULATOR
+           6. INTERACTIVE MIXOLOGY CALCULATOR & GLASS VISUALIZER
            ============================================================ */
         function calculateMixology() {
             const servings = parseInt(document.getElementById('servings-slider').value) || 1;
@@ -1911,7 +2246,214 @@
             document.getElementById('calc-water').innerText = `${waterMl} ml`;
             document.getElementById('calc-total-liquid').innerText = `${totalLiquid} ml`;
             document.getElementById('calc-bottles-hint').innerText = `~${bottleRatio} of a 500ml bottle`;
+
+            // Update Glass Visualizer
+            const syrupEl = document.getElementById('visualizer-syrup');
+            const sodaEl = document.getElementById('visualizer-soda');
+            const captionEl = document.getElementById('visualizer-caption');
+
+            if (syrupEl && sodaEl) {
+                const syrupHeight = Math.min(48, Math.max(14, servings * 3.2));
+                const totalSodaHeight = Math.min(140, Math.max(45, servings * 7.5));
+                syrupEl.style.height = `${syrupHeight}px`;
+                sodaEl.style.height = `${totalSodaHeight}px`;
+            }
+            if (captionEl) {
+                captionEl.innerText = `${servings} Glass${servings > 1 ? 'es' : ''} = ${syrupMl}ml Syrup + ${waterMl}ml Sparkling Soda`;
+            }
+
             playBeep(400 + servings * 25, 0.02);
+        }
+
+        /* ============================================================
+           6B. VAULT FORMULATION DIAGNOSTIC QUIZ
+           ============================================================ */
+        let quizAnswers = { 1: null, 2: null, 3: null };
+
+        function answerQuiz(step, choice) {
+            quizAnswers[step] = choice;
+            playBeep(700 + step * 50, 0.05);
+
+            if (step === 1) {
+                document.getElementById('quiz-q1').classList.add('hidden');
+                document.getElementById('quiz-q2').classList.remove('hidden');
+            } else if (step === 2) {
+                document.getElementById('quiz-q2').classList.add('hidden');
+                document.getElementById('quiz-q3').classList.remove('hidden');
+            } else if (step === 3) {
+                document.getElementById('quiz-q3').classList.add('hidden');
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const resultBox = document.getElementById('quiz-result');
+            const titleEl = document.getElementById('quiz-result-title');
+            const descEl = document.getElementById('quiz-result-desc');
+            const badgeEl = document.getElementById('quiz-result-badge');
+            const addBtn = document.getElementById('quiz-add-btn');
+
+            let basicScore = 0;
+            let scoutScore = 0;
+
+            Object.values(quizAnswers).forEach(ans => {
+                if (ans === 'basic') basicScore++;
+                if (ans === 'scout') scoutScore++;
+            });
+
+            const isBasic = basicScore >= scoutScore;
+            const matchPercent = isBasic ? (basicScore === 3 ? 99 : 75) : (scoutScore === 3 ? 98 : 72);
+
+            resultBox.classList.remove('hidden');
+
+            if (isBasic) {
+                badgeEl.className = 'inline-block px-3 py-1 text-xs font-bold uppercase retro-border bg-rust text-parchment';
+                badgeEl.innerText = `VAULT MATCH: ${matchPercent}% BUNKER BASIC`;
+                titleEl.className = 'font-display text-4xl sm:text-5xl uppercase text-rust';
+                titleEl.innerText = 'Bunker Basic (Flagship)';
+                descEl.innerText = 'Your taste profile craves warm festive campfire spices, whole cinnamon, and cracked nutmeg balanced with fresh orange & lemon zest. Perfect for sodas, floats, and all-day drinking.';
+                addBtn.className = 'bg-rust text-parchment px-6 py-3 font-display text-2xl uppercase retro-button shadow-retro hover:bg-rustDark flex items-center gap-2';
+                addBtn.onclick = () => { addProductToCart('Bunker Basic', currentSizes['basic'].size, currentSizes['basic'].price); playBeep(); };
+            } else {
+                badgeEl.className = 'inline-block px-3 py-1 text-xs font-bold uppercase retro-border bg-atomic text-parchment';
+                badgeEl.innerText = `VAULT MATCH: ${matchPercent}% BUNKER SCOUT`;
+                titleEl.className = 'font-display text-4xl sm:text-5xl uppercase text-atomic';
+                titleEl.innerText = 'Bunker Scout (Botanical)';
+                descEl.innerText = 'Your palate is tuned for dark caramelized molasses, dried Seville orange peel botanicals, and complex aromatic depth. Ideal for fiery mules, bourbon mixes, espresso tonics, and BBQ reductions.';
+                addBtn.className = 'bg-atomic text-parchment px-6 py-3 font-display text-2xl uppercase retro-button shadow-retro-atomic hover:bg-atomicDark flex items-center gap-2';
+                addBtn.onclick = () => { addProductToCart('Bunker Scout', currentSizes['scout'].size, currentSizes['scout'].price); playBeep(); };
+            }
+
+            playBeep(900, 0.1);
+        }
+
+        function resetQuiz() {
+            quizAnswers = { 1: null, 2: null, 3: null };
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-q3').classList.add('hidden');
+            document.getElementById('quiz-q2').classList.add('hidden');
+            document.getElementById('quiz-q1').classList.remove('hidden');
+            playBeep(500, 0.04);
+        }
+
+        /* ============================================================
+           6C. ROBCO VAULT TERMINAL HACKING MINI-GAME (EASTER EGG)
+           ============================================================ */
+        const HACK_WORDS_POOL = ['SYRUP', 'BASIC', 'SCOUT', 'SPICE', 'CRAFT', 'VAULT', 'SUGAR', 'FLASK', 'DRINK', 'BOTLE'];
+        let hackSecretWord = 'SYRUP';
+        let hackAttemptsLeft = 4;
+        let hackWordsList = [];
+        let hackGameOver = false;
+
+        function openHackModal() {
+            document.getElementById('terminal-hack-modal').classList.remove('hidden');
+            initHackGame();
+            playBeep(850, 0.08);
+        }
+
+        function closeHackModal() {
+            document.getElementById('terminal-hack-modal').classList.add('hidden');
+            playBeep(500, 0.04);
+        }
+
+        function initHackGame() {
+            hackAttemptsLeft = 4;
+            hackGameOver = false;
+            document.getElementById('hack-victory').classList.add('hidden');
+            updateHackAttemptsUI();
+
+            const shuffled = [...HACK_WORDS_POOL].sort(() => 0.5 - Math.random());
+            hackWordsList = shuffled.slice(0, 6);
+            hackSecretWord = hackWordsList[Math.floor(Math.random() * hackWordsList.length)];
+
+            const memoryGrid = document.getElementById('hack-memory-grid');
+            const consoleBox = document.getElementById('hack-console');
+            if (consoleBox) {
+                consoleBox.innerHTML = `
+                    <p>> ROBCO v2.077 TERMLINK ACTIVE.</p>
+                    <p>> ENTER PASSWORD (${hackAttemptsLeft} ATTEMPTS REMAINING).</p>
+                `;
+            }
+
+            const hexAddresses = ['0xF428', '0xF434', '0xF440', '0xF44C', '0xF458', '0xF464'];
+            const junkSymbols = ['!@#$%^', '&*()_+', '{}[]|;', ':<>?,.', '~`-=!@', '^*#$@!'];
+
+            if (memoryGrid) {
+                memoryGrid.innerHTML = hackWordsList.map((word, idx) => {
+                    const hex = hexAddresses[idx] || `0xF4${idx * 8}`;
+                    const junk1 = junkSymbols[idx % junkSymbols.length].slice(0, 3);
+                    const junk2 = junkSymbols[(idx + 1) % junkSymbols.length].slice(0, 3);
+                    return `
+                        <div class="flex items-center gap-2 py-0.5 select-none">
+                            <span class="text-terminalGreen/50">${hex}</span>
+                            <span class="text-terminalGreen/70">${junk1}</span>
+                            <button type="button" onclick="handleHackGuess('${word}', this)" class="font-bold text-terminalGreen hover:bg-terminalGreen hover:text-terminalBg px-1 transition-colors uppercase tracking-wider">
+                                ${word}
+                            </button>
+                            <span class="text-terminalGreen/70">${junk2}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function updateHackAttemptsUI() {
+            const icons = document.getElementById('hack-attempts-icons');
+            if (icons) {
+                icons.innerText = '■ '.repeat(hackAttemptsLeft).trim();
+            }
+        }
+
+        function handleHackGuess(word, btn) {
+            if (hackGameOver) return;
+
+            const consoleBox = document.getElementById('hack-console');
+
+            if (word === hackSecretWord) {
+                hackGameOver = true;
+                playBeep(980, 0.2);
+                consoleBox.innerHTML += `<p class="text-white font-bold">> [${word}] -> EXACT MATCH! ACCESS GRANTED.</p>`;
+                consoleBox.scrollTop = consoleBox.scrollHeight;
+                document.getElementById('hack-victory').classList.remove('hidden');
+                
+                try {
+                    navigator.clipboard.writeText('VAULT200');
+                } catch(e) {}
+                return;
+            }
+
+            let likeness = 0;
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] === hackSecretWord[i]) likeness++;
+            }
+
+            hackAttemptsLeft--;
+            updateHackAttemptsUI();
+            playBeep(350, 0.1);
+
+            consoleBox.innerHTML += `<p>> [${word}] -> ENTRY DENIED. (Likeness=${likeness}/${word.length})</p>`;
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+
+            btn.disabled = true;
+            btn.classList.add('line-through', 'opacity-40');
+
+            if (hackAttemptsLeft <= 0) {
+                hackGameOver = true;
+                playBeep(250, 0.3);
+                consoleBox.innerHTML += `<p class="text-red-400 font-bold">> TERMINAL LOCKED. PASSWORD WAS: ${hackSecretWord}</p>`;
+                consoleBox.scrollTop = consoleBox.scrollHeight;
+                setTimeout(() => {
+                    if (confirm("🔒 ROBCO SECURITY LOCKOUT 🔒\n\nAll attempts exhausted! Reset terminal and try again?")) {
+                        initHackGame();
+                    }
+                }, 500);
+            }
+        }
+
+        function claimHackReward() {
+            navigator.clipboard.writeText('VAULT200');
+            showNotification('🎉 Voucher VAULT200 (-£2.00) copied to clipboard! Paste it in the coupon box at checkout.', 'success');
+            closeHackModal();
         }
 
         /* ============================================================
