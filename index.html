@@ -1287,54 +1287,13 @@
                 </form>
             </div>
 
-            <!-- Testimonials Stream -->
+            <!-- Testimonials Stream (Dynamically loaded from Supabase Cloud) -->
             <div id="reviews-stream" class="space-y-6">
-                <!-- Testimonial 1 -->
-                <div class="border border-terminalGreen/40 bg-terminalGreen/5 p-6 rounded hover:bg-terminalGreen/10 transition-colors" data-aos="fade-up">
-                    <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 font-terminal text-lg border-b border-terminalGreen/20 pb-2">
-                        <i class="fa-solid fa-user-astronaut text-terminalGreen"></i>
-                        <span class="text-terminalGreen font-bold">USER_ID: WANDERER_99</span>
-                        <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">RATION: BUNKER BASIC</span>
-                        <span class="ml-auto">[2077-10-23 09:42]</span>
-                    </div>
-                    <p class="font-terminal text-2xl text-terminalGreen terminal-text leading-relaxed">
-                        "The Bunker Basic tastes just like the holidays back before the bombs fell. The festive Christmasy spices paired with sparkling water saved our squad's morale out in the wastes."
-                    </p>
-                    <div class="mt-3 text-terminalGreen/80 font-terminal text-lg">
-                        STATUS: VERIFIED CONSUMER [★★★★★]
-                    </div>
-                </div>
-
-                <!-- Testimonial 2 -->
-                <div class="border border-terminalGreen/40 bg-terminalGreen/5 p-6 rounded hover:bg-terminalGreen/10 transition-colors" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 font-terminal text-lg border-b border-terminalGreen/20 pb-2">
-                        <i class="fa-solid fa-user-ninja text-terminalGreen"></i>
-                        <span class="text-terminalGreen font-bold">USER_ID: VAULT_DWELLER_42</span>
-                        <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">RATION: BUNKER SCOUT</span>
-                        <span class="ml-auto">[2077-10-24 14:15]</span>
-                    </div>
-                    <p class="font-terminal text-2xl text-terminalGreen terminal-text leading-relaxed">
-                        "Mixed Bunker Scout with some clear moonshine from the local settlement. Best 'Wasteland Libre' I've ever tasted. Crisp citrus hit, real botanicals, and zero chemical aftertaste."
-                    </p>
-                    <div class="mt-3 text-terminalGreen/80 font-terminal text-lg">
-                        STATUS: VERIFIED CONSUMER [★★★★★]
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="border border-terminalGreen/40 bg-terminalGreen/5 p-6 rounded hover:bg-terminalGreen/10 transition-colors" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 font-terminal text-lg border-b border-terminalGreen/20 pb-2">
-                        <i class="fa-solid fa-user-shield text-terminalGreen"></i>
-                        <span class="text-terminalGreen font-bold">USER_ID: SUTTON_OUTPOST_LEAD</span>
-                        <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">PERK: BOTTLE RETURN</span>
-                        <span class="ml-auto">[2077-10-25 18:30]</span>
-                    </div>
-                    <p class="font-terminal text-2xl text-terminalGreen terminal-text leading-relaxed">
-                        "The bottle return policy is top tier. Dropped 4 empties off at Leviathan Brewery in Sutton Coldfield and got £6 off my next crate. Keep up the circular craft economy!"
-                    </p>
-                    <div class="mt-3 text-terminalGreen/80 font-terminal text-lg">
-                        STATUS: VERIFIED RECYCLER [★★★★★]
-                    </div>
+                <!-- Populated via loadReviews() -->
+                <div class="border border-terminalGreen/30 bg-terminalGreen/5 p-8 rounded text-center font-terminal text-terminalGreen">
+                    <i class="fa-solid fa-satellite-dish text-4xl mb-3 text-terminalGreen/60 animate-pulse"></i>
+                    <p class="text-2xl uppercase">> SYNCING PIP-COMMS CLOUD ARCHIVE...</p>
+                    <p class="text-lg text-terminalGreen/70 mt-1">Connecting to Supabase frequency receiver.</p>
                 </div>
             </div>
             
@@ -2059,45 +2018,186 @@
         }
 
         /* ============================================================
-           8. TERMINAL REVIEWS / UGC
+           8. TERMINAL REVIEWS / UGC (MODERATED & SUPABASE BACKED)
            ============================================================ */
+        const BLOCKED_WORDS = [
+            'fuck', 'shit', 'bitch', 'asshole', 'cunt', 'dick', 'cock', 'pussy', 'nigger', 'nigga', 'faggot', 'fag', 'retard', 
+            'whore', 'slut', 'nazi', 'hitler', 'porn', 'xxx', 'viagra', 'casino', 'crypto', 'telegram', 'whatsapp'
+        ];
+
+        function isAppropriateReview(text, user) {
+            const combined = `${user} ${text}`.toLowerCase();
+            
+            // Length checks
+            if (user.length < 2 || user.length > 25) {
+                return { ok: false, reason: 'Callsign must be between 2 and 25 characters.' };
+            }
+            if (text.length < 5 || text.length > 350) {
+                return { ok: false, reason: 'Review transmission must be between 5 and 350 characters.' };
+            }
+
+            // Link / spam prevention
+            const urlPattern = /(https?:\/\/|www\.|\.com|\.net|\.org|\.ru|\.xyz|discord\.gg|t\.me)/i;
+            if (urlPattern.test(combined)) {
+                return { ok: false, reason: 'External hyperlinks and frequency links are blocked by Vault security.' };
+            }
+
+            // Profanity & abuse check
+            for (const word of BLOCKED_WORDS) {
+                const regex = new RegExp(`\\b${word}\\b`, 'i');
+                if (regex.test(combined)) {
+                    return { ok: false, reason: 'Transmission blocked: Inappropriate or vulgar language detected.' };
+                }
+            }
+
+            return { ok: true };
+        }
+
+        function sanitizeHtml(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+
         function toggleAddReviewForm() {
             const form = document.getElementById('add-review-container');
             form.classList.toggle('hidden');
             playBeep(650, 0.05);
         }
 
-        function handleReviewSubmit(event) {
+        async function handleReviewSubmit(event) {
             event.preventDefault();
-            const user = document.getElementById('review-user').value.toUpperCase();
+            playBeep(850, 0.08);
+
+            const userInput = document.getElementById('review-user');
+            const textInput = document.getElementById('review-text');
             const product = document.getElementById('review-product').value;
-            const text = document.getElementById('review-text').value;
+            const submitBtn = event.target.querySelector('button[type="submit"]');
 
+            const rawUser = userInput.value.trim().toUpperCase();
+            const rawText = textInput.value.trim();
+
+            // Run Moderation Filter
+            const moderation = isAppropriateReview(rawText, rawUser);
+            if (!moderation.ok) {
+                showNotification(`⚠️ Security Alert: ${moderation.reason}`, 'warning');
+                playBeep(400, 0.15);
+                return;
+            }
+
+            const cleanUser = sanitizeHtml(rawUser);
+            const cleanText = sanitizeHtml(rawText);
+            const timestamp = new Date().toISOString();
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'TRANSMITTING TO CLOUD...';
+            }
+
+            try {
+                // 1. Insert into Supabase Cloud
+                if (supabaseClient) {
+                    const { error } = await supabaseClient.from('reviews').insert([{
+                        user_callsign: cleanUser,
+                        product: product,
+                        text: cleanText,
+                        rating: 5,
+                        created_at: timestamp
+                    }]);
+                    if (error) {
+                        console.warn('Supabase review insert notice:', error.message);
+                    }
+                }
+
+                // 2. Save locally for instant persistence
+                const localReviews = JSON.parse(localStorage.getItem('bunker_reviews') || '[]');
+                localReviews.unshift({
+                    user_callsign: cleanUser,
+                    product: product,
+                    text: cleanText,
+                    rating: 5,
+                    created_at: timestamp
+                });
+                localStorage.setItem('bunker_reviews', JSON.stringify(localReviews));
+
+                // 3. Re-render review stream
+                await loadReviews();
+
+                // Reset form
+                userInput.value = '';
+                textInput.value = '';
+                toggleAddReviewForm();
+                showNotification('Survivor transmission broadcasted live across the network!', 'success');
+                playBeep(950, 0.1);
+
+            } catch (err) {
+                console.error('Review submit error:', err);
+                showNotification('Transmission sent to local broadcast.', 'info');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'BROADCAST TRANSMISSION >>';
+                }
+            }
+        }
+
+        async function loadReviews() {
             const stream = document.getElementById('reviews-stream');
-            const newLog = document.createElement('div');
-            newLog.className = 'border border-terminalGreen bg-terminalGreen/15 p-6 rounded font-terminal animate-in fade-in duration-300';
-            newLog.innerHTML = `
-                <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 text-lg border-b border-terminalGreen/20 pb-2">
-                    <i class="fa-solid fa-satellite-dish text-terminalGreen"></i>
-                    <span class="text-terminalGreen font-bold">USER_ID: ${user}</span>
-                    <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">RATION: ${product.toUpperCase()}</span>
-                    <span class="ml-auto">[JUST BROADCASTED]</span>
-                </div>
-                <p class="text-2xl text-terminalGreen terminal-text leading-relaxed">
-                    "${text}"
-                </p>
-                <div class="mt-3 text-terminalGreen/80 text-lg">
-                    STATUS: LIVE TRANSMISSION [★★★★★]
-                </div>
-            `;
-            stream.prepend(newLog);
+            if (!stream) return;
 
-            // Reset form
-            document.getElementById('review-user').value = '';
-            document.getElementById('review-text').value = '';
-            toggleAddReviewForm();
-            showNotification('Survivor report broadcasted to comms network!', 'success');
-            playBeep(950, 0.1);
+            let reviews = [];
+
+            // Try loading from Supabase Cloud
+            if (supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('reviews')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!error && data && data.length > 0) {
+                        reviews = data;
+                    }
+                } catch (e) {
+                    console.log('Supabase review fetch fallback:', e);
+                }
+            }
+
+            // Fallback to local stored reviews if empty
+            if (reviews.length === 0) {
+                reviews = JSON.parse(localStorage.getItem('bunker_reviews') || '[]');
+            }
+
+            if (reviews.length === 0) {
+                stream.innerHTML = `
+                    <div class="border border-terminalGreen/30 bg-terminalGreen/5 p-8 rounded text-center font-terminal text-terminalGreen">
+                        <i class="fa-solid fa-satellite-dish text-4xl mb-3 text-terminalGreen/60 animate-pulse"></i>
+                        <p class="text-2xl uppercase">> NO TRANSMISSIONS LOGGED YET</p>
+                        <p class="text-lg text-terminalGreen/70 mt-1">Be the first survivor to transmit a verified field review using '+ Transmit New Log' above!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            stream.innerHTML = reviews.map(rev => {
+                const dateStr = rev.created_at ? new Date(rev.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '2026';
+                return `
+                    <div class="border border-terminalGreen/40 bg-terminalGreen/10 p-6 rounded font-terminal animate-in fade-in duration-300">
+                        <div class="flex flex-wrap items-center gap-3 text-terminalGreen/70 mb-3 text-lg border-b border-terminalGreen/20 pb-2">
+                            <i class="fa-solid fa-satellite-dish text-terminalGreen"></i>
+                            <span class="text-terminalGreen font-bold">USER_ID: ${rev.user_callsign || 'SURVIVOR'}</span>
+                            <span class="bg-terminalGreen/20 px-2 text-sm text-terminalGreen">RATION: ${(rev.product || 'BUNKER BASIC').toUpperCase()}</span>
+                            <span class="ml-auto text-sm text-terminalGreen/60">[${dateStr}]</span>
+                        </div>
+                        <p class="text-2xl text-terminalGreen terminal-text leading-relaxed">
+                            "${rev.text}"
+                        </p>
+                        <div class="mt-3 text-terminalGreen/80 text-lg">
+                            STATUS: VERIFIED TRANSMISSION [★★★★★]
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         /* ============================================================
@@ -2208,6 +2308,7 @@
         renderCart();
         updateAuthUI();
         calculateMixology();
+        loadReviews();
     </script>
 </body>
 </html>
