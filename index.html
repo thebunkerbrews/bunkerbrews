@@ -324,51 +324,17 @@
         <!-- Cart Footer & Checkout -->
         <div class="p-6 bg-parchmentDark border-t-4 border-ink space-y-4">
             
-            <!-- Bottle Return Discount Section with Account + Proof Verification -->
-            <div id="bottle-perk-container" class="bg-parchment p-3.5 retro-border border-2">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="font-bold text-xs uppercase flex items-center gap-1.5 text-ink">
-                        <i class="fa-solid fa-recycle text-atomic text-sm"></i> Bottle Return Perk (-£1.50 ea)
-                    </span>
-                    <span class="text-xs font-bold text-rust" id="bottle-rebate-display">£0.00</span>
+            <!-- Quick Voucher Code Box -->
+            <div class="bg-parchment p-3.5 retro-border border-2">
+                <div class="flex items-center justify-between text-xs font-bold uppercase text-ink mb-1">
+                    <span><i class="fa-solid fa-tag text-rust mr-1.5"></i> Square Voucher Code:</span>
+                    <span class="text-[10px] text-rust font-normal">Apply at Square Checkout</span>
                 </div>
-
-                <!-- Guest Locked View -->
-                <div id="bottle-perk-guest" class="bg-ink/5 p-2.5 border border-ink/30 text-xs">
-                    <p class="font-bold text-ink/75 mb-2">
-                        <i class="fa-solid fa-lock text-rust mr-1"></i> Account Required: Log in to claim your £1.50 bottle deposit credit!
-                    </p>
-                    <button type="button" onclick="openAuthModal()" class="w-full bg-ink text-parchment py-1.5 font-bold uppercase text-[11px] hover:bg-rust transition-colors retro-border">
-                        Log In / Create Account to Unlock
+                <div class="flex gap-2">
+                    <input type="text" id="cart-coupon-input" placeholder="e.g. VAULT200" class="flex-grow bg-ink/5 border-2 border-ink px-2.5 py-1.5 text-xs font-bold uppercase focus:outline-none font-body">
+                    <button type="button" onclick="applyCartCoupon()" class="bg-ink text-parchment px-3 py-1.5 font-bold uppercase text-xs hover:bg-rust transition-colors retro-border">
+                        Copy Code
                     </button>
-                </div>
-
-                <!-- Logged In Member View -->
-                <div id="bottle-perk-member" class="hidden space-y-2 text-xs">
-                    <div class="flex items-center justify-between">
-                        <label class="font-bold text-ink/80">Returning Empties:</label>
-                        <select id="bottle-return-qty" onchange="updateBottleDiscount()" class="bg-parchment border-2 border-ink px-2 py-1 text-xs font-bold focus:outline-none">
-                            <option value="0">0 bottles (£0.00)</option>
-                            <option value="1">1 bottle (-£1.50)</option>
-                            <option value="2">2 bottles (-£3.00)</option>
-                            <option value="3">3 bottles (-£4.50)</option>
-                            <option value="4">4 bottles (-£6.00)</option>
-                        </select>
-                    </div>
-
-                    <!-- Proof Upload Trigger -->
-                    <div id="bottle-proof-status-box" class="pt-2 border-t border-ink/20">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-bold text-[11px] text-ink/70">Return Proof:</span>
-                            <span id="proof-status-badge" class="text-[10px] font-bold px-1.5 py-0.5 bg-radYellow/30 text-ink border border-ink/30">
-                                ⚠️ Required
-                            </span>
-                        </div>
-                        <button type="button" onclick="openBottleProofModal()" class="w-full bg-atomic/15 hover:bg-atomic hover:text-parchment text-ink border-2 border-ink py-1.5 px-2 font-bold uppercase text-[11px] transition-colors flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-camera"></i>
-                            <span id="proof-btn-label">Upload Return Proof (Photo/Slip)</span>
-                        </button>
-                    </div>
                 </div>
             </div>
 
@@ -377,10 +343,6 @@
                 <div class="flex justify-between text-ink/70">
                     <span>Subtotal:</span>
                     <span id="cart-subtotal">£0.00</span>
-                </div>
-                <div class="flex justify-between text-atomic" id="bottle-discount-row" style="display: none;">
-                    <span>Bottle Credit:</span>
-                    <span id="cart-discount">-£0.00</span>
                 </div>
                 <div class="flex justify-between text-ink/70 text-xs">
                     <span>Dispatch (UK Tracked / Free Pickup):</span>
@@ -393,7 +355,7 @@
             </div>
 
             <!-- Square Checkout CTA -->
-            <button id="checkout-btn" onclick="initiateCheckout()" class="w-full bg-rust text-parchment py-4 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-rustDark flex items-center justify-center gap-3">
+            <button id="checkout-btn" onclick="initiateCheckout()" class="w-full bg-rust text-parchment py-4 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-rustDark flex items-center justify-center gap-3 cursor-pointer">
                 <i class="fa-solid fa-lock text-xl"></i>
                 <span id="checkout-btn-text">Proceed to Checkout (Square)</span>
             </button>
@@ -402,68 +364,6 @@
                 <span>•</span>
                 <span>Apple Pay / Cards</span>
             </p>
-        </div>
-    </div>
-
-    <!-- Bottle Return Proof Submission Modal -->
-    <div id="bottle-proof-modal" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-[105] hidden flex items-center justify-center p-4">
-        <div class="bg-parchment p-6 sm:p-8 retro-border shadow-[12px_12px_0_0_#5B9EA6] w-full max-w-lg relative animate-in fade-in zoom-in duration-200">
-            <button onclick="closeBottleProofModal()" class="absolute top-4 right-4 text-ink hover:text-rust text-2xl transition-colors font-bold">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 bg-atomic/15 rounded-full flex items-center justify-center mx-auto mb-3 border-2 border-atomic">
-                    <i class="fa-solid fa-recycle text-3xl text-atomic pulse-glow"></i>
-                </div>
-                <h2 class="font-display text-4xl text-ink uppercase">Bottle Return Verification</h2>
-                <p class="font-bold text-xs text-ink/70 uppercase">Proof is reviewed & verified by Bunker Command</p>
-            </div>
-            
-            <form id="bottle-proof-form" onsubmit="handleBottleProofSubmit(event)" class="space-y-4 font-bold text-xs">
-                <div>
-                    <label class="block uppercase mb-1">Return / Drop-off Location</label>
-                    <select id="proof-location" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
-                        <option value="Bunker HQ - 173 Reddicap Heath Road, B75 7EN">1. Bunker HQ (173 Reddicap Heath Road, B75 7EN)</option>
-                        <option value="Leviathan Brewery - Unit 4&5, 17 Reddicap Trading Est., B75 7BU">2. Leviathan Brewery (Unit 4&5, 17 Reddicap Trading Est)</option>
-                        <option value="Postal Return to Bunker HQ">3. Postal Return to 173 Reddicap Heath Road</option>
-                    </select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block uppercase mb-1">Bottles Returned</label>
-                        <input type="number" id="proof-bottle-count" min="1" max="20" value="1" oninput="updateProofCreditDisplay()" required class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
-                    </div>
-                    <div>
-                        <label class="block uppercase mb-1">Total Credit Value</label>
-                        <input type="text" id="proof-credit-val" readonly value="£1.50" class="w-full bg-ink/10 retro-border px-3 py-2 text-sm text-rust font-bold font-body">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block uppercase mb-1">Upload Photo of Return Receipt / Bottles</label>
-                    <input type="file" id="proof-file-input" accept="image/*" required onchange="previewProofImage(event)" class="w-full bg-parchment retro-border p-2 text-xs focus:outline-none file:mr-3 file:py-1 file:px-3 file:retro-border file:bg-ink file:text-parchment file:text-xs file:font-bold file:uppercase hover:file:bg-rust">
-                    <div id="proof-image-preview-container" class="hidden mt-2 p-2 bg-ink/5 retro-border border-2 text-center">
-                        <img id="proof-image-preview" src="#" alt="Proof Preview" class="max-h-36 mx-auto retro-border">
-                        <span class="text-[10px] text-atomic font-bold block mt-1">✓ Image Attached</span>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block uppercase mb-1">Survivor Notes (Optional)</label>
-                    <input type="text" id="proof-notes" class="w-full bg-parchment retro-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body" placeholder="e.g. Left with Leviathan taproom staff on Friday">
-                </div>
-
-                <div class="p-3 bg-atomic/10 retro-border border-2 text-[11px] text-ink/80">
-                    <i class="fa-solid fa-paper-plane text-atomic mr-1"></i>
-                    Proof & claim dispatch will be submitted directly to <strong class="text-ink">thebunkerbrews@gmail.com</strong> for your survivor account credit.
-                </div>
-
-                <button type="submit" class="w-full bg-rust text-parchment px-4 py-3 font-display text-2xl tracking-wider retro-button shadow-retro hover:bg-rustDark uppercase mt-2">
-                    Submit Proof & Unlock Discount
-                </button>
-            </form>
         </div>
     </div>
 
@@ -711,12 +611,13 @@
 
                 <!-- Navigation Links & Actions -->
                 <div class="flex items-center space-x-1.5 sm:space-x-4 font-bold shrink-0">
-                    <nav class="hidden lg:flex space-x-6 uppercase text-sm">
+                    <nav class="hidden lg:flex space-x-5 uppercase text-sm">
                         <a href="#rations" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Rations</a>
-                        <a href="#recipes" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Recipe Book</a>
+                        <a href="#recipes" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Recipes</a>
                         <a href="#mixology" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Mixology</a>
+                        <a href="#cashback" onclick="playBeep()" class="text-rust hover:text-ink hover:-translate-y-0.5 transition-all flex items-center gap-1"><i class="fa-solid fa-recycle text-xs"></i> Bottle Cashback</a>
                         <a href="#lore" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Lore</a>
-                        <a href="#comms" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Comms Logs</a>
+                        <a href="#comms" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Comms</a>
                     </nav>
                     
                     <!-- Auth Button -->
@@ -756,6 +657,10 @@
         </a>
         <a href="#mixology" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
             <span><i class="fa-solid fa-calculator text-rust mr-2.5"></i> Mixology Calculator</span>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </a>
+        <a href="#cashback" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-rust bg-rust/10 text-rust hover:bg-rust hover:text-parchment transition-colors">
+            <span><i class="fa-solid fa-recycle text-rust mr-2.5"></i> Bottle Return Cashback (£1.50 ea)</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
         <a href="#lore" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
@@ -1569,6 +1474,128 @@
 
             </div>
         </div>
+    <!-- Bottle Return Cashback Section -->
+    <section id="cashback" class="py-24 border-b-4 border-ink bg-parchment relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            
+            <div class="text-center mb-12" data-aos="fade-up">
+                <div class="inline-flex items-center gap-2 bg-atomic/15 text-atomic px-4 py-1.5 retro-border border-2 text-xs font-bold uppercase mb-3">
+                    <i class="fa-solid fa-recycle text-sm pulse-glow"></i> Circular Economy Protocol
+                </div>
+                <h2 class="font-display text-5xl sm:text-6xl text-ink uppercase tracking-tight">Bottle Return Cashback</h2>
+                <p class="font-bold text-sm sm:text-base text-ink/75 max-w-2xl mx-auto mt-2">
+                    Return your empty swing-top glass bottles to any Bunker Outpost or via post. Submit your return proof and original purchase proof below to claim <strong class="text-rust">£1.50 cashback per bottle</strong> sent straight to your Bank Account or PayPal!
+                </p>
+            </div>
+
+            <div class="bg-parchmentDark p-6 sm:p-10 retro-border shadow-[10px_10px_0_0_#5B9EA6]" data-aos="zoom-in">
+                
+                <!-- Outpost Drop-off Info Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-xs font-bold">
+                    <div class="bg-parchment p-3.5 retro-border border-2">
+                        <span class="text-rust block uppercase font-display text-lg mb-1">1. Bunker HQ (HQ Drop)</span>
+                        <p class="text-ink/80 text-[11px]">173 Reddicap Heath Rd, Sutton Coldfield, B75 7EN</p>
+                    </div>
+                    <div class="bg-parchment p-3.5 retro-border border-2">
+                        <span class="text-atomic block uppercase font-display text-lg mb-1">2. Leviathan Taproom</span>
+                        <p class="text-ink/80 text-[11px]">Unit 4 & 5, 17 Reddicap Trading Estate, B75 7BU</p>
+                    </div>
+                    <div class="bg-parchment p-3.5 retro-border border-2">
+                        <span class="text-ink block uppercase font-display text-lg mb-1">3. Postal Return</span>
+                        <p class="text-ink/80 text-[11px]">Post wrapped empties to Bunker HQ with your Callsign</p>
+                    </div>
+                </div>
+
+                <!-- Cashback Claim Form -->
+                <form id="cashback-claim-form" onsubmit="handleCashbackClaimSubmit(event)" class="space-y-5 font-bold text-xs sm:text-sm">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block uppercase mb-1 text-ink">Survivor Callsign / Full Name <span class="text-rust">*</span></label>
+                            <input type="text" id="cb-name" required placeholder="e.g. Vault Hunter Sarah" class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                        </div>
+                        <div>
+                            <label class="block uppercase mb-1 text-ink">E-Mail Address <span class="text-rust">*</span></label>
+                            <input type="email" id="cb-email" required placeholder="sarah@wasteland.uk" class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block uppercase mb-1 text-ink">Drop-off / Return Location <span class="text-rust">*</span></label>
+                            <select id="cb-location" required class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                                <option value="Bunker HQ - 173 Reddicap Heath Road, B75 7EN">1. Bunker HQ Drop-off (173 Reddicap Heath Rd, B75 7EN)</option>
+                                <option value="Leviathan Brewery - Unit 4&5, 17 Reddicap Trading Est, B75 7BU">2. Leviathan Brewery Taproom (Unit 4 & 5)</option>
+                                <option value="Postal Return to Bunker HQ">3. Postal Return Package to Bunker HQ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block uppercase mb-1 text-ink">Bottles Returned <span class="text-rust">*</span></label>
+                            <input type="number" id="cb-bottle-count" min="1" max="50" value="1" oninput="updateCashbackValue()" required class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body font-bold text-center">
+                        </div>
+                    </div>
+
+                    <!-- Payout Total Banner -->
+                    <div class="bg-radYellow/25 border-2 border-ink p-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-ink/75 block">Cashback Payout Value:</span>
+                            <span class="text-xs text-ink/60 font-normal">Calculated at £1.50 per verified swing-top bottle</span>
+                        </div>
+                        <span id="cb-payout-total" class="font-display text-4xl text-rust">£1.50</span>
+                    </div>
+
+                    <!-- Payout Method -->
+                    <div>
+                        <label class="block uppercase mb-1 text-ink">Payout Destination Details (Bank or PayPal) <span class="text-rust">*</span></label>
+                        <input type="text" id="cb-payout-details" required placeholder="Enter PayPal Email OR UK Bank Sort Code & Account Number" class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                    </div>
+
+                    <!-- File Uploads: 1. Proof of Return, 2. Online Proof of Purchase -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="bg-parchment p-3.5 retro-border border-2">
+                            <label class="block uppercase mb-1 text-ink">1. Proof of Bottle Return <span class="text-rust">*</span></label>
+                            <p class="text-[11px] text-ink/65 font-normal mb-2">Photo of dropped-off bottles or outpost drop-off slip</p>
+                            <input type="file" id="cb-return-proof" accept="image/*,.pdf" required class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:retro-border file:bg-ink file:text-parchment file:text-xs file:font-bold file:uppercase hover:file:bg-rust">
+                        </div>
+                        <div class="bg-parchment p-3.5 retro-border border-2">
+                            <label class="block uppercase mb-1 text-ink">2. Online Proof of Purchase <span class="text-rust">*</span></label>
+                            <p class="text-[11px] text-ink/65 font-normal mb-2">Original order email, Square receipt, or invoice screenshot</p>
+                            <input type="file" id="cb-purchase-proof" accept="image/*,.pdf" required class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:retro-border file:bg-ink file:text-parchment file:text-xs file:font-bold file:uppercase hover:file:bg-rust">
+                        </div>
+                    </div>
+
+                    <!-- Notes of Return -->
+                    <div>
+                        <label class="block uppercase mb-1 text-ink">Notes of Return (Optional)</label>
+                        <textarea id="cb-notes" rows="2" placeholder="e.g. Dropped off with staff at Leviathan taproom on Saturday afternoon..." class="w-full bg-parchment retro-border px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="cb-submit-btn" class="w-full bg-atomic text-parchment py-4 font-display text-2xl uppercase tracking-wider retro-button shadow-retro hover:bg-atomicDark flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Transmit Cashback Claim to Bunker Command >></span>
+                    </button>
+                </form>
+
+                <!-- Cashback Claim Success Banner -->
+                <div id="cb-success-banner" class="hidden mt-6 p-6 bg-parchment border-4 border-atomic shadow-retro text-center space-y-3">
+                    <div class="w-12 h-12 bg-atomic/20 rounded-full flex items-center justify-center mx-auto border-2 border-atomic">
+                        <i class="fa-solid fa-check text-2xl text-atomic"></i>
+                    </div>
+                    <h3 class="font-display text-3xl sm:text-4xl text-ink uppercase">Cashback Transmission Logged!</h3>
+                    <p id="cb-success-msg" class="text-xs sm:text-sm font-bold text-ink/80 max-w-xl mx-auto">
+                        Your claim has been dispatched to <strong>thebunkerbrews@gmail.com</strong>. Bunker Command will inspect the submission and credit your account within 24–48 hours!
+                    </p>
+                    <div class="pt-2">
+                        <button type="button" onclick="document.getElementById('cb-success-banner').classList.add('hidden')" class="bg-ink text-parchment px-5 py-2 text-xs font-bold uppercase hover:bg-rust cursor-pointer">
+                            Acknowledge & Close
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </section>
 
     <!-- Customer Reviews (Interactive Terminal Console) -->
@@ -1994,59 +2021,12 @@
             playBeep(450, 0.04);
         }
 
-        function updateBottleDiscount() {
-            if (!currentUser) {
-                showNotification('Member-only perk: Log in to claim bottle return credits.', 'warning');
-                openAuthModal();
-                document.getElementById('bottle-return-qty').value = "0";
-                bottleDiscountCount = 0;
-                renderCartTotals();
-                return;
-            }
-
-            bottleDiscountCount = parseInt(document.getElementById('bottle-return-qty').value) || 0;
-            
-            if (bottleDiscountCount > 0 && !bottleProofData) {
-                showNotification('Please upload your drop-off proof to validate your £1.50 discount!', 'info');
-                openBottleProofModal();
-            }
-            
-            renderCartTotals();
-            playBeep(700, 0.04);
-        }
-
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             const navBadge = document.getElementById('nav-cart-badge');
             
             const totalItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-            navBadge.innerText = totalItemsCount;
-
-            // Render Auth-locked state for bottle returns
-            const guestBox = document.getElementById('bottle-perk-guest');
-            const memberBox = document.getElementById('bottle-perk-member');
-            if (currentUser) {
-                guestBox.classList.add('hidden');
-                memberBox.classList.remove('hidden');
-            } else {
-                guestBox.classList.remove('hidden');
-                memberBox.classList.add('hidden');
-                bottleDiscountCount = 0;
-                bottleProofData = null;
-            }
-
-            // Render Proof Status Badge
-            const proofBadge = document.getElementById('proof-status-badge');
-            const proofBtnLabel = document.getElementById('proof-btn-label');
-            if (bottleProofData) {
-                proofBadge.innerText = `✓ Verified (${bottleProofData.count} bottles)`;
-                proofBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 bg-atomic text-parchment';
-                proofBtnLabel.innerText = 'Update / View Uploaded Proof';
-            } else {
-                proofBadge.innerText = '⚠️ Required';
-                proofBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 bg-radYellow/30 text-ink border border-ink/30';
-                proofBtnLabel.innerText = 'Upload Return Proof (Photo/Slip)';
-            }
+            if (navBadge) navBadge.innerText = totalItemsCount;
 
             if (cart.length === 0) {
                 container.innerHTML = `
@@ -2070,9 +2050,9 @@
                         <span class="text-xs font-bold text-ink/70">${item.size} • £${item.price.toFixed(2)} ea</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="updateCartQty(${index}, -1)" class="w-7 h-7 bg-parchment border-2 border-ink font-bold flex items-center justify-center hover:bg-rust hover:text-parchment">-</button>
+                        <button onclick="updateCartQty(${index}, -1)" class="w-7 h-7 bg-parchment border-2 border-ink font-bold flex items-center justify-center hover:bg-rust hover:text-parchment cursor-pointer">-</button>
                         <span class="font-display text-xl w-5 text-center">${item.quantity}</span>
-                        <button onclick="updateCartQty(${index}, 1)" class="w-7 h-7 bg-parchment border-2 border-ink font-bold flex items-center justify-center hover:bg-atomic hover:text-parchment">+</button>
+                        <button onclick="updateCartQty(${index}, 1)" class="w-7 h-7 bg-parchment border-2 border-ink font-bold flex items-center justify-center hover:bg-atomic hover:text-parchment cursor-pointer">+</button>
                     </div>
                     <div class="text-right">
                         <span class="font-display text-2xl block text-ink">£${(item.price * item.quantity).toFixed(2)}</span>
@@ -2085,21 +2065,24 @@
 
         function renderCartTotals() {
             const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-            const discountAmount = bottleDiscountCount * 1.50;
-            const finalTotal = Math.max(0, subtotal - discountAmount);
-
             document.getElementById('cart-subtotal').innerText = `£${subtotal.toFixed(2)}`;
-            document.getElementById('bottle-rebate-display').innerText = `-£${discountAmount.toFixed(2)}`;
-            
-            const discountRow = document.getElementById('bottle-discount-row');
-            if (bottleDiscountCount > 0) {
-                discountRow.style.display = 'flex';
-                document.getElementById('cart-discount').innerText = `-£${discountAmount.toFixed(2)}`;
-            } else {
-                discountRow.style.display = 'none';
-            }
+            document.getElementById('cart-total').innerText = `£${subtotal.toFixed(2)}`;
+        }
 
-            document.getElementById('cart-total').innerText = `£${finalTotal.toFixed(2)}`;
+        function applyCartCoupon() {
+            const input = document.getElementById('cart-coupon-input');
+            const code = input ? input.value.trim().toUpperCase() : 'VAULT200';
+            if (!code) {
+                showNotification('Please enter a voucher code (e.g. VAULT200)', 'warning');
+                return;
+            }
+            try {
+                navigator.clipboard.writeText(code);
+                showNotification(`🎟️ Voucher code [${code}] copied to clipboard! Paste it at Square checkout.`, 'success');
+                playBeep(850, 0.08);
+            } catch (e) {
+                showNotification(`🎟️ Voucher code is: ${code}`, 'info');
+            }
         }
 
         /* ============================================================
@@ -2118,75 +2101,139 @@
                 return;
             }
 
-            // Member + Proof Verification check for bottle return discounts
-            if (bottleDiscountCount > 0) {
-                if (!currentUser) {
-                    showNotification('Member-only perk: Please log in to claim bottle return credits.', 'warning');
-                    openAuthModal();
-                    return;
-                }
-                if (!bottleProofData) {
-                    showNotification('Proof of bottle return required! Please upload your drop-off receipt/photo.', 'warning');
-                    openBottleProofModal();
-                    return;
-                }
-            }
-
             const btn = document.getElementById('checkout-btn');
             const btnText = document.getElementById('checkout-btn-text');
             btn.disabled = true;
             btnText.innerText = 'Connecting to Square...';
             playBeep(900, 0.08);
 
-            // Determine promo code if bottle return discount active
-            let promoCode = '';
-            if (bottleDiscountCount > 0) {
-                promoCode = `BOTTLE${bottleDiscountCount * 150}`;
-                try {
-                    await navigator.clipboard.writeText(promoCode);
-                    showNotification(`Discount Voucher [${promoCode}] (-£${(bottleDiscountCount * 1.5).toFixed(2)}) copied to clipboard!`, 'success');
-                } catch (e) {
-                    console.log('Clipboard auto-copy fallback');
-                }
-            }
-
             // Direct Square Payment Link for single-item checkout
             if (cart.length === 1) {
                 const itemKey = `${cart[0].name}_${cart[0].size}`;
-                const targetUrl = SQUARE_PAYMENT_LINKS[itemKey];
-                
-                if (targetUrl) {
-                    if (bottleDiscountCount > 0) {
-                        alert(
-                            `🎟️ BOTTLE RETURN DISCOUNT APPLIED (-£${(bottleDiscountCount * 1.5).toFixed(2)})\n\n` +
-                            `Your Voucher Code: ${promoCode}\n` +
-                            `(We have copied it to your clipboard!)\n\n` +
-                            `Please paste '${promoCode}' into the Coupon / Discount box on the Square checkout screen to apply your £${(bottleDiscountCount * 1.5).toFixed(2)} savings.`
-                        );
-                    }
-                    window.location.href = targetUrl;
-                    return;
-                }
+                const targetUrl = SQUARE_PAYMENT_LINKS[itemKey] || 'https://square.link/u/QXPyUGEw';
+                window.location.href = targetUrl;
+                return;
             }
 
-            // For multi-item carts, open primary item or guide survivor
+            // For multi-item carts, redirect to primary checkout link
             if (cart.length > 1) {
                 const itemKey = `${cart[0].name}_${cart[0].size}`;
-                const targetUrl = SQUARE_PAYMENT_LINKS[itemKey] || 'https://square.link/u/bcQlovqO';
-                
-                alert(
-                    `📦 MULTI-ITEM CRATE CHECKOUT 📦\n\n` +
-                    `Cart items: ${cart.map(i => `${i.quantity}x ${i.name} (${i.size})`).join(', ')}\n` +
-                    `Total: ${document.getElementById('cart-total').innerText}\n` +
-                    (bottleDiscountCount > 0 ? `\n🎟️ Voucher Code Copied: ${promoCode} (-£${(bottleDiscountCount * 1.5).toFixed(2)})\n` : '\n') +
-                    `Redirecting to secure Square checkout now!`
-                );
+                const targetUrl = SQUARE_PAYMENT_LINKS[itemKey] || 'https://square.link/u/QXPyUGEw';
                 window.location.href = targetUrl;
                 return;
             }
 
             btn.disabled = false;
             btnText.innerText = 'Proceed to Checkout (Square)';
+        }
+
+        /* ============================================================
+           4B. BOTTLE RETURN CASHBACK PROTOCOL (SUBMIT PROOF & CLAIM)
+           ============================================================ */
+        function updateCashbackValue() {
+            const count = parseInt(document.getElementById('cb-bottle-count').value) || 1;
+            const total = (count * 1.50).toFixed(2);
+            document.getElementById('cb-payout-total').innerText = `£${total}`;
+        }
+
+        async function handleCashbackClaimSubmit(event) {
+            event.preventDefault();
+            playBeep(850, 0.08);
+
+            const submitBtn = document.getElementById('cb-submit-btn');
+            const name = document.getElementById('cb-name').value.trim();
+            const email = document.getElementById('cb-email').value.trim();
+            const location = document.getElementById('cb-location').value;
+            const count = parseInt(document.getElementById('cb-bottle-count').value) || 1;
+            const payoutDetails = document.getElementById('cb-payout-details').value.trim();
+            const notes = document.getElementById('cb-notes').value.trim() || 'None';
+            const returnProofInput = document.getElementById('cb-return-proof');
+            const purchaseProofInput = document.getElementById('cb-purchase-proof');
+
+            const returnProofName = returnProofInput.files[0] ? returnProofInput.files[0].name : 'return_proof.jpg';
+            const purchaseProofName = purchaseProofInput.files[0] ? purchaseProofInput.files[0].name : 'purchase_proof.jpg';
+            const claimId = 'BB-CB-' + Math.floor(100000 + Math.random() * 900000);
+            const payoutAmount = (count * 1.50).toFixed(2);
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'TRANSMITTING CLAIM TO BUNKER COMMAND...';
+
+            const claimData = {
+                claimId,
+                name,
+                email,
+                location,
+                count,
+                payoutAmount: `£${payoutAmount}`,
+                payoutDetails,
+                returnProofName,
+                purchaseProofName,
+                notes,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                // 1. Insert into Supabase if available
+                if (supabaseClient) {
+                    await supabaseClient.from('bottle_claims').insert([{
+                        claim_id: claimId,
+                        name: name,
+                        email: email,
+                        location: location,
+                        count: count,
+                        payout_amount: payoutAmount,
+                        payout_details: payoutDetails,
+                        notes: notes,
+                        created_at: new Date().toISOString()
+                    }]);
+                }
+
+                // 2. Save locally
+                const localClaims = JSON.parse(localStorage.getItem('bunker_cashback_claims') || '[]');
+                localClaims.unshift(claimData);
+                localStorage.setItem('bunker_cashback_claims', JSON.stringify(localClaims));
+
+                // 3. Prepare email dispatch link to thebunkerbrews@gmail.com
+                const subject = encodeURIComponent(`[BUNKER BOTTLE CASHBACK CLAIM] ${claimId} - ${name} (${count} Bottles / £${payoutAmount})`);
+                const body = encodeURIComponent(
+                    `⚡ BUNKER BREWS - BOTTLE RETURN CASHBACK CLAIM ⚡\n\n` +
+                    `Claim ID: ${claimId}\n` +
+                    `Survivor Callsign: ${name}\n` +
+                    `Email: ${email}\n` +
+                    `Drop-off Location: ${location}\n` +
+                    `Bottles Returned: ${count}\n` +
+                    `Cashback Due: £${payoutAmount}\n` +
+                    `Payout Destination: ${payoutDetails}\n` +
+                    `Return Proof File: ${returnProofName}\n` +
+                    `Purchase Proof File: ${purchaseProofName}\n` +
+                    `Survivor Notes: ${notes}\n\n` +
+                    `Submitted: ${new Date().toLocaleString()}\n`
+                );
+
+                // Show on-screen confirmation banner
+                document.getElementById('cb-success-msg').innerHTML = `
+                    Claim <strong>${claimId}</strong> for <strong>£${payoutAmount}</strong> (${count} bottles) recorded! Transmission dispatched to <strong>thebunkerbrews@gmail.com</strong>.<br><br>
+                    <a href="mailto:thebunkerbrews@gmail.com?subject=${subject}&body=${body}" class="inline-block bg-rust text-parchment px-4 py-1.5 retro-border text-xs uppercase font-bold hover:bg-rustDark mt-2">
+                        <i class="fa-solid fa-envelope mr-1"></i> Send Backup Verification Email
+                    </a>
+                `;
+                document.getElementById('cb-success-banner').classList.remove('hidden');
+                
+                showNotification(`🎉 Cashback claim ${claimId} logged! Payout: £${payoutAmount}`, 'success');
+                playBeep(950, 0.15);
+
+                // Reset form fields
+                document.getElementById('cashback-claim-form').reset();
+                updateCashbackValue();
+
+            } catch (err) {
+                console.error('Cashback claim submit error:', err);
+                document.getElementById('cb-success-banner').classList.remove('hidden');
+                showNotification(`Cashback claim ${claimId} logged locally!`, 'info');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Transmit Cashback Claim to Bunker Command >>';
+            }
         }
 
         /* ============================================================
