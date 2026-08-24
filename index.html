@@ -324,18 +324,13 @@
         <!-- Cart Footer & Checkout -->
         <div class="p-6 bg-parchmentDark border-t-4 border-ink space-y-4">
             
-            <!-- Quick Voucher Code Box -->
-            <div class="bg-parchment p-3.5 retro-border border-2">
-                <div class="flex items-center justify-between text-xs font-bold uppercase text-ink mb-1">
-                    <span><i class="fa-solid fa-tag text-rust mr-1.5"></i> Square Voucher Code:</span>
-                    <span class="text-[10px] text-rust font-normal">Apply at Square Checkout</span>
-                </div>
-                <div class="flex gap-2">
-                    <input type="text" id="cart-coupon-input" placeholder="e.g. VAULT200" class="flex-grow bg-ink/5 border-2 border-ink px-2.5 py-1.5 text-xs font-bold uppercase focus:outline-none font-body">
-                    <button type="button" onclick="applyCartCoupon()" class="bg-ink text-parchment px-3 py-1.5 font-bold uppercase text-xs hover:bg-rust transition-colors retro-border">
-                        Copy Code
-                    </button>
-                </div>
+            <!-- Square Coupon / Gift Card Guidance Subnote -->
+            <div class="bg-parchment p-3.5 retro-border border-2 text-xs text-ink/80 font-bold flex items-start gap-2.5">
+                <i class="fa-solid fa-gift text-rust text-base mt-0.5 shrink-0"></i>
+                <p class="leading-relaxed">
+                    <span class="text-ink uppercase font-bold block mb-0.5">Discount & Gift Card Protocol:</span>
+                    To apply a discount code (such as <strong class="text-rust bg-radYellow/30 px-1 py-0.5 font-mono">VAULT200</strong>) or gift card, enter your code into the <em>"Gift Card, Coupon, or Discount Code"</em> section on the Square checkout screen.
+                </p>
             </div>
 
             <!-- Financial Summary -->
@@ -486,7 +481,7 @@
                     <p>Our craft cola syrup concentrates are small-batch brewed with whole spices and natural botanical extracts. Syrups must be refrigerated after opening and mixed at the recommended 1:5 ratio (1 part syrup to 5 parts sparkling water).</p>
                     
                     <h4 class="font-display text-xl text-ink uppercase mt-2">2. Pricing & Dispatch</h4>
-                    <p>500ml bottles are £7.50; 250ml bottles are £5.50. Orders are dispatched via UK postal carriers or available for free local pickup in Sutton Coldfield.</p>
+                    <p>450ml bottles are £8.50; 330ml bottles are £6.75; 250ml bottles are £5.50. Orders are dispatched via UK postal carriers or available for free local pickup in Sutton Coldfield.</p>
 
                     <h4 class="font-display text-xl text-ink uppercase mt-2">3. Circular Bottle Return & Cashback Terms</h4>
                     <p>Return your empty, undamaged swing-top glass bottles to any registered outpost or via post to claim <strong>£1.50 cashback per bottle</strong>. Proof of return and purchase is required via the online Bottle Return Cashback portal. All verified cashback payouts are processed within <strong>10 working days</strong>.</p>
@@ -855,19 +850,22 @@
                     <!-- Size Selector & Dynamic Add-to-Cart -->
                     <div class="mt-auto border-t-[3px] border-ink pt-4">
                         <label class="block font-bold text-xs uppercase mb-2 text-ink/70">Select Ration Size:</label>
-                        <div class="grid grid-cols-2 gap-2 mb-4">
-                            <button type="button" onclick="selectProductSize('basic', '500ml', 7.50); playBeep();" id="btn-size-basic-500" class="py-2 px-3 border-[3px] border-ink bg-rust text-parchment font-bold text-xs uppercase transition-all shadow-sm">
-                                500ml (£7.50)
+                        <div class="grid grid-cols-3 gap-1.5 mb-4">
+                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/10 transition-all text-center">
+                                250ml<br><span class="font-normal text-[10px] opacity-80">£5.50</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:bg-rust/10 transition-all">
-                                250ml (£5.50)
+                            <button type="button" onclick="selectProductSize('basic', '330ml', 6.75); playBeep();" id="btn-size-basic-330" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/10 transition-all text-center">
+                                330ml<br><span class="font-normal text-[10px] opacity-80">£6.75</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('basic', '450ml', 8.50); playBeep();" id="btn-size-basic-450" class="py-2 px-1 border-[3px] border-ink bg-rust text-parchment font-bold text-[11px] sm:text-xs uppercase transition-all shadow-sm text-center">
+                                450ml<br><span class="font-normal text-[10px] opacity-90">£8.50</span>
                             </button>
                         </div>
                         
                         <div class="flex items-center justify-between">
                             <div>
                                 <span class="text-xs font-bold text-ink/60 uppercase block">Ration Cost</span>
-                                <span id="price-display-basic" class="font-display text-4xl text-ink">£7.50</span>
+                                <span id="price-display-basic" class="font-display text-4xl text-ink">£8.50</span>
                             </div>
                             <button onclick="addProductToCart('Bunker Basic', currentSizes['basic'].size, currentSizes['basic'].price); playBeep();" class="bg-ink text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-rust flex items-center gap-2">
                                 <i class="fa-solid fa-plus text-sm"></i> Add to Crate
@@ -938,19 +936,22 @@
                     <!-- Size Selector & Dynamic Add-to-Cart -->
                     <div class="mt-auto border-t-[3px] border-ink pt-4">
                         <label class="block font-bold text-xs uppercase mb-2 text-ink/70">Select Ration Size:</label>
-                        <div class="grid grid-cols-2 gap-2 mb-4">
-                            <button type="button" onclick="selectProductSize('scout', '500ml', 7.50); playBeep();" id="btn-size-scout-500" class="py-2 px-3 border-[3px] border-ink bg-atomic text-parchment font-bold text-xs uppercase transition-all shadow-sm">
-                                500ml (£7.50)
+                        <div class="grid grid-cols-3 gap-1.5 mb-4">
+                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/10 transition-all text-center">
+                                250ml<br><span class="font-normal text-[10px] opacity-80">£5.50</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:bg-atomic/10 transition-all">
-                                250ml (£5.50)
+                            <button type="button" onclick="selectProductSize('scout', '330ml', 6.75); playBeep();" id="btn-size-scout-330" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/10 transition-all text-center">
+                                330ml<br><span class="font-normal text-[10px] opacity-80">£6.75</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('scout', '450ml', 8.50); playBeep();" id="btn-size-scout-450" class="py-2 px-1 border-[3px] border-ink bg-atomic text-parchment font-bold text-[11px] sm:text-xs uppercase transition-all shadow-sm text-center">
+                                450ml<br><span class="font-normal text-[10px] opacity-90">£8.50</span>
                             </button>
                         </div>
                         
                         <div class="flex items-center justify-between">
                             <div>
                                 <span class="text-xs font-bold text-ink/60 uppercase block">Ration Cost</span>
-                                <span id="price-display-scout" class="font-display text-4xl text-ink">£7.50</span>
+                                <span id="price-display-scout" class="font-display text-4xl text-ink">£8.50</span>
                             </div>
                             <button onclick="addProductToCart('Bunker Scout', currentSizes['scout'].size, currentSizes['scout'].price); playBeep();" class="bg-ink text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-atomic flex items-center gap-2">
                                 <i class="fa-solid fa-plus text-sm"></i> Add to Crate
@@ -986,7 +987,7 @@
 
                     <div class="mt-6 pt-4 border-t-2 border-parchment/30 text-center relative overflow-hidden bg-ink/10 p-2.5">
                         <p class="font-terminal text-lg uppercase tracking-widest text-parchment">
-                            >> YIELD: ~16 SERVINGS PER 500ML BOTTLE
+                            >> YIELD: ~15 SERVINGS PER 450ML BOTTLE
                         </p>
                     </div>
                 </div>
@@ -1106,9 +1107,9 @@
                         <div class="w-14 h-14 bg-ink text-radYellow retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
                             <i class="fa-solid fa-recycle"></i>
                         </div>
-                        <span class="font-display text-5xl text-ink">16 Cans</span>
+                        <span class="font-display text-5xl text-ink">15 Cans</span>
                         <span class="font-display text-xl uppercase text-ink mt-1">Waste Eliminated</span>
-                        <p class="text-xs font-bold text-ink/70 mt-2">16 single-use cans / plastic bottles diverted from landfill per 500ml concentrate.</p>
+                        <p class="text-xs font-bold text-ink/70 mt-2">15 single-use cans / plastic bottles diverted from landfill per 450ml concentrate.</p>
                     </div>
 
                     <!-- Metric 4 -->
@@ -1367,7 +1368,7 @@
                         <i class="fa-solid fa-bottle-droplet text-3xl text-rust mb-2"></i>
                         <span class="block text-xs font-bold text-ink/60 uppercase">Craft Syrup Needed</span>
                         <span id="calc-syrup" class="font-display text-4xl text-ink block mt-1">120 ml</span>
-                        <span id="calc-bottles-hint" class="text-[11px] font-bold text-rust uppercase mt-1 block">~0.24 of a 500ml bottle</span>
+                        <span id="calc-bottles-hint" class="text-[11px] font-bold text-rust uppercase mt-1 block">~0.27 of a 450ml bottle</span>
                     </div>
 
                     <div class="bg-parchment p-5 retro-border border-2">
@@ -1960,8 +1961,8 @@
            2. PRODUCT SIZE SELECTION & STATE
            ============================================================ */
         const currentSizes = {
-            basic: { size: '500ml', price: 7.50 },
-            scout: { size: '500ml', price: 7.50 }
+            basic: { size: '450ml', price: 8.50 },
+            scout: { size: '450ml', price: 8.50 }
         };
 
         function selectProductSize(productKey, size, price) {
@@ -1970,18 +1971,21 @@
             // Update Price Display
             document.getElementById(`price-display-${productKey}`).innerText = `£${price.toFixed(2)}`;
             
-            // Update Toggle Button Styles
-            const btn500 = document.getElementById(`btn-size-${productKey}-500`);
-            const btn250 = document.getElementById(`btn-size-${productKey}-250`);
+            // Update Toggle Button Styles for 250ml, 330ml, 450ml
+            const sizeList = ['250', '330', '450'];
             const activeColor = productKey === 'basic' ? 'bg-rust' : 'bg-atomic';
+            const selectedNum = size.replace('ml', '');
             
-            if (size === '500ml') {
-                btn500.className = `py-2 px-3 border-[3px] border-ink ${activeColor} text-parchment font-bold text-xs uppercase transition-all shadow-sm`;
-                btn250.className = `py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:${activeColor}/10 transition-all`;
-            } else {
-                btn250.className = `py-2 px-3 border-[3px] border-ink ${activeColor} text-parchment font-bold text-xs uppercase transition-all shadow-sm`;
-                btn500.className = `py-2 px-3 border-[3px] border-ink bg-parchment text-ink font-bold text-xs uppercase hover:${activeColor}/10 transition-all`;
-            }
+            sizeList.forEach(s => {
+                const btn = document.getElementById(`btn-size-${productKey}-${s}`);
+                if (btn) {
+                    if (s === selectedNum) {
+                        btn.className = `py-2 px-1 border-[3px] border-ink ${activeColor} text-parchment font-bold text-[11px] sm:text-xs uppercase transition-all shadow-sm text-center`;
+                    } else {
+                        btn.className = `py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:${activeColor}/10 transition-all text-center`;
+                    }
+                }
+            });
         }
 
         /* ============================================================
@@ -2099,8 +2103,12 @@
            ============================================================ */
         const SQUARE_PAYMENT_LINKS = {
             'Bunker Basic_250ml': 'https://square.link/u/bcQlovqO',
+            'Bunker Basic_330ml': 'https://square.link/u/uhtBtlOr',
+            'Bunker Basic_450ml': 'https://square.link/u/QXPyUGEw',
             'Bunker Basic_500ml': 'https://square.link/u/QXPyUGEw',
             'Bunker Scout_250ml': 'https://square.link/u/m4vEh6za',
+            'Bunker Scout_330ml': 'https://square.link/u/tVGdG5R9',
+            'Bunker Scout_450ml': 'https://square.link/u/RcZKLkJN',
             'Bunker Scout_500ml': 'https://square.link/u/RcZKLkJN',
         };
 
@@ -2385,12 +2393,12 @@
             const syrupMl = servings * 30; // 30ml per serving
             const waterMl = servings * 150; // 150ml per serving
             const totalLiquid = syrupMl + waterMl;
-            const bottleRatio = (syrupMl / 500).toFixed(2);
+            const bottleRatio = (syrupMl / 450).toFixed(2);
 
             document.getElementById('calc-syrup').innerText = `${syrupMl} ml`;
             document.getElementById('calc-water').innerText = `${waterMl} ml`;
             document.getElementById('calc-total-liquid').innerText = `${totalLiquid} ml`;
-            document.getElementById('calc-bottles-hint').innerText = `~${bottleRatio} of a 500ml bottle`;
+            document.getElementById('calc-bottles-hint').innerText = `~${bottleRatio} of a 450ml bottle`;
 
             // Update Glass Visualizer
             const syrupEl = document.getElementById('visualizer-syrup');
@@ -2605,7 +2613,7 @@
 
         function claimHackReward() {
             navigator.clipboard.writeText('VAULT200');
-            showNotification('🎉 Voucher VAULT200 (-£2.00) copied to clipboard! Paste it in the coupon box at checkout.', 'success');
+            showNotification('🎉 Code VAULT200 (-£2.00) copied! Enter it in the gift card / coupon box on the Square checkout screen.', 'success');
             closeHackModal();
         }
 
