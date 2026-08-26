@@ -1,0 +1,34 @@
+name: Monthly Bunker Analytics & Telemetry Report
+
+on:
+  schedule:
+    # Runs at 08:00 AM UTC on the 1st day of every month
+    - cron: '0 8 1 * *'
+  workflow_dispatch: # Allows manual trigger anytime from GitHub Actions tab
+
+jobs:
+  dispatch-monthly-report:
+    name: Compile & Send Monthly Telemetry Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Compile & Send Monthly Report to Bunker Command
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://floqgjqcscckszjvbger.supabase.co' }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZsb3FnanFjc2Nja3N6anZiZ2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNDYwMjgsImV4cCI6MjEwMjgyMjAyOH0.iwhF_0qDKtk69B-jusmqpgLquleGjE835ssn--V6gEk' }}
+          REPORT_EMAIL: ${{ secrets.REPORT_EMAIL || 'thebunkerbrews@gmail.com' }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: node scripts/send_monthly_report.js

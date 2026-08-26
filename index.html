@@ -436,10 +436,11 @@
             
             <!-- Legal Tabs -->
             <div class="flex border-b-[3px] border-ink mb-4 shrink-0 overflow-x-auto text-xs sm:text-sm font-bold gap-1">
-                <button id="legal-tab-allergens" onclick="switchLegalTab('allergens')" class="py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0">Allergens & Dietary</button>
-                <button id="legal-tab-privacy" onclick="switchLegalTab('privacy')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Privacy Protocol</button>
-                <button id="legal-tab-terms" onclick="switchLegalTab('terms')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Terms of Survival</button>
-                <button id="legal-tab-contact" onclick="switchLegalTab('contact')" class="py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Outposts & Comms</button>
+                <button id="legal-tab-allergens" onclick="switchLegalTab('allergens')" class="py-2.5 px-3.5 font-display text-lg sm:text-xl bg-ink text-parchment uppercase transition-colors shrink-0">Allergens & Dietary</button>
+                <button id="legal-tab-privacy" onclick="switchLegalTab('privacy')" class="py-2.5 px-3.5 font-display text-lg sm:text-xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Privacy Protocol</button>
+                <button id="legal-tab-cookies" onclick="switchLegalTab('cookies')" class="py-2.5 px-3.5 font-display text-lg sm:text-xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Cookie Directives</button>
+                <button id="legal-tab-terms" onclick="switchLegalTab('terms')" class="py-2.5 px-3.5 font-display text-lg sm:text-xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Terms of Survival</button>
+                <button id="legal-tab-contact" onclick="switchLegalTab('contact')" class="py-2.5 px-3.5 font-display text-lg sm:text-xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0">Outposts & Comms</button>
             </div>
 
             <!-- Scrollable Content Area -->
@@ -476,6 +477,32 @@
                     
                     <h4 class="font-display text-xl text-ink uppercase mt-2">3. Account & Local Storage</h4>
                     <p>Survivor callsigns and local preferences are securely stored on your local browser. You may request account deletion or data exports at any time by emailing <strong>thebunkerbrews@gmail.com</strong>.</p>
+                </div>
+
+                <!-- Cookie Directives Section -->
+                <div id="legal-sec-cookies" class="hidden space-y-3">
+                    <h3 class="font-display text-2xl text-atomic uppercase">UK GDPR & PECR Cookie Directives</h3>
+                    <p>We believe in full transparency and survivor data privacy. We operate a strict opt-in protocol for all analytical telemetry:</p>
+                    
+                    <div class="space-y-2">
+                        <div class="p-3 bg-ink/5 retro-border border-2">
+                            <span class="font-display text-lg text-rust uppercase block">1. Essential Local Storage (Always Active)</span>
+                            <p class="text-xs text-ink/80">Required for core functionality: crate items, audio radio state, security tokens, and consent records. No personal profiling.</p>
+                        </div>
+                        <div class="p-3 bg-ink/5 retro-border border-2">
+                            <span class="font-display text-lg text-atomic uppercase block">2. Privacy-Friendly Analytics (Opt-In)</span>
+                            <p class="text-xs text-ink/80">Anonymously records page visits, recipe views, mini-game engagement, and bottle return claims. Zero IP address tracking or third-party ad profiling.</p>
+                        </div>
+                        <div class="p-3 bg-ink/5 retro-border border-2">
+                            <span class="font-display text-lg text-ink uppercase block">3. Monthly Executive Data Reports</span>
+                            <p class="text-xs text-ink/80">Aggregated non-personal site telemetry is compiled monthly and transmitted to Bunker Command (thebunkerbrews@gmail.com) to optimize supply allocations.</p>
+                        </div>
+                    </div>
+                    <div class="pt-1">
+                        <button type="button" onclick="openCookiePrefsModal()" class="bg-rust text-parchment px-4 py-2 text-xs uppercase font-bold retro-border hover:bg-rustDark">
+                            <i class="fa-solid fa-sliders mr-1"></i> Open Cookie Preferences Manager
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Terms Section -->
@@ -520,6 +547,92 @@
             <div class="mt-4 pt-3 border-t-2 border-ink flex justify-between items-center shrink-0 text-xs font-bold text-ink/70">
                 <span>© 2026 Bunker Brews Legal Division</span>
                 <button type="button" onclick="closeLegalModal()" class="bg-ink text-parchment px-4 py-1.5 font-bold uppercase hover:bg-rust transition-colors">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GDPR Cookie Consent Banner (Bottom Screen) -->
+    <div id="cookie-consent-banner" class="fixed bottom-0 left-0 right-0 z-[110] hidden bg-parchment border-t-4 border-ink shadow-[0_-8px_25px_rgba(0,0,0,0.3)] p-4 sm:p-5 font-bold text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-start sm:items-center gap-3">
+                <div class="w-10 h-10 bg-rust text-parchment rounded-full flex items-center justify-center shrink-0 border-2 border-ink text-lg">
+                    <i class="fa-solid fa-cookie-bite"></i>
+                </div>
+                <div>
+                    <span class="font-display text-xl text-rust uppercase block leading-tight">Survivor Data Directives & Cookies (UK GDPR)</span>
+                    <p class="text-ink/80 text-[11px] sm:text-xs font-normal max-w-3xl leading-snug">
+                        We use essential storage to keep your crate stocked and radio tuned. With your consent, we also gather anonymized telemetry to optimize brewing logistics and send monthly performance reports to Bunker Command. Zero ad tracking.
+                        <a href="javascript:void(0)" onclick="openLegalModal('cookies')" class="underline text-rust font-bold hover:text-ink">Read Protocol</a>.
+                    </p>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 shrink-0 w-full md:w-auto justify-end">
+                <button type="button" onclick="openCookiePrefsModal()" class="px-3.5 py-2 border-2 border-ink bg-parchment hover:bg-ink/10 uppercase text-xs transition-colors">
+                    Preferences
+                </button>
+                <button type="button" onclick="acceptEssentialCookies()" class="px-3.5 py-2 border-2 border-ink bg-ink/10 hover:bg-ink hover:text-parchment uppercase text-xs transition-colors">
+                    Essential Only
+                </button>
+                <button type="button" onclick="acceptAllCookies()" class="px-4 py-2 bg-rust text-parchment retro-button shadow-retro-sm hover:bg-rustDark uppercase text-xs transition-colors">
+                    Accept All Protocols
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GDPR Cookie Preferences Granular Modal -->
+    <div id="cookie-prefs-modal" class="fixed inset-0 bg-ink/85 backdrop-blur-sm z-[120] hidden items-center justify-center p-4">
+        <div class="bg-parchment p-6 sm:p-7 retro-border shadow-[10px_10px_0_0_#4AF626] w-full max-w-lg max-h-[90vh] flex flex-col relative animate-in zoom-in duration-150">
+            <button onclick="closeCookiePrefsModal()" class="absolute top-4 right-4 text-ink hover:text-rust text-2xl font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="mb-4">
+                <h3 class="font-display text-3xl text-ink uppercase">Cookie & Telemetry Settings</h3>
+                <p class="text-xs text-ink/75 font-bold">Configure your data permissions under the UK Data Protection Act 2018.</p>
+            </div>
+            
+            <div class="space-y-3.5 overflow-y-auto pr-1 text-xs font-bold flex-grow">
+                <!-- 1. Essential -->
+                <div class="p-3.5 bg-ink/5 retro-border border-2 flex items-start justify-between gap-3">
+                    <div>
+                        <span class="font-display text-lg text-ink uppercase block">1. Essential Operations</span>
+                        <p class="text-[11px] text-ink/75 font-normal">Shopping crate persistence, 1950s radio state, theme settings, and authentication session tokens. Cannot be disabled.</p>
+                    </div>
+                    <span class="px-2 py-1 bg-ink text-parchment text-[10px] uppercase font-bold shrink-0">Always Active</span>
+                </div>
+
+                <!-- 2. Analytics -->
+                <div class="p-3.5 bg-ink/5 retro-border border-2 flex items-start justify-between gap-3">
+                    <div class="flex-grow">
+                        <span class="font-display text-lg text-atomic uppercase block">2. Anonymized Analytics</span>
+                        <p class="text-[11px] text-ink/75 font-normal">Records page views, top flavor selections, mixology yield calculations, and mini-game completions. Aggregated for monthly email reporting to Bunker Command. No personal IP tracking.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+                        <input type="checkbox" id="pref-opt-analytics" class="sr-only peer" checked>
+                        <div class="w-9 h-5 bg-ink/30 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-parchment after:border-ink after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-atomic"></div>
+                    </label>
+                </div>
+
+                <!-- 3. Marketing & Attribution -->
+                <div class="p-3.5 bg-ink/5 retro-border border-2 flex items-start justify-between gap-3">
+                    <div class="flex-grow">
+                        <span class="font-display text-lg text-rust uppercase block">3. Reward & Voucher Attribution</span>
+                        <p class="text-[11px] text-ink/75 font-normal">Measures redemption conversions of unlocked RobCo Vault discount codes (VAULT200, LOCKPICK50, RADFREE) to evaluate reward campaigns.</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+                        <input type="checkbox" id="pref-opt-marketing" class="sr-only peer" checked>
+                        <div class="w-9 h-5 bg-ink/30 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-parchment after:border-ink after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rust"></div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t-2 border-ink flex justify-end gap-2 shrink-0">
+                <button type="button" onclick="closeCookiePrefsModal()" class="px-4 py-2 border-2 border-ink uppercase text-xs font-bold hover:bg-ink/10">
+                    Cancel
+                </button>
+                <button type="button" onclick="saveCustomCookiePreferences()" class="px-5 py-2 bg-rust text-parchment uppercase text-xs font-bold retro-button shadow-retro-sm hover:bg-rustDark">
+                    Save Directives
+                </button>
             </div>
         </div>
     </div>
@@ -1862,6 +1975,8 @@
                 <div class="flex flex-wrap gap-4 sm:gap-6">
                     <a href="javascript:void(0)" onclick="openLegalModal('allergens')" class="hover:text-radYellow font-bold"><i class="fa-solid fa-circle-info mr-1"></i>Allergen Advice</a>
                     <a href="javascript:void(0)" onclick="openLegalModal('privacy')" class="hover:text-rust">Privacy Protocol</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('cookies')" class="hover:text-rust">Cookie Directives</a>
+                    <a href="javascript:void(0)" onclick="openCookiePrefsModal()" class="hover:text-atomic"><i class="fa-solid fa-cookie-bite mr-1"></i>Cookie Settings</a>
                     <a href="javascript:void(0)" onclick="openLegalModal('terms')" class="hover:text-rust">Terms of Survival</a>
                     <a href="javascript:void(0)" onclick="openLegalModal('contact')" class="hover:text-atomic">Outposts & Comms</a>
                 </div>
@@ -2107,6 +2222,8 @@
                     }
                 }
             });
+
+            BunkerAnalytics.track('size_selected', { flavor: productKey, size, price });
         }
 
         /* ============================================================
@@ -2144,6 +2261,7 @@
             saveCart();
             showNotification(`${name} (${size}) added to crate!`, 'success');
             toggleCartDrawer(true);
+            BunkerAnalytics.track('add_to_cart', { product: name, size, price: parseFloat(price) });
         }
 
         function updateCartQty(index, delta) {
@@ -2244,6 +2362,11 @@
             btn.disabled = true;
             btnText.innerText = 'Connecting to Square...';
             playBeep(900, 0.08);
+
+            BunkerAnalytics.track('checkout_initiated', { 
+                items_count: cart.length, 
+                items: cart.map(i => ({ name: i.name, size: i.size, qty: i.quantity, price: i.price })) 
+            });
 
             // Direct Square Payment Link for single-item checkout
             if (cart.length === 1) {
@@ -2359,6 +2482,13 @@
                 
                 showNotification(`🎉 Bottle return claim ${claimId} logged! Gift Card: £${payoutAmount}`, 'success');
                 playBeep(950, 0.15);
+
+                BunkerAnalytics.track('bottle_return_claim', { 
+                    claim_id: claimId, 
+                    drop_location: location, 
+                    bottle_count: count, 
+                    reward_amount: payoutAmount 
+                });
 
                 // Reset form fields
                 document.getElementById('cashback-claim-form').reset();
@@ -2765,6 +2895,7 @@
         function claimHackReward() {
             navigator.clipboard.writeText('VAULT200');
             showNotification('🎉 Code VAULT200 (-£2.00) copied to clipboard! Paste it into the coupon box at Square checkout.', 'success');
+            BunkerAnalytics.track('minigame_reward_claimed', { game: 'hack', code: 'VAULT200', value: 2.00 });
             closeHackModal();
         }
 
@@ -2883,6 +3014,7 @@
         function claimLockpickReward() {
             navigator.clipboard.writeText('LOCKPICK50');
             showNotification('🎉 Code LOCKPICK50 (-£1.00) copied to clipboard! Enter it at Square checkout.', 'success');
+            BunkerAnalytics.track('minigame_reward_claimed', { game: 'lockpick', code: 'LOCKPICK50', value: 1.00 });
             closeHackModal();
         }
 
@@ -3070,6 +3202,7 @@
         function claimRadReward() {
             navigator.clipboard.writeText('RADFREE');
             showNotification('🎉 Code RADFREE (-50p) copied to clipboard! Enter it at Square checkout.', 'success');
+            BunkerAnalytics.track('minigame_reward_claimed', { game: 'rad_catcher', code: 'RADFREE', value: 0.50 });
             closeHackModal();
         }
 
@@ -3535,21 +3668,161 @@
         }
 
         function switchLegalTab(tab) {
-            const tabs = ['allergens', 'privacy', 'terms', 'contact'];
+            const tabs = ['allergens', 'privacy', 'cookies', 'terms', 'contact'];
             tabs.forEach(t => {
                 const tabBtn = document.getElementById(`legal-tab-${t}`);
                 const sec = document.getElementById(`legal-sec-${t}`);
                 if (tabBtn && sec) {
                     if (t === tab) {
-                        tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl bg-ink text-parchment uppercase transition-colors shrink-0';
+                        tabBtn.className = 'py-2.5 px-3.5 font-display text-lg sm:text-xl bg-ink text-parchment uppercase transition-colors shrink-0';
                         sec.classList.remove('hidden');
                     } else {
-                        tabBtn.className = 'py-2.5 px-4 font-display text-xl sm:text-2xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0';
+                        tabBtn.className = 'py-2.5 px-3.5 font-display text-lg sm:text-xl text-ink hover:bg-ink/10 uppercase transition-colors shrink-0';
                         sec.classList.add('hidden');
                     }
                 }
             });
         }
+
+        /* ============================================================
+           11. UK GDPR COOKIE CONSENT & PRIVACY TELEMETRY ENGINE
+           ============================================================ */
+        const COOKIE_CONSENT_KEY = 'bunker_cookie_consent';
+        const ANALYTICS_SESSION_KEY = 'bunker_analytics_session';
+
+        let cookieConsent = JSON.parse(localStorage.getItem(COOKIE_CONSENT_KEY) || 'null');
+
+        function getAnalyticsSessionId() {
+            let sid = sessionStorage.getItem(ANALYTICS_SESSION_KEY);
+            if (!sid) {
+                sid = 'bb_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now();
+                sessionStorage.setItem(ANALYTICS_SESSION_KEY, sid);
+            }
+            return sid;
+        }
+
+        function initCookieConsent() {
+            if (!cookieConsent) {
+                // Show banner after short delay
+                setTimeout(() => {
+                    const banner = document.getElementById('cookie-consent-banner');
+                    if (banner) banner.classList.remove('hidden');
+                }, 1000);
+            } else if (cookieConsent.analytics) {
+                BunkerAnalytics.track('page_view', { path: window.location.pathname, title: document.title });
+            }
+        }
+
+        function acceptAllCookies() {
+            cookieConsent = {
+                essential: true,
+                analytics: true,
+                marketing: true,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(cookieConsent));
+            document.getElementById('cookie-consent-banner').classList.add('hidden');
+            showNotification('🍪 All protocols accepted! Telemetry active.', 'success');
+            playBeep(880, 0.1);
+            BunkerAnalytics.track('consent_granted', { level: 'all' });
+            BunkerAnalytics.track('page_view', { path: window.location.pathname, title: document.title });
+        }
+
+        function acceptEssentialCookies() {
+            cookieConsent = {
+                essential: true,
+                analytics: false,
+                marketing: false,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(cookieConsent));
+            document.getElementById('cookie-consent-banner').classList.add('hidden');
+            showNotification('🛡️ Essential protocols only saved.', 'info');
+            playBeep(600, 0.05);
+        }
+
+        function openCookiePrefsModal() {
+            const modal = document.getElementById('cookie-prefs-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // sync checkbox states
+                if (cookieConsent) {
+                    document.getElementById('pref-opt-analytics').checked = !!cookieConsent.analytics;
+                    document.getElementById('pref-opt-marketing').checked = !!cookieConsent.marketing;
+                }
+            }
+            playBeep(700, 0.05);
+        }
+
+        function closeCookiePrefsModal() {
+            const modal = document.getElementById('cookie-prefs-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+            playBeep(500, 0.04);
+        }
+
+        function saveCustomCookiePreferences() {
+            const analytics = document.getElementById('pref-opt-analytics').checked;
+            const marketing = document.getElementById('pref-opt-marketing').checked;
+
+            cookieConsent = {
+                essential: true,
+                analytics: analytics,
+                marketing: marketing,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(cookieConsent));
+            closeCookiePrefsModal();
+            const banner = document.getElementById('cookie-consent-banner');
+            if (banner) banner.classList.add('hidden');
+
+            showNotification('💾 Cookie & Telemetry directives updated!', 'success');
+            playBeep(850, 0.08);
+
+            if (analytics) {
+                BunkerAnalytics.track('consent_granted', { level: 'custom', analytics, marketing });
+                BunkerAnalytics.track('page_view', { path: window.location.pathname, title: document.title });
+            }
+        }
+
+        // Bunker Analytics Telemetry Engine (Supabase + Local Buffer)
+        const BunkerAnalytics = {
+            track: async function(eventType, eventData = {}) {
+                if (!cookieConsent || !cookieConsent.analytics) {
+                    return; // Strict UK GDPR opt-in protection
+                }
+
+                const payload = {
+                    session_id: getAnalyticsSessionId(),
+                    event_type: eventType,
+                    event_data: eventData,
+                    url: window.location.pathname + window.location.hash,
+                    screen_width: window.innerWidth,
+                    created_at: new Date().toISOString()
+                };
+
+                // 1. Sync to Supabase table `site_analytics` if connected
+                if (supabaseClient) {
+                    try {
+                        await supabaseClient.from('site_analytics').insert([payload]);
+                    } catch (e) {
+                        // Silent fallback
+                    }
+                }
+
+                // 2. Buffer in local monthly telemetry cache for reporting
+                try {
+                    const localLog = JSON.parse(localStorage.getItem('bunker_telemetry_buffer') || '[]');
+                    localLog.push(payload);
+                    if (localLog.length > 500) localLog.shift(); // keep recent 500
+                    localStorage.setItem('bunker_telemetry_buffer', JSON.stringify(localLog));
+                } catch (e) {}
+            }
+        };
 
         // Check if URL has ?status=success
         const urlParams = new URLSearchParams(window.location.search);
@@ -3557,6 +3830,7 @@
             document.getElementById('order-success-banner').classList.remove('hidden');
             cart = [];
             saveCart();
+            BunkerAnalytics.track('order_completed', { status: 'success' });
         }
 
         // Initial setup
@@ -3564,6 +3838,7 @@
         updateAuthUI();
         calculateMixology();
         loadReviews();
+        initCookieConsent();
     </script>
 </body>
 </html>

@@ -28,18 +28,29 @@ When you register a survivor callsign or account:
 When you submit a bottle return proof claim for discount credits:
 * Drop-off location, return quantity, photo of receipt or returned bottles, customer notes, and verification timestamp dispatched to `thebunkerbrews@gmail.com`.
 
-### D. Technical & Analytical Data
-* IP address, browser type, device information, operating system, and interaction timestamps.
+### D. Cookies, Local Storage & Analytical Telemetry (UK GDPR & PECR Compliant)
+We operate a strict opt-in consent protocol for all non-essential telemetry:
+1. **Essential Local Storage (Always Active):**
+   * Storing items in your survival crate (`bunker_cart`).
+   * 1950s Pip-Boy radio playback state (`bunker_sfx_enabled`).
+   * Authentication session tokens via Supabase.
+   * Your cookie consent choice (`bunker_cookie_consent`).
+2. **Anonymized Analytics & Performance Telemetry (Opt-in Only):**
+   * Where you have explicitly opted in via our Cookie Consent Protocol, we collect anonymized interaction events: page views, popular recipe book views, Mixology Calculator yield calculations, and mini-game completion rates.
+   * We do not store raw IP addresses or identifiable fingerprinting cookies.
+3. **Marketing & Voucher Attribution (Opt-in Only):**
+   * Tracking redemption conversion of reward voucher codes (`VAULT200`, `LOCKPICK50`, `RADFREE`).
 
 ---
 
-## 3. How We Use Your Information
+## 3. How We Use Your Information & Automated Monthly Reports
 We use your data strictly for legitimate business and contractual purposes:
 1. **Fulfilling Orders:** Processing, packing, and dispatching craft cola syrups to your UK address or coordinating local pickup.
 2. **Payment Processing & Fraud Prevention:** Secure checkout authentication through Square.
-3. **Bottle Return Discount Validation:** Verifying drop-off receipts and crediting your account.
-4. **Customer Comms & Support:** Responding to inquiries sent to `thebunkerbrews@gmail.com`.
-5. **Newsletter & Comms Array:** Transmitting restock notices, batch announcements, and new flavor formulas (only where opted-in).
+3. **Bottle Return Reward Validation:** Verifying drop-off receipts and issuing official digital gift cards.
+4. **Internal Analytics & Monthly Reporting:** Aggregating monthly anonymized operational reports (visitor volume, product size popularity, recycling totals) dispatched securely to internal management at `thebunkerbrews@gmail.com` to optimize brewing schedules and supply logistics.
+5. **Customer Comms & Support:** Responding to inquiries sent to `thebunkerbrews@gmail.com`.
+6. **Newsletter & Comms Array:** Transmitting restock notices, batch announcements, and new flavor formulas (only where opted-in).
 
 ---
 
