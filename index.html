@@ -549,10 +549,10 @@
                         <i class="fa-solid fa-terminal mr-1"></i> 1. HACK <span class="hidden sm:inline">(MASTER // £2)</span>
                     </button>
                     <button type="button" id="tab-btn-lockpick" onclick="switchArcadeGame('lockpick')" class="py-1.5 px-2 bg-terminalGreen/10 text-terminalGreen border border-terminalGreen/50 hover:bg-terminalGreen/20 text-center transition-colors">
-                        <i class="fa-solid fa-key mr-1"></i> 2. LOCKPICK <span class="hidden sm:inline">(ADVANCED // 50p)</span>
+                        <i class="fa-solid fa-key mr-1"></i> 2. LOCKPICK <span class="hidden sm:inline">(ADVANCED // £1)</span>
                     </button>
                     <button type="button" id="tab-btn-rad" onclick="switchArcadeGame('rad')" class="py-1.5 px-2 bg-terminalGreen/10 text-terminalGreen border border-terminalGreen/50 hover:bg-terminalGreen/20 text-center transition-colors">
-                        <i class="fa-solid fa-radiation mr-1"></i> 3. RAD-CATCHER <span class="hidden sm:inline">(REFLEX // £1)</span>
+                        <i class="fa-solid fa-radiation mr-1"></i> 3. RAD-CATCHER <span class="hidden sm:inline">(REFLEX // 50p)</span>
                     </button>
                 </div>
             </div>
@@ -641,10 +641,10 @@
                 <!-- Lockpick Victory Banner -->
                 <div id="lp-victory" class="hidden p-4 bg-terminalGreen/20 border-2 border-terminalGreen text-center space-y-2.5">
                     <p class="text-xl sm:text-2xl text-terminalGreen terminal-text font-bold">🔓 TUMBLER ENGAGED! LOCKPICK SUCCESSFUL!</p>
-                    <p class="text-base sm:text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">LOCKPICK50</strong> (-50p OFF CHECKOUT)</p>
+                    <p class="text-base sm:text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">LOCKPICK50</strong> (-£1.00 OFF CHECKOUT)</p>
                     <div class="flex justify-center gap-3 pt-1">
                         <button type="button" onclick="claimLockpickReward()" class="bg-terminalGreen text-terminalBg px-4 py-1.5 text-lg font-bold uppercase hover:bg-white hover:text-black transition-colors cursor-pointer">
-                            <i class="fa-solid fa-copy mr-1"></i> Copy 50p Voucher
+                            <i class="fa-solid fa-copy mr-1"></i> Copy £1 Voucher
                         </button>
                         <button type="button" onclick="initLockpickGame()" class="border border-terminalGreen text-terminalGreen px-3 py-1.5 text-base uppercase hover:bg-terminalGreen/20 cursor-pointer">
                             Pick Another Lock
@@ -670,7 +670,7 @@
                         <i class="fa-solid fa-radiation text-4xl text-radYellow animate-spin-slow"></i>
                         <h4 class="font-display text-3xl uppercase text-terminalGreen">WASTELAND RAD-CATCHER</h4>
                         <p class="text-xs sm:text-sm text-terminalGreen/80 max-w-xs">
-                            Catch pure Bunker Cola bottles (+15), Lemons (+10), and Sugar (+5). Avoid glowing green toxic Rad-Drums! Score 100+ to win £1.00 off!
+                            Catch pure Bunker Cola bottles (+15), Lemons (+10), and Sugar (+5). Avoid glowing green toxic Rad-Drums! Score 100+ to win 50p off!
                         </p>
                         <button type="button" onclick="startRadGame()" class="bg-terminalGreen text-terminalBg px-6 py-2 text-xl font-bold uppercase hover:bg-white hover:text-black cursor-pointer">
                             START GAME >>
@@ -691,10 +691,10 @@
                 <!-- Rad Game Victory Banner -->
                 <div id="rc-victory" class="hidden p-4 bg-terminalGreen/20 border-2 border-terminalGreen text-center space-y-2.5">
                     <p class="text-xl sm:text-2xl text-terminalGreen terminal-text font-bold">🏆 SUPPLY MISSION SURVIVED! QUOTA MET!</p>
-                    <p class="text-base sm:text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">RADFREE</strong> (-£1.00 OFF CHECKOUT)</p>
+                    <p class="text-base sm:text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">RADFREE</strong> (-50p OFF CHECKOUT)</p>
                     <div class="flex justify-center gap-3 pt-1">
                         <button type="button" onclick="claimRadReward()" class="bg-terminalGreen text-terminalBg px-4 py-1.5 text-lg font-bold uppercase hover:bg-white hover:text-black transition-colors cursor-pointer">
-                            <i class="fa-solid fa-copy mr-1"></i> Copy £1 Voucher
+                            <i class="fa-solid fa-copy mr-1"></i> Copy 50p Voucher
                         </button>
                         <button type="button" onclick="startRadGame()" class="border border-terminalGreen text-terminalGreen px-3 py-1.5 text-base uppercase hover:bg-terminalGreen/20 cursor-pointer">
                             Play Again
@@ -2882,12 +2882,12 @@
 
         function claimLockpickReward() {
             navigator.clipboard.writeText('LOCKPICK50');
-            showNotification('🎉 Code LOCKPICK50 (-50p) copied to clipboard! Enter it at Square checkout.', 'success');
+            showNotification('🎉 Code LOCKPICK50 (-£1.00) copied to clipboard! Enter it at Square checkout.', 'success');
             closeHackModal();
         }
 
         /* ------------------------------------------------------------
-           GAME 3: WASTELAND RAD-CATCHER (REFLEX // £1.00)
+           GAME 3: WASTELAND RAD-CATCHER (REFLEX // 50p)
            ------------------------------------------------------------ */
         let radScore = 0;
         let radRads = 0;
@@ -3069,7 +3069,7 @@
 
         function claimRadReward() {
             navigator.clipboard.writeText('RADFREE');
-            showNotification('🎉 Code RADFREE (-£1.00) copied to clipboard! Enter it at Square checkout.', 'success');
+            showNotification('🎉 Code RADFREE (-50p) copied to clipboard! Enter it at Square checkout.', 'success');
             closeHackModal();
         }
 
