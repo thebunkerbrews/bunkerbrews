@@ -35,7 +35,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Share+Tech+Mono&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -65,8 +65,8 @@
                     fontFamily: {
                         display: ['"Bebas Neue"', 'sans-serif'],
                         accent: ['"Syne"', 'sans-serif'],
-                        body: ['"Courier Prime"', 'monospace'],
-                        terminal: ['"VT323"', 'monospace'],
+                        body: ['"Space Mono"', 'monospace'],
+                        terminal: ['"Share Tech Mono"', 'monospace'],
                     },
                     boxShadow: {
                         'retro-sm': '3px 3px 0px 0px #2D2D2D',
@@ -535,7 +535,7 @@
                 <i class="fa-solid fa-lock text-xl"></i>
                 <span id="checkout-btn-text">Proceed to Checkout (Square)</span>
             </button>
-            <p class="text-[11px] text-center text-ink/60 font-bold flex items-center justify-center gap-2">
+            <p class="text-xs sm:text-sm text-center text-ink/60 font-bold flex items-center justify-center gap-2">
                 <span>🔒 Encrypted Checkout Powered by Square</span>
                 <span>•</span>
                 <span>Apple Pay / Cards</span>
@@ -641,7 +641,7 @@
                     <div class="p-3.5 bg-rust/10 retro-border border-2 space-y-2">
                         <span class="font-display text-xl text-rust uppercase block">Natural Botanical Ingredients:</span>
                         <p class="text-xs">Contains pure cane sugar, dark brown sugar, demerara sugar, pure molasses, fresh orange & lemon citrus juice and zest, ground cinnamon, nutmeg, ground coriander, star anise, and pure vanilla extract.</p>
-                        <p class="text-[11px] text-ink/70 mt-1 italic">Free from the 14 major UK/EU allergens (Celery, Cereals containing gluten, Crustaceans, Eggs, Fish, Lupin, Milk, Molluscs, Mustard, Tree Nuts, Peanuts, Sesame, Soya, Sulphur dioxide/Sulphites).</p>
+                        <p class="text-xs sm:text-sm text-ink/70 mt-1 italic">Free from the 14 major UK/EU allergens (Celery, Cereals containing gluten, Crustaceans, Eggs, Fish, Lupin, Milk, Molluscs, Mustard, Tree Nuts, Peanuts, Sesame, Soya, Sulphur dioxide/Sulphites).</p>
                     </div>
                 </div>
 
@@ -705,13 +705,13 @@
                     <div class="p-4 bg-ink/5 retro-border border-2 space-y-2">
                         <span class="font-display text-xl text-rust uppercase block">Bunker Command HQ (Post & Bottle Drop-off)</span>
                         <p class="text-xs">173 Reddicap Heath Road<br>Sutton Coldfield, West Midlands<br>B75 7EN, United Kingdom</p>
-                        <span class="inline-block px-2 py-0.5 bg-rust text-parchment text-[10px] uppercase font-bold">Mail Orders, Post & Returns Accepted</span>
+                        <span class="inline-block px-2 py-0.5 bg-rust text-parchment text-xs uppercase font-bold">Mail Orders, Post & Returns Accepted</span>
                     </div>
 
                     <div class="p-4 bg-ink/5 retro-border border-2 space-y-2">
                         <span class="font-display text-xl text-atomic uppercase block">Leviathan Brewery (Partner Drop-off Outpost)</span>
                         <p class="text-xs">Unit 4 & 5, 17 Reddicap Trading Estate<br>Sutton Coldfield<br>B75 7BU, United Kingdom</p>
-                        <span class="inline-block px-2 py-0.5 bg-atomic text-parchment text-[10px] uppercase font-bold">Local Pickup & Bottle Recycling Drop-off</span>
+                        <span class="inline-block px-2 py-0.5 bg-atomic text-parchment text-xs uppercase font-bold">Local Pickup & Bottle Recycling Drop-off</span>
                     </div>
 
                     <div class="p-4 bg-radYellow/15 retro-border border-2">
@@ -738,7 +738,7 @@
                 </div>
                 <div>
                     <span class="font-display text-xl text-[#E8C547] uppercase block leading-tight phosphor-amber">Data Directives & Cookies (UK GDPR)</span>
-                    <p class="text-[#5B9EA6]/80 font-terminal text-[11px] sm:text-xs font-normal max-w-3xl leading-snug mt-1">
+                    <p class="text-[#5B9EA6]/80 font-terminal text-xs sm:text-sm font-normal max-w-3xl leading-snug mt-1">
                         We use essential storage to keep your crate stocked and radio tuned. With your consent, we also gather anonymized telemetry to optimize brewing logistics and send monthly performance reports to Bunker Command. Zero ad tracking.
                         <a href="javascript:void(0)" onclick="openLegalModal('cookies')" class="underline text-rust font-bold hover:text-rustDark">Read Protocol</a>.
                     </p>
@@ -774,16 +774,16 @@
                 <div class="p-3.5 bg-black/40 border border-[#E8C547]/20 rounded-lg flex items-start justify-between gap-3">
                     <div>
                         <span class="font-display text-lg text-[#E8C547] uppercase block">1. Essential Operations</span>
-                        <p class="font-terminal text-[11px] text-[#5B9EA6]/75 font-normal mt-1">Shopping crate persistence, 1950s radio state, theme settings, and authentication session tokens. Cannot be disabled.</p>
+                        <p class="font-terminal text-xs sm:text-sm text-[#5B9EA6]/75 font-normal mt-1">Shopping crate persistence, 1950s radio state, theme settings, and authentication session tokens. Cannot be disabled.</p>
                     </div>
-                    <span class="px-2 py-1 bg-rust/20 border border-rust text-rust text-[10px] uppercase font-terminal rounded shrink-0">Always Active</span>
+                    <span class="px-2 py-1 bg-rust/20 border border-rust text-rust text-xs uppercase font-terminal rounded shrink-0">Always Active</span>
                 </div>
 
                 <!-- 2. Analytics -->
                 <div class="p-3.5 bg-black/40 border border-[#E8C547]/20 rounded-lg flex items-start justify-between gap-3">
                     <div class="flex-grow">
                         <span class="font-display text-lg text-atomic uppercase block">2. Anonymized Analytics</span>
-                        <p class="font-terminal text-[11px] text-[#5B9EA6]/75 font-normal mt-1">Records page views, top flavor selections, mixology yield calculations, and mini-game completions. Aggregated for monthly email reporting to Bunker Command. No personal IP tracking.</p>
+                        <p class="font-terminal text-xs sm:text-sm text-[#5B9EA6]/75 font-normal mt-1">Records page views, top flavor selections, mixology yield calculations, and mini-game completions. Aggregated for monthly email reporting to Bunker Command. No personal IP tracking.</p>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
                         <input type="checkbox" id="pref-opt-analytics" class="sr-only peer" checked>
@@ -795,7 +795,7 @@
                 <div class="p-3.5 bg-black/40 border border-[#E8C547]/20 rounded-lg flex items-start justify-between gap-3">
                     <div class="flex-grow">
                         <span class="font-display text-lg text-rust uppercase block">3. Reward & Voucher Attribution</span>
-                        <p class="font-terminal text-[11px] text-[#5B9EA6]/75 font-normal mt-1">Measures redemption conversions of unlocked RobCo Vault discount codes (VAULT200, LOCKPICK50, RADFREE) to evaluate reward campaigns.</p>
+                        <p class="font-terminal text-xs sm:text-sm text-[#5B9EA6]/75 font-normal mt-1">Measures redemption conversions of unlocked RobCo Vault discount codes (VAULT200, LOCKPICK50, RADFREE) to evaluate reward campaigns.</p>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
                         <input type="checkbox" id="pref-opt-marketing" class="sr-only peer" checked>
@@ -1016,7 +1016,7 @@
                     </div>
                     <div class="truncate">
                         <span class="font-display text-2xl xs:text-3xl sm:text-4xl text-[#E8C547] tracking-wider mt-0.5 phosphor-amber drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,0.8)] block leading-none truncate">BUNKER BREWS</span>
-                        <span class="text-[9px] sm:text-[10px] font-bold text-[#4AF626]/70 tracking-widest uppercase hidden md:block font-terminal">Artisan Craft Cola Concentrate // ESTD. 2026</span>
+                        <span class="text-[9px] sm:text-xs font-bold text-[#4AF626]/70 tracking-widest uppercase hidden md:block font-terminal">Artisan Craft Cola Concentrate // ESTD. 2026</span>
                     </div>
                 </a>
 
@@ -1088,7 +1088,7 @@
         </a>
         <div class="grid grid-cols-2 gap-2 pt-1">
             <div class="flex border border-[#4AF626]/30 bg-terminalBg overflow-hidden">
-                <button type="button" onclick="toggleAudioSFX();" class="flex-1 py-2.5 px-2 text-[#4AF626] font-bold uppercase text-[11px] flex items-center justify-center gap-1 font-terminal">
+                <button type="button" onclick="toggleAudioSFX();" class="flex-1 py-2.5 px-2 text-[#4AF626] font-bold uppercase text-xs sm:text-sm flex items-center justify-center gap-1 font-terminal">
                     <i class="fa-solid fa-radio text-[#E8C547]"></i> <span id="mobile-sfx-label">RADIO: ON</span>
                 </button>
                 <button type="button" onclick="nextRadioStation();" title="Next Station" class="px-2.5 bg-rust text-parchment text-xs font-bold hover:bg-rustDark flex items-center justify-center">
@@ -1146,7 +1146,7 @@
                 </div>
 
                 <!-- Badge -->
-                <div class="inline-flex items-center gap-2 mb-6 px-3.5 sm:px-4 py-1.5 bg-[#E8C547] text-ink font-bold text-[11px] sm:text-xs uppercase retro-border shadow-[4px_4px_0_0_#B83A2E] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+                <div class="inline-flex items-center gap-2 mb-6 px-3.5 sm:px-4 py-1.5 bg-[#E8C547] text-ink font-bold text-xs sm:text-sm uppercase retro-border shadow-[4px_4px_0_0_#B83A2E] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
                     <i class="fa-solid fa-atom text-rust"></i>
                     <span>Small-Batch Survival Craft Supplies</span>
                 </div>
@@ -1176,15 +1176,15 @@
                 <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-12 pt-8 border-t border-[#E8C547]/20">
                     <div class="flex flex-col items-center text-parchment/70">
                         <div class="font-terminal text-[#4AF626] text-xl mb-1 phosphor-anim">100%</div>
-                        <span class="font-bold text-[10px] sm:text-xs uppercase text-parchment/60">Real Botanicals</span>
+                        <span class="font-bold text-xs sm:text-xs uppercase text-parchment/60">Real Botanicals</span>
                     </div>
                     <div class="flex flex-col items-center text-parchment/70">
                         <div class="font-terminal text-[#E8C547] text-xl mb-1 phosphor-amber">☢</div>
-                        <span class="font-bold text-[10px] sm:text-xs uppercase text-parchment/60">Vintage Swing-Top</span>
+                        <span class="font-bold text-xs sm:text-xs uppercase text-parchment/60">Vintage Swing-Top</span>
                     </div>
                     <div class="flex flex-col items-center text-parchment/70">
                         <div class="font-terminal text-rust text-xl mb-1 neon-flicker" style="font-size:1rem">£1.50</div>
-                        <span class="font-bold text-[10px] sm:text-xs uppercase text-parchment/60">Return Credit</span>
+                        <span class="font-bold text-xs sm:text-xs uppercase text-parchment/60">Return Credit</span>
                     </div>
                 </div>
 
@@ -1279,8 +1279,8 @@
                         </div>
                         <!-- Allergen Advice Badge -->
                         <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
-                            <span class="text-[10px] text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
-                            <span class="text-[11px] text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
+                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
                         </div>
                     </div>
 
@@ -1288,14 +1288,14 @@
                     <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
                         <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
                         <div class="grid grid-cols-3 gap-1.5 mb-4">
-                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
-                                250ml<br><span class="font-normal text-[10px] opacity-80">&pound;5.50</span>
+                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
+                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('basic', '330ml', 6.75); playBeep();" id="btn-size-basic-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
-                                330ml<br><span class="font-normal text-[10px] opacity-80">&pound;6.75</span>
+                            <button type="button" onclick="selectProductSize('basic', '330ml', 6.75); playBeep();" id="btn-size-basic-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('basic', '450ml', 8.50); playBeep();" id="btn-size-basic-450" class="py-2 px-1 border-2 border-rust bg-rust/20 text-rust font-bold text-[11px] sm:text-xs uppercase transition-all shadow-[0_0_8px_rgba(184,58,46,0.3)] text-center font-terminal">
-                                450ml<br><span class="font-normal text-[10px] opacity-90">&pound;8.50</span>
+                            <button type="button" onclick="selectProductSize('basic', '450ml', 8.50); playBeep();" id="btn-size-basic-450" class="py-2 px-1 border-2 border-rust bg-rust/20 text-rust font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(184,58,46,0.3)] text-center font-terminal">
+                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
                             </button>
                         </div>
                         
@@ -1365,8 +1365,8 @@
                         </div>
                         <!-- Allergen Advice Badge -->
                         <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
-                            <span class="text-[10px] text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
-                            <span class="text-[11px] text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
+                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
                         </div>
                     </div>
 
@@ -1374,14 +1374,14 @@
                     <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
                         <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
                         <div class="grid grid-cols-3 gap-1.5 mb-4">
-                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
-                                250ml<br><span class="font-normal text-[10px] opacity-80">&pound;5.50</span>
+                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
+                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('scout', '330ml', 6.75); playBeep();" id="btn-size-scout-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
-                                330ml<br><span class="font-normal text-[10px] opacity-80">&pound;6.75</span>
+                            <button type="button" onclick="selectProductSize('scout', '330ml', 6.75); playBeep();" id="btn-size-scout-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('scout', '450ml', 8.50); playBeep();" id="btn-size-scout-450" class="py-2 px-1 border-2 border-atomic bg-atomic/20 text-atomic font-bold text-[11px] sm:text-xs uppercase transition-all shadow-[0_0_8px_rgba(91,158,166,0.3)] text-center font-terminal">
-                                450ml<br><span class="font-normal text-[10px] opacity-90">&pound;8.50</span>
+                            <button type="button" onclick="selectProductSize('scout', '450ml', 8.50); playBeep();" id="btn-size-scout-450" class="py-2 px-1 border-2 border-atomic bg-atomic/20 text-atomic font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(91,158,166,0.3)] text-center font-terminal">
+                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
                             </button>
                         </div>
                         
@@ -1587,7 +1587,7 @@
                 <!-- Recipe 1: Classic Vault Sparkler -->
                 <div class="recipe-card manual-card p-6 flex flex-col group" data-category="soda" data-aos="fade-up">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-terminal uppercase border border-rust/60">BUNKER BASIC OR SCOUT</span>
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-xs sm:text-sm font-terminal uppercase border border-rust/60">BUNKER BASIC OR SCOUT</span>
                         <span class="text-xs font-terminal text-[#5B9EA6]/70 uppercase"><i class="fa-solid fa-clock mr-1"></i> 1 MIN</span>
                     </div>
                     <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">01. The Classic Vault Sparkler</h3>
@@ -1596,7 +1596,7 @@
                     </p>
                     
                     <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
-                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <span class="text-xs text-[#E8C547] uppercase block">Ration Measurements:</span>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Syrup:</span><span class="text-rust">30 ml</span></div>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Chilled Sparkling Water:</span><span>150 ml</span></div>
                         <div class="flex justify-between"><span>&bull; Garnish:</span><span>Ice + Lemon Wheel</span></div>
@@ -1610,7 +1610,7 @@
                 <!-- Recipe 2: Glowing Campfire Float -->
                 <div class="recipe-card manual-card p-6 flex flex-col group" data-category="soda" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-terminal uppercase border border-rust/60">BUNKER BASIC</span>
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-xs sm:text-sm font-terminal uppercase border border-rust/60">BUNKER BASIC</span>
                         <span class="text-xs font-terminal text-[#5B9EA6]/70 uppercase"><i class="fa-solid fa-clock mr-1"></i> 2 MINS</span>
                     </div>
                     <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">02. Glowing Campfire Float</h3>
@@ -1618,7 +1618,7 @@
                         A nostalgic 1950s soda fountain indulgence combining velvety vanilla bean ice cream with festive spiced cola.
                     </p>
                     <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
-                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <span class="text-xs text-[#E8C547] uppercase block">Ration Measurements:</span>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Basic:</span><span class="text-rust">35 ml</span></div>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Sparkling Soda:</span><span>120 ml</span></div>
                         <div class="flex justify-between"><span>&bull; Topping:</span><span>1 Scoop Vanilla Bean Ice Cream + Nutmeg</span></div>
@@ -1631,7 +1631,7 @@
                 <!-- Recipe 3: Wasteland Bourbon Cola -->
                 <div class="recipe-card manual-card p-6 flex flex-col group" data-category="cocktail" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-terminal uppercase border border-rust/60">BUNKER BASIC</span>
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-xs sm:text-sm font-terminal uppercase border border-rust/60">BUNKER BASIC</span>
                         <span class="text-xs font-terminal text-[#5B9EA6]/70 uppercase"><i class="fa-solid fa-cocktail mr-1"></i> COCKTAIL</span>
                     </div>
                     <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">03. Wasteland Bourbon Cola</h3>
@@ -1639,7 +1639,7 @@
                         An elevated campfire cocktail where oak, charred barrel warmth, and cassia cinnamon harmonise.
                     </p>
                     <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
-                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <span class="text-xs text-[#E8C547] uppercase block">Ration Measurements:</span>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Basic:</span><span class="text-rust">25 ml</span></div>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bourbon or Spiced Rum:</span><span>50 ml</span></div>
                         <div class="flex justify-between"><span>&bull; Club Soda &amp; Bitters:</span><span>100 ml + 2 dashes Angostura</span></div>
@@ -1652,7 +1652,7 @@
                 <!-- Recipe 4: The Botanical Scout Mule -->
                 <div class="recipe-card manual-card p-6 flex flex-col group" data-category="cocktail" data-aos="fade-up">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-terminal uppercase border border-atomic/60">BUNKER SCOUT</span>
+                        <span class="px-2.5 py-1 bg-atomic text-parchment text-xs sm:text-sm font-terminal uppercase border border-atomic/60">BUNKER SCOUT</span>
                         <span class="text-xs font-terminal text-[#5B9EA6]/70 uppercase"><i class="fa-solid fa-lemon mr-1"></i> REFRESHING</span>
                     </div>
                     <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">04. The Botanical Scout Mule</h3>
@@ -1660,7 +1660,7 @@
                         A zesty, botanical fusion pairing caramelized molasses and citrus with fiery ginger beer.
                     </p>
                     <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
-                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <span class="text-xs text-[#E8C547] uppercase block">Ration Measurements:</span>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Scout:</span><span class="text-atomic">30 ml</span></div>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Fiery Ginger Beer:</span><span>120 ml</span></div>
                         <div class="flex justify-between"><span>&bull; Fresh Lime &amp; Mint:</span><span>15ml lime juice + slapped mint</span></div>
@@ -1673,7 +1673,7 @@
                 <!-- Recipe 5: Espresso Vault Tonic -->
                 <div class="recipe-card manual-card p-6 flex flex-col group" data-category="culinary" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-terminal uppercase border border-atomic/60">BUNKER SCOUT</span>
+                        <span class="px-2.5 py-1 bg-atomic text-parchment text-xs sm:text-sm font-terminal uppercase border border-atomic/60">BUNKER SCOUT</span>
                         <span class="text-xs font-terminal text-[#5B9EA6]/70 uppercase"><i class="fa-solid fa-mug-hot mr-1"></i> KICKSTART</span>
                     </div>
                     <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">05. Espresso Vault Tonic</h3>
@@ -1681,7 +1681,7 @@
                         Rich roasted espresso meets cold sparkling botanical cola for an invigorating dark crema refresher.
                     </p>
                     <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
-                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <span class="text-xs text-[#E8C547] uppercase block">Ration Measurements:</span>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Scout:</span><span class="text-atomic">20 ml</span></div>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Fresh Double Espresso:</span><span>1 Shot (30 ml)</span></div>
                         <div class="flex justify-between"><span>&bull; Sparkling Mineral Water:</span><span>120 ml + Ice</span></div>
@@ -1694,7 +1694,7 @@
                 <!-- Recipe 6: Smoked Molasses Glaze -->
                 <div class="recipe-card manual-card p-6 flex flex-col group" data-category="culinary" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-ink text-parchment text-[11px] font-terminal uppercase border border-[#4AF626]/30">BUNKER SCOUT</span>
+                        <span class="px-2.5 py-1 bg-ink text-parchment text-xs sm:text-sm font-terminal uppercase border border-[#4AF626]/30">BUNKER SCOUT</span>
                         <span class="text-xs font-terminal text-[#5B9EA6]/70 uppercase"><i class="fa-solid fa-fire mr-1"></i> CULINARY</span>
                     </div>
                     <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">06. Smoked Molasses Glaze</h3>
@@ -1702,7 +1702,7 @@
                         Transform your cooking with a sticky, caramelized cola glaze for meats, grilled halloumi, or roasted root veg.
                     </p>
                     <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
-                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <span class="text-xs text-[#E8C547] uppercase block">Ration Measurements:</span>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Scout:</span><span class="text-rust">60 ml</span></div>
                         <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Apple Cider Vinegar:</span><span>2 tbsp</span></div>
                         <div class="flex justify-between"><span>&bull; Mustard &amp; Smoked Paprika:</span><span>1 tbsp Dijon + 1 tsp Paprika</span></div>
@@ -1739,7 +1739,7 @@
                             <span id="slider-servings-val" class="font-display text-4xl text-[#E8C547] bg-[#131a16] border border-[#E8C547]/50 px-4 py-1 shadow-[0_0_10px_rgba(232,197,71,0.2)] rounded-lg">4</span>
                         </div>
                         <input type="range" id="servings-slider" min="1" max="20" value="4" oninput="calculateMixology()" class="w-full">
-                        <div class="flex justify-between text-[11px] font-bold text-[#E8C547]/50 uppercase">
+                        <div class="flex justify-between text-xs sm:text-sm font-bold text-[#E8C547]/50 uppercase">
                             <span>1 Solo Dweller</span>
                             <span>10 Settlement Party</span>
                             <span>20 Bunker Gathering</span>
@@ -1748,13 +1748,13 @@
                         <!-- Mix Ratio Badge -->
                         <div class="p-3 bg-[#131a16] border border-[#5B9EA6]/40 rounded-lg flex items-center justify-between text-xs font-bold uppercase">
                             <span class="text-[#5B9EA6]"><i class="fa-solid fa-droplet mr-1.5"></i> Vault Ratio Formula:</span>
-                            <span class="bg-[#5B9EA6]/20 text-[#5B9EA6] border border-[#5B9EA6]/40 px-2 py-0.5 rounded text-[11px]">1 : 5 (Syrup : Water)</span>
+                            <span class="bg-[#5B9EA6]/20 text-[#5B9EA6] border border-[#5B9EA6]/40 px-2 py-0.5 rounded text-xs sm:text-sm">1 : 5 (Syrup : Water)</span>
                         </div>
                     </div>
 
                     <!-- Right: Interactive Live Fizz & Pour Glass Visualizer -->
                     <div class="lg:col-span-5 bg-[#0a0f0d] border border-[#5B9EA6]/40 p-6 flex flex-col items-center justify-center relative overflow-hidden shadow-[0_0_20px_rgba(91,158,166,0.15)] rounded-2xl">
-                        <span class="text-[10px] font-bold uppercase text-[#5B9EA6] mb-3 tracking-widest"><i class="fa-solid fa-flask text-atomic mr-1"></i> Live Pour Visualizer</span>
+                        <span class="text-xs font-bold uppercase text-[#5B9EA6] mb-3 tracking-widest"><i class="fa-solid fa-flask text-atomic mr-1"></i> Live Pour Visualizer</span>
                         
                         <!-- Vintage Glass Silhouette -->
                         <div class="w-32 h-48 border-4 border-ink rounded-b-3xl relative overflow-hidden bg-ink/5 flex flex-col justify-end shadow-inner">
@@ -1788,21 +1788,21 @@
                         <i class="fa-solid fa-bottle-droplet text-3xl text-rust mb-2"></i>
                         <span class="block text-xs font-bold text-ink/60 uppercase">Craft Syrup Needed</span>
                         <span id="calc-syrup" class="font-display text-4xl text-ink block mt-1">120 ml</span>
-                        <span id="calc-bottles-hint" class="text-[11px] font-bold text-rust uppercase mt-1 block">~0.27 of a 450ml bottle</span>
+                        <span id="calc-bottles-hint" class="text-xs sm:text-sm font-bold text-rust uppercase mt-1 block">~0.27 of a 450ml bottle</span>
                     </div>
 
                     <div class="bg-black/50 p-5 border border-[#4AF626]/25">
                         <i class="fa-solid fa-droplet text-3xl text-atomic mb-2"></i>
                         <span class="block text-xs font-bold text-ink/60 uppercase">Sparkling Water Needed</span>
                         <span id="calc-water" class="font-display text-4xl text-ink block mt-1">600 ml</span>
-                        <span class="text-[11px] font-bold text-ink/50 uppercase mt-1 block">Chilled Soda / Seltzer</span>
+                        <span class="text-xs sm:text-sm font-bold text-ink/50 uppercase mt-1 block">Chilled Soda / Seltzer</span>
                     </div>
 
                     <div class="bg-black/50 p-5 border border-[#4AF626]/25">
                         <i class="fa-solid fa-glass-water text-3xl text-radYellow mb-2"></i>
                         <span class="block text-xs font-bold text-ink/60 uppercase">Total Refreshment Yield</span>
                         <span id="calc-total-liquid" class="font-display text-4xl text-ink block mt-1">720 ml</span>
-                        <span class="text-[11px] font-bold text-ink/50 uppercase mt-1 block">Delicious Craft Cola</span>
+                        <span class="text-xs sm:text-sm font-bold text-ink/50 uppercase mt-1 block">Delicious Craft Cola</span>
                     </div>
                 </div>
 
@@ -1922,15 +1922,15 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-xs font-bold">
                     <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
                         <span class="text-rust block uppercase font-display text-lg mb-1">1. Bunker HQ (HQ Drop)</span>
-                        <p class="text-[#4AF626]/70 text-[11px] mt-1">173 Reddicap Heath Rd, Sutton Coldfield, B75 7EN</p>
+                        <p class="text-[#4AF626]/70 text-xs sm:text-sm mt-1">173 Reddicap Heath Rd, Sutton Coldfield, B75 7EN</p>
                     </div>
                     <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
                         <span class="text-atomic block uppercase font-display text-lg mb-1">2. Leviathan Brewery</span>
-                        <p class="text-[#4AF626]/70 text-[11px] mt-1">Unit 4 & 5, 17 Reddicap Trading Estate, B75 7BU</p>
+                        <p class="text-[#4AF626]/70 text-xs sm:text-sm mt-1">Unit 4 & 5, 17 Reddicap Trading Estate, B75 7BU</p>
                     </div>
                     <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
                         <span class="text-ink block uppercase font-display text-lg mb-1">3. Postal Return</span>
-                        <p class="text-[#4AF626]/70 text-[11px] mt-1">Post wrapped empties to Bunker HQ with your Callsign</p>
+                        <p class="text-[#4AF626]/70 text-xs sm:text-sm mt-1">Post wrapped empties to Bunker HQ with your Callsign</p>
                     </div>
                 </div>
 
@@ -1939,18 +1939,18 @@
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Survivor Callsign / Full Name <span class="text-rust">*</span></label>
+                            <label class="block uppercase mb-1 text-[#E8C547] text-xs tracking-wider">Survivor Callsign / Full Name <span class="text-rust">*</span></label>
                             <input type="text" id="cb-name" required placeholder="e.g. Vault Hunter Sarah" class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal">
                         </div>
                         <div>
-                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">E-Mail Address (Gift Card Destination) <span class="text-rust">*</span></label>
+                            <label class="block uppercase mb-1 text-[#E8C547] text-xs tracking-wider">E-Mail Address (Gift Card Destination) <span class="text-rust">*</span></label>
                             <input type="email" id="cb-email" required placeholder="sarah@wasteland.uk" class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="sm:col-span-2">
-                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Drop-off / Return Location <span class="text-rust">*</span></label>
+                            <label class="block uppercase mb-1 text-[#E8C547] text-xs tracking-wider">Drop-off / Return Location <span class="text-rust">*</span></label>
                             <select id="cb-location" required class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal">
                                 <option value="Bunker HQ - 173 Reddicap Heath Road, B75 7EN">1. Bunker HQ Drop-off (173 Reddicap Heath Rd, B75 7EN)</option>
                                 <option value="Leviathan Brewery - Unit 4&5, 17 Reddicap Trading Est, B75 7BU">2. Leviathan Brewery Drop-off (Unit 4 & 5)</option>
@@ -1958,7 +1958,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Bottles Returned <span class="text-rust">*</span></label>
+                            <label class="block uppercase mb-1 text-[#E8C547] text-xs tracking-wider">Bottles Returned <span class="text-rust">*</span></label>
                             <input type="number" id="cb-bottle-count" min="1" max="50" value="1" oninput="updateCashbackValue()" required class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded font-terminal font-bold text-center">
                         </div>
                     </div>
@@ -1977,27 +1977,27 @@
                         <i class="fa-solid fa-gift text-atomic text-2xl shrink-0"></i>
                         <div>
                             <span class="text-xs uppercase font-bold text-[#5B9EA6] block tracking-wide">Digital Gift Card Issued via Email</span>
-                            <span class="text-[11px] text-[#5B9EA6]/80 font-normal">You will receive an official Bunker Brews Gift Card for the total amount owed directly to your email. Your gift card code can be redeemed online at checkout or presented in person at our pop-up stalls, markets, and events!</span>
+                            <span class="text-xs sm:text-sm text-[#5B9EA6]/80 font-normal">You will receive an official Bunker Brews Gift Card for the total amount owed directly to your email. Your gift card code can be redeemed online at checkout or presented in person at our pop-up stalls, markets, and events!</span>
                         </div>
                     </div>
 
                     <!-- File Uploads: 1. Proof of Return, 2. Online Proof of Purchase -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                         <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
-                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">1. Proof of Bottle Return <span class="text-rust">*</span></label>
-                            <p class="text-[11px] text-[#4AF626]/60 font-terminal mb-2">Photo of dropped-off bottles or outpost drop-off slip</p>
+                            <label class="block uppercase mb-1 text-[#E8C547] text-xs tracking-wider">1. Proof of Bottle Return <span class="text-rust">*</span></label>
+                            <p class="text-xs sm:text-sm text-[#4AF626]/60 font-terminal mb-2">Photo of dropped-off bottles or outpost drop-off slip</p>
                             <input type="file" id="cb-return-proof" accept="image/*,.pdf" required class="w-full text-xs text-[#4AF626]/80 file:mr-2 file:py-1.5 file:px-3 file:border file:border-[#4AF626]/50 file:bg-[#4AF626]/10 file:text-[#4AF626] file:text-xs file:font-terminal file:uppercase hover:file:bg-[#4AF626]/20 file:rounded transition-colors cursor-pointer">
                         </div>
                         <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
-                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">2. Online Proof of Purchase <span class="text-rust">*</span></label>
-                            <p class="text-[11px] text-[#4AF626]/60 font-terminal mb-2">Original order email, Square receipt, or invoice screenshot</p>
+                            <label class="block uppercase mb-1 text-[#E8C547] text-xs tracking-wider">2. Online Proof of Purchase <span class="text-rust">*</span></label>
+                            <p class="text-xs sm:text-sm text-[#4AF626]/60 font-terminal mb-2">Original order email, Square receipt, or invoice screenshot</p>
                             <input type="file" id="cb-purchase-proof" accept="image/*,.pdf" required class="w-full text-xs text-[#4AF626]/80 file:mr-2 file:py-1.5 file:px-3 file:border file:border-[#4AF626]/50 file:bg-[#4AF626]/10 file:text-[#4AF626] file:text-xs file:font-terminal file:uppercase hover:file:bg-[#4AF626]/20 file:rounded transition-colors cursor-pointer">
                         </div>
                     </div>
 
                     <!-- Notes of Return -->
                     <div>
-                        <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Notes of Return (Optional)</label>
+                        <label class="block uppercase mb-1 text-[#E8C547] text-xs tracking-wider">Notes of Return (Optional)</label>
                         <textarea id="cb-notes" rows="2" placeholder="e.g. Dropped off at Leviathan Brewery / Bunker HQ on Saturday afternoon..." class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal"></textarea>
                     </div>
 
@@ -2404,9 +2404,9 @@
                 const btn = document.getElementById(`btn-size-${productKey}-${s}`);
                 if (btn) {
                     if (s === selectedNum) {
-                        btn.className = `py-2 px-1 border-[3px] border-ink ${activeColor} text-parchment font-bold text-[11px] sm:text-xs uppercase transition-all shadow-sm text-center`;
+                        btn.className = `py-2 px-1 border-[3px] border-ink ${activeColor} text-parchment font-bold text-xs sm:text-sm uppercase transition-all shadow-sm text-center`;
                     } else {
-                        btn.className = `py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:${activeColor}/10 transition-all text-center`;
+                        btn.className = `py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-xs sm:text-sm uppercase hover:${activeColor}/10 transition-all text-center`;
                     }
                 }
             });
