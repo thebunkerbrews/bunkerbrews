@@ -86,19 +86,22 @@
             --c-ink: #2D2D2D;
             --c-rust: #B83A2E;
             --c-atomic: #5B9EA6;
+            --c-terminal: #4AF626;
+            --c-radYellow: #E8C547;
         }
 
         body {
-            background-color: #F9F3E6;
+            background-color: #F0E8D6;
             color: #2D2D2D;
             background-image: 
-                radial-gradient(#2d2d2d 0.75px, transparent 0.75px), 
-                radial-gradient(#2d2d2d 0.75px, #F9F3E6 0.75px);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-            background-color: #F9F3E6;
+                radial-gradient(#2d2d2d 0.8px, transparent 0.8px), 
+                radial-gradient(#2d2d2d 0.8px, #F0E8D6 0.8px),
+                repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(45,45,45,0.04) 28px, rgba(45,45,45,0.04) 29px);
+            background-size: 24px 24px, 24px 24px, 100% 29px;
+            background-position: 0 0, 12px 12px, 0 0;
         }
 
+        /* === BORDERS & BUTTONS === */
         .retro-border { border: 3px solid #2D2D2D; }
         .retro-border-thick { border: 4px solid #2D2D2D; }
         
@@ -106,6 +109,14 @@
             border: 3px solid #2D2D2D;
             transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
+            position: relative;
+        }
+        .retro-button::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border: 1px solid rgba(255,255,255,0.12);
+            pointer-events: none;
         }
         .retro-button:hover {
             transform: translate(-2px, -2px);
@@ -116,32 +127,143 @@
             box-shadow: 2px 2px 0px 0px #2D2D2D !important;
         }
 
-        /* Atomic Glow & Radiance */
+        /* === GLOW EFFECTS === */
         .atomic-glow {
             transition: all 0.3s ease;
         }
         .atomic-glow:hover {
             box-shadow: 0 0 25px 6px rgba(91, 158, 166, 0.45), 6px 6px 0px 0px #2D2D2D;
         }
-
         .rust-glow:hover {
             box-shadow: 0 0 25px 6px rgba(184, 58, 46, 0.45), 6px 6px 0px 0px #2D2D2D;
         }
 
-        /* Animations */
+        /* Phosphor CRT text glow — used on major headings in dark sections */
+        .phosphor-text {
+            text-shadow:
+                0 0 8px rgba(74, 246, 38, 0.5),
+                0 0 18px rgba(74, 246, 38, 0.25),
+                0 0 35px rgba(74, 246, 38, 0.1);
+        }
+        .phosphor-amber {
+            text-shadow:
+                0 0 8px rgba(232, 197, 71, 0.6),
+                0 0 20px rgba(232, 197, 71, 0.3),
+                0 0 40px rgba(232, 197, 71, 0.1);
+        }
+
+        /* Terminal / Pip-Boy panel — dark inset panel */
+        .pip-panel {
+            background: #0b1311;
+            border: 3px solid #4AF626;
+            box-shadow: 0 0 18px rgba(74, 246, 38, 0.18), inset 0 0 12px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .pip-panel::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(74, 246, 38, 0.2);
+            pointer-events: none;
+        }
+
+        /* Terminal product card */
+        .terminal-card {
+            background: #0e1e1a;
+            border: 3px solid #4AF626;
+            box-shadow: 6px 6px 0px 0px #4AF626;
+            color: #4AF626;
+            position: relative;
+            overflow: hidden;
+        }
+        .terminal-card::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(74,246,38,0.15);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .terminal-card:hover {
+            box-shadow: 0 0 30px rgba(74,246,38,0.25), 6px 6px 0px 0px #4AF626;
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+        }
+
+        /* Government classification stamp */
+        .gov-stamp {
+            transform: rotate(-8deg);
+            border: 3px solid;
+            padding: 2px 10px;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.1em;
+            display: inline-block;
+        }
+
+        /* Vault divider — centered atomic ring ornament between sections */
+        .vault-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 0 auto;
+            max-width: 400px;
+        }
+        .vault-divider::before,
+        .vault-divider::after {
+            content: '';
+            flex: 1;
+            height: 3px;
+            background: #2D2D2D;
+        }
+
+        /* Dark section utility — inverse of parchment */
+        .dark-section {
+            background-color: #1a1a1a;
+            background-image:
+                radial-gradient(rgba(74,246,38,0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* === ANIMATIONS === */
         @keyframes spin-slow {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+        @keyframes orbit-counter {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
         @keyframes pulse-glow {
             0%, 100% { opacity: 1; filter: drop-shadow(0 0 6px rgba(91, 158, 166, 0.9)); }
             50% { opacity: 0.5; filter: drop-shadow(0 0 2px rgba(91, 158, 166, 0.3)); }
+        }
+        @keyframes phosphor-pulse {
+            0%, 100% { text-shadow: 0 0 8px rgba(74,246,38,0.6), 0 0 18px rgba(74,246,38,0.3); opacity: 1; }
+            50% { text-shadow: 0 0 4px rgba(74,246,38,0.3), 0 0 10px rgba(74,246,38,0.15); opacity: 0.85; }
+        }
+        @keyframes pip-blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
         }
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-12px) rotate(1deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
+        @keyframes scanline-scroll {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes bubble-rise {
+            0% { transform: translateY(100%) scale(0.3); opacity: 0.7; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-150%) scale(1); opacity: 0; }
+        }
+
         /* Authentic 1950s Atomic Neon Sign Flicker */
         .neon-flicker {
             color: #FF3B2B;
@@ -153,7 +275,6 @@
                 0 0 75px #8F261C;
             animation: neonSignPulse 5.5s infinite;
             display: inline-block;
-            transition: all 0.1s ease;
         }
 
         @keyframes neonSignPulse {
@@ -167,48 +288,22 @@
                     0 0 80px #8F261C;
                 opacity: 1;
             }
-            18%, 21% {
-                color: #4A1B16;
-                text-shadow: none;
-                opacity: 0.3;
-            }
-            19.5% {
-                color: #FF3B2B;
-                text-shadow: 0 0 6px #FF5A3D, 0 0 16px #E83620;
-                opacity: 0.85;
-            }
-            22.5% {
-                color: #38120E;
-                text-shadow: none;
-                opacity: 0.2;
-            }
-            53.5%, 55% {
-                color: #421612;
-                text-shadow: none;
-                opacity: 0.25;
-            }
-            54.2% {
-                color: #FF3B2B;
-                text-shadow: 0 0 8px #FF5A3D, 0 0 20px #E83620;
-                opacity: 0.9;
-            }
-            73.2% {
-                color: #38120E;
-                text-shadow: none;
-                opacity: 0.2;
-            }
-            73.8% {
-                color: #FF3B2B;
-                text-shadow: 0 0 12px #FF5A3D, 0 0 28px #E83620;
-                opacity: 0.95;
-            }
+            18%, 21% { color: #4A1B16; text-shadow: none; opacity: 0.3; }
+            19.5% { color: #FF3B2B; text-shadow: 0 0 6px #FF5A3D, 0 0 16px #E83620; opacity: 0.85; }
+            22.5% { color: #38120E; text-shadow: none; opacity: 0.2; }
+            53.5%, 55% { color: #421612; text-shadow: none; opacity: 0.25; }
+            54.2% { color: #FF3B2B; text-shadow: 0 0 8px #FF5A3D, 0 0 20px #E83620; opacity: 0.9; }
+            73.2% { color: #38120E; text-shadow: none; opacity: 0.2; }
+            73.8% { color: #FF3B2B; text-shadow: 0 0 12px #FF5A3D, 0 0 28px #E83620; opacity: 0.95; }
         }
 
         .spin-slow { animation: spin-slow 24s linear infinite; }
         .spin-reverse { animation: spin-slow 18s linear infinite reverse; }
+        .orbit-counter { animation: orbit-counter 30s linear infinite; }
         .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
         .float-anim { animation: float 6s ease-in-out infinite; }
-        .flicker-text { animation: neonSignPulse 5.5s infinite; }
+        .pip-blink { animation: pip-blink 1s step-end infinite; }
+        .phosphor-anim { animation: phosphor-pulse 4s ease-in-out infinite; }
 
         /* Terminal CRT Screen Effects */
         .scanline {
@@ -241,14 +336,10 @@
             animation: marquee 28s linear infinite;
         }
         .marquee-container:hover .marquee-content { animation-play-state: paused; }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #F9F3E6; border-left: 2px solid #2D2D2D; }
+        ::-webkit-scrollbar-track { background: #2D2D2D; border-left: 2px solid #4AF626; }
         ::-webkit-scrollbar-thumb { background: #B83A2E; border: 2px solid #2D2D2D; }
         ::-webkit-scrollbar-thumb:hover { background: #5B9EA6; }
 
@@ -261,9 +352,9 @@
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 28px;
-            width: 28px;
+            width: 14px;
             border-radius: 0;
-            background: #B83A2E;
+            background: #E8C547;
             border: 3px solid #2D2D2D;
             cursor: pointer;
             box-shadow: 2px 2px 0px #2D2D2D;
@@ -273,8 +364,93 @@
             width: 100%;
             height: 10px;
             cursor: pointer;
-            background: #5B9EA6;
+            background: #2D2D2D;
             border: 2px solid #2D2D2D;
+        }
+
+        /* Bubble animations for pour visualizer */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(249,243,230,0.5);
+            animation: bubble-rise 2.5s ease-in infinite;
+        }
+        .bubble-1 { width: 5px; height: 5px; left: 20%; animation-delay: 0s; animation-duration: 2.2s; }
+        .bubble-2 { width: 4px; height: 4px; left: 45%; animation-delay: 0.7s; animation-duration: 2.8s; }
+        .bubble-3 { width: 6px; height: 6px; left: 65%; animation-delay: 1.4s; animation-duration: 2.1s; }
+        .bubble-4 { width: 3px; height: 3px; left: 80%; animation-delay: 0.3s; animation-duration: 3s; }
+
+        /* Nav signal bar */
+        .signal-bar {
+            height: 3px;
+            background: linear-gradient(90deg, #4AF626 0%, #4AF626 70%, transparent 100%);
+            animation: phosphor-pulse 3s ease-in-out infinite;
+        }
+
+        /* Logo orbit ring */
+        .logo-orbit {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(91,158,166,0.35);
+            animation: spin-slow 20s linear infinite;
+        }
+        .logo-orbit-2 {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px dashed rgba(184,58,46,0.25);
+            animation: spin-slow 14s linear infinite reverse;
+        }
+
+        /* Atomic ring divider ornament */
+        .atomic-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 8px 0;
+        }
+        .atomic-divider::before,
+        .atomic-divider::after {
+            content: '';
+            height: 3px;
+            width: 80px;
+            background: currentColor;
+            opacity: 0.4;
+        }
+
+        /* Dark manual card for recipes */
+        .manual-card {
+            background: #111a16;
+            border: 2px solid rgba(74,246,38,0.3);
+            color: #d4e8cc;
+            position: relative;
+        }
+        .manual-card::after {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            border: 1px solid rgba(74,246,38,0.1);
+            pointer-events: none;
+        }
+        .manual-card:hover {
+            border-color: rgba(74,246,38,0.6);
+            box-shadow: 0 0 20px rgba(74,246,38,0.12);
+            transform: translateY(-3px);
+            transition: all 0.3s ease;
+        }
+
+        /* Section heading label (small pill above big heading) */
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
     </style>
 </head>
@@ -825,46 +1001,49 @@
     </div>
 
     <!-- Navigation Header -->
-    <header class="fixed w-full z-50 bg-parchment border-b-[3px] border-ink transition-all duration-300 shadow-md">
+    <div class="signal-bar fixed top-0 w-full z-[60]"></div>
+    <header class="fixed w-full z-50 top-[3px] bg-[#1c1008]/95 border-b-[3px] border-ink backdrop-blur-sm transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         <div class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 sm:h-20">
                 <!-- Logo & Brand -->
                 <a href="#" onclick="playBeep()" class="flex-shrink flex items-center gap-2.5 sm:gap-3 group min-w-0">
                     <div class="relative w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
-                        <img src="logo.png" alt="Bunker Brews Official Logo" class="w-full h-full rounded-full object-contain retro-border shadow-retro-sm group-hover:rotate-6 transition-transform duration-300">
+                        <div class="logo-orbit"></div>
+                        <div class="logo-orbit-2"></div>
+                        <img src="logo.png" alt="Bunker Brews Official Logo" class="w-full h-full rounded-full object-contain retro-border border-[#4AF626]/40 shadow-[0_0_12px_rgba(74,246,38,0.2)] group-hover:rotate-6 transition-transform duration-300 relative z-10">
                     </div>
                     <div class="truncate">
-                        <span class="font-display text-2xl xs:text-3xl sm:text-4xl text-rust tracking-wider mt-0.5 drop-shadow-[1.5px_1.5px_0px_rgba(45,45,45,1)] block leading-none truncate">BUNKER BREWS</span>
-                        <span class="text-[9px] sm:text-[10px] font-bold text-ink/70 tracking-widest uppercase hidden md:block">Artisan Craft Cola Concentrate</span>
+                        <span class="font-display text-2xl xs:text-3xl sm:text-4xl text-[#E8C547] tracking-wider mt-0.5 phosphor-amber drop-shadow-[1.5px_1.5px_0px_rgba(0,0,0,0.8)] block leading-none truncate">BUNKER BREWS</span>
+                        <span class="text-[9px] sm:text-[10px] font-bold text-[#4AF626]/70 tracking-widest uppercase hidden md:block font-terminal">Artisan Craft Cola Concentrate // ESTD. 2026</span>
                     </div>
                 </a>
 
                 <!-- Navigation Links & Actions -->
                 <div class="flex items-center space-x-1.5 sm:space-x-4 font-bold shrink-0">
-                    <nav class="hidden lg:flex space-x-5 uppercase text-sm">
-                        <a href="#rations" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Rations</a>
-                        <a href="#recipes" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Recipes</a>
-                        <a href="#mixology" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Mixology</a>
-                        <a href="#cashback" onclick="playBeep()" class="text-rust hover:text-ink hover:-translate-y-0.5 transition-all flex items-center gap-1"><i class="fa-solid fa-recycle text-xs"></i> Bottle Cashback</a>
-                        <a href="#lore" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Lore</a>
-                        <a href="#comms" onclick="playBeep()" class="text-ink hover:text-rust hover:-translate-y-0.5 transition-all">Comms</a>
+                    <nav class="hidden lg:flex space-x-5 uppercase text-sm font-body">
+                        <a href="#rations" onclick="playBeep()" class="text-parchment/80 hover:text-[#E8C547] hover:-translate-y-0.5 transition-all flex items-center gap-1 group"><span class="text-[#4AF626] opacity-0 group-hover:opacity-100 transition-opacity font-terminal">▶</span>Rations</a>
+                        <a href="#recipes" onclick="playBeep()" class="text-parchment/80 hover:text-[#E8C547] hover:-translate-y-0.5 transition-all flex items-center gap-1 group"><span class="text-[#4AF626] opacity-0 group-hover:opacity-100 transition-opacity font-terminal">▶</span>Recipes</a>
+                        <a href="#mixology" onclick="playBeep()" class="text-parchment/80 hover:text-[#E8C547] hover:-translate-y-0.5 transition-all flex items-center gap-1 group"><span class="text-[#4AF626] opacity-0 group-hover:opacity-100 transition-opacity font-terminal">▶</span>Mixology</a>
+                        <a href="#cashback" onclick="playBeep()" class="text-[#E8C547] hover:text-rust hover:-translate-y-0.5 transition-all flex items-center gap-1 group"><span class="text-[#4AF626] opacity-0 group-hover:opacity-100 transition-opacity font-terminal">▶</span><i class="fa-solid fa-recycle text-xs"></i> Bottle Cashback</a>
+                        <a href="#lore" onclick="playBeep()" class="text-parchment/80 hover:text-[#E8C547] hover:-translate-y-0.5 transition-all flex items-center gap-1 group"><span class="text-[#4AF626] opacity-0 group-hover:opacity-100 transition-opacity font-terminal">▶</span>Lore</a>
+                        <a href="#comms" onclick="playBeep()" class="text-parchment/80 hover:text-[#E8C547] hover:-translate-y-0.5 transition-all flex items-center gap-1 group"><span class="text-[#4AF626] opacity-0 group-hover:opacity-100 transition-opacity font-terminal">▶</span>Comms</a>
                     </nav>
                     
                     <!-- Auth Button -->
-                    <button id="nav-auth-btn" onclick="openAuthModal()" title="Terminal Account" class="text-ink hover:text-rust transition-all uppercase text-xs sm:text-sm flex items-center gap-1.5 border-2 border-transparent hover:border-ink p-1.5 sm:px-2.5 sm:py-1.5">
-                        <i class="fa-solid fa-user-circle text-lg sm:text-xl text-rust"></i>
-                        <span id="user-badge" class="hidden md:inline">Terminal Access</span>
+                    <button id="nav-auth-btn" onclick="openAuthModal()" title="Terminal Account" class="text-parchment/70 hover:text-[#E8C547] transition-all uppercase text-xs sm:text-sm flex items-center gap-1.5 border-2 border-transparent hover:border-[#4AF626]/50 p-1.5 sm:px-2.5 sm:py-1.5">
+                        <i class="fa-solid fa-user-circle text-lg sm:text-xl text-[#4AF626]"></i>
+                        <span id="user-badge" class="hidden md:inline font-terminal">Terminal Access</span>
                     </button>
                     
                     <!-- Cart Trigger Button -->
-                    <button onclick="toggleCartDrawer(true); playBeep();" class="bg-atomic text-parchment px-2.5 sm:px-4 py-1.5 sm:py-2.5 retro-border shadow-retro-sm retro-button font-bold uppercase hover:bg-atomicDark flex items-center gap-1.5 sm:gap-2 relative">
+                    <button onclick="toggleCartDrawer(true); playBeep();" class="bg-rust text-parchment px-2.5 sm:px-4 py-1.5 sm:py-2.5 retro-border border-rust shadow-[3px_3px_0_0_#E8C547] retro-button font-bold uppercase hover:bg-rustDark flex items-center gap-1.5 sm:gap-2 relative">
                         <i class="fa-solid fa-cart-shopping text-sm sm:text-base"></i>
                         <span class="hidden xs:inline text-xs sm:text-sm">Crate</span>
-                        <span id="nav-cart-badge" class="bg-rust text-parchment text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-ink">0</span>
+                        <span id="nav-cart-badge" class="bg-[#E8C547] text-ink text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-ink">0</span>
                     </button>
 
                     <!-- Mobile Hamburger Toggle -->
-                    <button id="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 retro-border flex items-center justify-center bg-parchment text-ink hover:bg-rust hover:text-parchment transition-colors">
+                    <button id="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 border-2 border-[#4AF626]/50 flex items-center justify-center bg-terminalBg text-[#4AF626] hover:bg-[#4AF626] hover:text-terminalBg transition-colors">
                         <i id="mobile-menu-icon" class="fa-solid fa-bars text-base sm:text-lg"></i>
                     </button>
                 </div>
@@ -876,46 +1055,46 @@
     <div id="mobile-menu-backdrop" onclick="toggleMobileNav()" class="fixed inset-0 bg-ink/60 z-30 hidden backdrop-blur-xs transition-opacity"></div>
 
     <!-- Mobile Dropdown Navigation -->
-    <div id="mobile-menu" class="fixed top-16 sm:top-20 left-0 w-full bg-parchment border-b-[4px] border-ink z-40 hidden shadow-2xl p-4 sm:p-5 space-y-2 font-bold uppercase text-xs sm:text-sm">
-        <a href="#rations" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
-            <span><i class="fa-solid fa-bottle-droplet text-rust mr-2.5"></i> Supply Requisition (Shop)</span>
+    <div id="mobile-menu" class="fixed top-[67px] sm:top-[83px] left-0 w-full bg-[#111a16] border-b-[4px] border-[#4AF626]/50 z-40 hidden shadow-2xl p-4 sm:p-5 space-y-2 font-bold uppercase text-xs sm:text-sm">
+        <a href="#rations" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border border-[#4AF626]/30 hover:bg-[#4AF626] hover:text-terminalBg transition-colors text-[#4AF626]">
+            <span><i class="fa-solid fa-bottle-droplet text-[#E8C547] mr-2.5"></i> Supply Requisition (Shop)</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
-        <a href="#recipes" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
-            <span><i class="fa-solid fa-martini-glass-citrus text-atomic mr-2.5"></i> Wasteland Recipe Book</span>
+        <a href="#recipes" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border border-[#4AF626]/30 hover:bg-[#4AF626] hover:text-terminalBg transition-colors text-[#4AF626]/80">
+            <span><i class="fa-solid fa-martini-glass-citrus text-[#E8C547] mr-2.5"></i> Wasteland Recipe Book</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
-        <a href="#mixology" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
-            <span><i class="fa-solid fa-calculator text-rust mr-2.5"></i> Mixology Calculator</span>
+        <a href="#mixology" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border border-[#4AF626]/30 hover:bg-[#4AF626] hover:text-terminalBg transition-colors text-[#4AF626]/80">
+            <span><i class="fa-solid fa-calculator text-[#E8C547] mr-2.5"></i> Mixology Calculator</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
-        <a href="#cashback" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-rust bg-rust/10 text-rust hover:bg-rust hover:text-parchment transition-colors">
+        <a href="#cashback" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border border-rust bg-rust/15 text-rust hover:bg-rust hover:text-parchment transition-colors">
             <span><i class="fa-solid fa-recycle text-rust mr-2.5"></i> Bottle Return Rewards (£1.50 ea)</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
-        <a href="javascript:void(0)" onclick="openGamesModal('hack'); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-terminalGreen bg-terminalBg text-terminalGreen hover:bg-terminalGreen hover:text-terminalBg transition-colors">
-            <span><i class="fa-solid fa-gamepad text-terminalGreen mr-2.5"></i> Vault Holotape Arcade (3 Games)</span>
+        <a href="javascript:void(0)" onclick="openGamesModal('hack'); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-[#E8C547] bg-[#E8C547]/10 text-[#E8C547] hover:bg-[#E8C547] hover:text-terminalBg transition-colors">
+            <span><i class="fa-solid fa-gamepad mr-2.5"></i> Vault Holotape Arcade (3 Games)</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
-        <a href="#lore" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
-            <span><i class="fa-solid fa-book-bookmark text-atomic mr-2.5"></i> Vault Lore & Origins</span>
+        <a href="#lore" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border border-[#4AF626]/30 hover:bg-[#4AF626] hover:text-terminalBg transition-colors text-[#4AF626]/80">
+            <span><i class="fa-solid fa-book-bookmark text-[#E8C547] mr-2.5"></i> Vault Lore & Origins</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
-        <a href="javascript:void(0)" onclick="openLegalModal('allergens'); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 bg-radYellow/25 text-ink hover:bg-radYellow transition-colors">
-            <span><i class="fa-solid fa-circle-info text-rust mr-2.5"></i> Allergen Advice</span>
+        <a href="javascript:void(0)" onclick="openLegalModal('allergens'); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 border border-[#4AF626]/30 bg-[#4AF626]/10 text-[#4AF626] hover:bg-[#4AF626] hover:text-terminalBg transition-colors">
+            <span><i class="fa-solid fa-circle-info text-[#E8C547] mr-2.5"></i> Allergen Advice</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
         <div class="grid grid-cols-2 gap-2 pt-1">
-            <div class="flex border-2 border-ink bg-ink/10 overflow-hidden">
-                <button type="button" onclick="toggleAudioSFX();" class="flex-1 py-2.5 px-2 text-ink font-bold uppercase text-[11px] flex items-center justify-center gap-1">
-                    <i class="fa-solid fa-radio text-rust"></i> <span id="mobile-sfx-label">RADIO: ON</span>
+            <div class="flex border border-[#4AF626]/30 bg-terminalBg overflow-hidden">
+                <button type="button" onclick="toggleAudioSFX();" class="flex-1 py-2.5 px-2 text-[#4AF626] font-bold uppercase text-[11px] flex items-center justify-center gap-1 font-terminal">
+                    <i class="fa-solid fa-radio text-[#E8C547]"></i> <span id="mobile-sfx-label">RADIO: ON</span>
                 </button>
                 <button type="button" onclick="nextRadioStation();" title="Next Station" class="px-2.5 bg-rust text-parchment text-xs font-bold hover:bg-rustDark flex items-center justify-center">
                     <i class="fa-solid fa-forward-step"></i>
                 </button>
             </div>
-            <a href="javascript:void(0)" onclick="openAuthModal(); toggleMobileNav();" class="py-2.5 px-3 bg-ink text-parchment hover:bg-rust transition-colors text-center text-xs flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-user-shield text-radYellow"></i> Account
+            <a href="javascript:void(0)" onclick="openAuthModal(); toggleMobileNav();" class="py-2.5 px-3 bg-terminalBg border border-[#4AF626]/30 text-[#4AF626] hover:bg-[#4AF626] hover:text-terminalBg transition-colors text-center text-xs flex items-center justify-center gap-1.5 font-terminal">
+                <i class="fa-solid fa-user-shield text-[#E8C547]"></i> Account
             </a>
         </div>
     </div>
@@ -933,62 +1112,77 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-44 lg:pb-28 overflow-hidden flex items-center min-h-[92vh]">
-        <!-- Orbit Background Elements -->
-        <div class="absolute top-20 -left-20 w-96 h-96 border-[4px] border-rust/15 rounded-full spin-slow pointer-events-none"></div>
-        <div class="absolute bottom-10 -right-20 w-[32rem] h-[32rem] border-[4px] border-atomic/15 rounded-full spin-reverse pointer-events-none"></div>
-        
-        <!-- Mid-century Sparkle Stars -->
-        <svg class="absolute top-36 left-[12%] w-12 h-12 text-atomic pulse-glow float-anim pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
-        </svg>
-        <svg class="absolute bottom-36 right-[15%] w-10 h-10 text-rust pulse-glow float-anim pointer-events-none" style="animation-delay: 1.5s;" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
-        </svg>
+    <section class="relative pt-36 pb-20 lg:pt-48 lg:pb-28 overflow-hidden flex items-center min-h-[95vh] bg-[#13100a]">
+        <!-- Large atomic ring watermark behind text (echoes the logo seal) -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+            <!-- Outer glowing ring -->
+            <div class="w-[600px] h-[600px] sm:w-[900px] sm:h-[900px] rounded-full border-[2px] border-[#B83A2E]/12 spin-slow"></div>
+            <!-- Middle orbit ring -->
+            <div class="absolute w-[420px] h-[420px] sm:w-[640px] sm:h-[640px] rounded-full border-[1.5px] border-[#5B9EA6]/15 spin-reverse"></div>
+            <!-- Inner ring -->
+            <div class="absolute w-[260px] h-[260px] sm:w-[400px] sm:h-[400px] rounded-full border-[2px] border-[#E8C547]/10 spin-slow" style="animation-duration: 35s"></div>
+            <!-- Atomic ellipses echoing logo rings -->
+            <svg class="absolute w-[500px] h-[500px] sm:w-[750px] sm:h-[750px] text-[#5B9EA6]/8 spin-slow" style="animation-duration: 40s" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+                <ellipse cx="50" cy="50" rx="46" ry="15" transform="rotate(30 50 50)" />
+                <ellipse cx="50" cy="50" rx="46" ry="15" transform="rotate(90 50 50)" />
+                <ellipse cx="50" cy="50" rx="46" ry="15" transform="rotate(150 50 50)" />
+                <circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.4" />
+            </svg>
+            <!-- Dot grid overlay -->
+            <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(rgba(74,246,38,0.06) 1px, transparent 1px); background-size: 28px 28px;"></div>
+        </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="zoom-in" data-aos-duration="900">
+        <!-- Pip-Boy Station Callsign Label -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div class="text-center max-w-4xl mx-auto">
                 
+                <!-- Station callsign -->
+                <div class="inline-flex items-center gap-3 mb-5 font-terminal text-sm sm:text-base text-[#4AF626]/80">
+                    <span class="pip-blink text-[#4AF626]">█</span>
+                    <span>> BUNKER BREWS COMMS ARRAY // BATCH #077 // BIRMINGHAM, UK</span>
+                    <span class="pip-blink text-[#4AF626]" style="animation-delay: 0.5s">█</span>
+                </div>
+
                 <!-- Badge -->
-                <div class="inline-flex items-center gap-2 mb-6 px-3.5 sm:px-4 py-1.5 bg-ink text-parchment font-bold text-[11px] sm:text-xs uppercase retro-border shadow-[4px_4px_0_0_#B83A2E] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
-                    <i class="fa-solid fa-atom text-atomic"></i>
+                <div class="inline-flex items-center gap-2 mb-6 px-3.5 sm:px-4 py-1.5 bg-[#E8C547] text-ink font-bold text-[11px] sm:text-xs uppercase retro-border shadow-[4px_4px_0_0_#B83A2E] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+                    <i class="fa-solid fa-atom text-rust"></i>
                     <span>Small-Batch Survival Craft Supplies</span>
                 </div>
                 
                 <!-- Main Headings -->
-                <h1 class="font-display text-5xl xs:text-6xl sm:text-8xl lg:text-9xl text-ink leading-[0.95] tracking-wide mb-6 uppercase break-words">
+                <h1 class="font-display text-5xl xs:text-6xl sm:text-8xl lg:text-9xl text-parchment leading-[0.95] tracking-wide mb-6 uppercase break-words drop-shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">
                     Homemade <span class="neon-flicker">Craft Cola</span><br>Syrup Concentrate
                 </h1>
                 
-                <p class="mt-4 text-base sm:text-2xl text-ink/85 font-bold max-w-2xl mx-auto mb-8 sm:mb-10 border-t-[3px] border-b-[3px] border-ink py-3 sm:py-4 leading-snug">
-                    Warm campfire spices united with crisp, refreshing citrus — the ultimate contrast for exploration.
+                <p class="mt-4 text-base sm:text-2xl text-parchment/75 font-bold max-w-2xl mx-auto mb-8 sm:mb-10 border-t-[3px] border-b-[3px] border-[#E8C547]/40 py-3 sm:py-4 leading-snug">
+                    Warm campfire spices united with crisp, refreshing citrus—the ultimate contrast for exploration.
                 </p>
                 
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-5 mt-6 sm:mt-8">
-                    <a href="#rations" onclick="playBeep()" class="w-full sm:w-auto bg-rust text-parchment px-6 sm:px-8 py-3.5 sm:py-4 text-xl sm:text-2xl font-display tracking-wider uppercase retro-border shadow-retro retro-button hover:bg-rustDark flex items-center justify-center gap-3">
+                    <a href="#rations" onclick="playBeep()" class="w-full sm:w-auto bg-rust text-parchment px-6 sm:px-8 py-3.5 sm:py-4 text-xl sm:text-2xl font-display tracking-wider uppercase border-[3px] border-parchment/30 shadow-[6px_6px_0_0_#E8C547] retro-button hover:bg-rustDark flex items-center justify-center gap-3">
                         <i class="fa-solid fa-bottle-droplet"></i>
                         Order Your Rations
                     </a>
-                    <a href="#mixology" onclick="playBeep()" class="w-full sm:w-auto bg-parchment text-ink px-6 sm:px-8 py-3.5 sm:py-4 text-xl sm:text-2xl font-display tracking-wider uppercase retro-border shadow-retro-atomic retro-button atomic-glow flex items-center justify-center gap-3">
+                    <a href="#mixology" onclick="playBeep()" class="w-full sm:w-auto bg-transparent text-parchment px-6 sm:px-8 py-3.5 sm:py-4 text-xl sm:text-2xl font-display tracking-wider uppercase border-[3px] border-[#4AF626]/60 shadow-[6px_6px_0_0_rgba(74,246,38,0.3)] retro-button hover:bg-[#4AF626]/10 flex items-center justify-center gap-3">
                         <i class="fa-solid fa-sliders"></i>
                         Mixing Calculator
                     </a>
                 </div>
 
-                <!-- Trust Badges -->
-                <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-12 pt-8 border-t-2 border-ink/20 text-xs font-bold uppercase text-ink/80">
-                    <div class="flex flex-col items-center">
-                        <i class="fa-solid fa-leaf text-atomic text-xl mb-1"></i>
-                        <span>100% Real Botanicals</span>
+                <!-- Trust Badges as SPECIAL-style stat counters -->
+                <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-12 pt-8 border-t border-[#E8C547]/20">
+                    <div class="flex flex-col items-center text-parchment/70">
+                        <div class="font-terminal text-[#4AF626] text-xl mb-1 phosphor-anim">100%</div>
+                        <span class="font-bold text-[10px] sm:text-xs uppercase text-parchment/60">Real Botanicals</span>
                     </div>
-                    <div class="flex flex-col items-center">
-                        <i class="fa-solid fa-wine-bottle text-rust text-xl mb-1"></i>
-                        <span>Vintage Swing-Top</span>
+                    <div class="flex flex-col items-center text-parchment/70">
+                        <div class="font-terminal text-[#E8C547] text-xl mb-1 phosphor-amber">☢</div>
+                        <span class="font-bold text-[10px] sm:text-xs uppercase text-parchment/60">Vintage Swing-Top</span>
                     </div>
-                    <div class="flex flex-col items-center">
-                        <i class="fa-solid fa-recycle text-atomic text-xl mb-1"></i>
-                        <span>£1.50 Return Credit</span>
+                    <div class="flex flex-col items-center text-parchment/70">
+                        <div class="font-terminal text-rust text-xl mb-1 neon-flicker" style="font-size:1rem">£1.50</div>
+                        <span class="font-bold text-[10px] sm:text-xs uppercase text-parchment/60">Return Credit</span>
                     </div>
                 </div>
 
@@ -996,266 +1190,268 @@
         </div>
     </section>
 
-    <!-- Circular Economy Marquee -->
-    <div class="bg-atomic text-parchment py-3.5 border-y-[4px] border-ink marquee-container font-bold text-base sm:text-lg uppercase tracking-wider relative z-20 shadow-md">
+    <!-- Vault Warning Marquee Tape -->
+    <div class="bg-ink text-[#E8C547] py-3 border-y-[4px] border-[#E8C547]/60 marquee-container font-terminal text-base sm:text-lg uppercase tracking-wider relative z-20 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         <div class="marquee-content">
-            <span class="mx-8"><i class="fa-solid fa-recycle text-radYellow mr-2"></i> SUSTAINABLE BUSINESS: Return your bottles for £1.50 off your next order! </span>
-            <span class="mx-8"><i class="fa-solid fa-shield-halved text-radYellow mr-2"></i> REQUISITION NOW: Free Local Pickup in Sutton Coldfield & Leviathan Brewery </span>
-            <span class="mx-8"><i class="fa-solid fa-recycle text-radYellow mr-2"></i> SUSTAINABLE BUSINESS: Return your bottles for £1.50 off your next order! </span>
-            <span class="mx-8"><i class="fa-solid fa-bolt text-radYellow mr-2"></i> NO CORN SYRUP: Pure Cane Sugar, Real Essential Citrus Oils & Aromatic Whole Spices </span>
+            <span class="mx-8">☢ RETURN YOUR BOTTLES FOR £1.50 DIGITAL GIFT CARD CREDIT PER BOTTLE</span>
+            <span class="mx-8">/// FREE LOCAL PICKUP // SUTTON COLDFIELD // LEVIATHAN BREWERY ///</span>
+            <span class="mx-8">☢ RETURN YOUR BOTTLES FOR £1.50 DIGITAL GIFT CARD CREDIT PER BOTTLE</span>
+            <span class="mx-8">⚠ NO CORN SYRUP // PURE CANE SUGAR // REAL ESSENTIAL CITRUS OILS // WHOLE SPICES ⚠</span>
         </div>
     </div>
 
-    <!-- Flavor Profile & Product Showcase Section -->
-    <section id="rations" class="py-24 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Vault-Tec Supply Requisition Section -->
+    <section id="rations" class="py-24 relative overflow-hidden bg-[#0e1209]">
+        <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(74,246,38,0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
+            <!-- Section Header: Vault-Tec Requisition Form -->
             <div class="text-center mb-16" data-aos="fade-up">
-                <div class="inline-block px-3 py-1 bg-rust text-parchment text-xs font-bold uppercase retro-border mb-3">
-                    Batch #077 Formulation
+                <div class="inline-block px-4 py-1 bg-[#E8C547] text-ink text-xs font-bold uppercase retro-border mb-3 font-terminal">
+                    <i class="fa-solid fa-atom mr-1 text-rust"></i> VAULT-TEC REQ. FORM #077 // BATCH AUTHORIZED
                 </div>
-                <h2 class="font-display text-5xl md:text-7xl text-ink uppercase inline-block relative">
-                    <span class="text-rust mr-2"><i class="fa-solid fa-bolt pulse-glow"></i></span>
+                <h2 class="font-display text-5xl md:text-7xl text-parchment uppercase inline-block relative phosphor-amber">
+                    <span class="text-[#E8C547] mr-2"><i class="fa-solid fa-bolt pulse-glow"></i></span>
                     Standard Issue Supplies
-                    <span class="text-rust ml-2"><i class="fa-solid fa-bolt pulse-glow"></i></span>
+                    <span class="text-[#E8C547] ml-2"><i class="fa-solid fa-bolt pulse-glow"></i></span>
                 </h2>
-                <p class="font-bold text-ink/70 max-w-xl mx-auto mt-2">
-                    Crafted in small batches with real whole spices and fresh citrus oils. Choose your ration format below.
+                <p class="font-terminal text-[#4AF626]/80 max-w-xl mx-auto mt-3">
+                    > CRAFTED IN SMALL BATCHES WITH REAL WHOLE SPICES AND FRESH CITRUS OILS. SELECT RATION FORMAT.
                 </p>
-                <div class="w-28 h-[4px] bg-ink mx-auto mt-4"></div>
+                <div class="w-28 h-[4px] bg-[#E8C547]/60 mx-auto mt-4"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
                 
-                <!-- Product Card 1: Bunker Basic -->
-                <div class="bg-parchment retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-2 transition-all duration-300 relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="100">
+                <!-- Product Card 1: Bunker Basic (Terminal Treatment) -->
+                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="100">
                     
-                    <!-- Bestseller Stamp -->
-                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-rust rounded-full flex items-center justify-center retro-border transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-md">
+                    <!-- Classification Stamp -->
+                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-rust border-2 border-[#E8C547] flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-[0_0_12px_rgba(184,58,46,0.5)]">
                         <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">BEST<br>SELLER</span>
                     </div>
                     
                     <!-- Product Visual Stage -->
-                    <div class="bg-ink/5 p-6 retro-border mb-6 flex justify-center h-64 items-center relative overflow-hidden">
-                        <div class="absolute w-44 h-44 bg-rust/20 rounded-full z-0 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="bg-black/60 border border-[#4AF626]/20 p-6 mb-6 flex justify-center h-64 items-center relative overflow-hidden">
+                        <div class="absolute w-44 h-44 rounded-full z-0 border border-rust/20" style="box-shadow: 0 0 40px rgba(184,58,46,0.15)"></div>
                         
                         <!-- Stylized SVG Bottle -->
-                        <svg id="svg-bottle-basic" class="h-48 w-auto text-ink z-10 float-anim transition-all duration-300" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="4">
-                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#F9F3E6"/>
-                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="5"/>
-                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="5"/>
+                        <svg id="svg-bottle-basic" class="h-48 w-auto z-10 float-anim transition-all duration-300" viewBox="0 0 100 200" fill="none" stroke="#4AF626" stroke-width="3">
+                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#0e1a14"/>
+                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="4"/>
+                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="4"/>
                             <text x="40" y="80" font-family="'Bebas Neue', sans-serif" font-size="30" fill="#B83A2E" stroke="none">B</text>
-                            <rect x="25" y="100" width="50" height="60" fill="#B83A2E" stroke="currentColor" stroke-width="3"/>
+                            <rect x="25" y="100" width="50" height="60" fill="#B83A2E" stroke="#4AF626" stroke-width="2"/>
                             <text x="50" y="130" font-family="'Courier Prime', monospace" font-size="11" fill="#F9F3E6" stroke="none" text-anchor="middle" font-weight="bold">BASIC</text>
                             <text x="50" y="145" font-family="'Courier Prime', monospace" font-size="8" fill="#F9F3E6" stroke="none" text-anchor="middle">SPICED CITRUS</text>
                         </svg>
                     </div>
                     
-                    <div class="mb-3">
+                    <div class="mb-3 relative z-10">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-display text-4xl uppercase text-rust tracking-wide">Bunker Basic</h3>
-                            <span class="bg-rust/15 text-rust px-2 py-0.5 text-xs font-bold border border-rust">FLAGSHIP</span>
+                            <h3 class="font-display text-4xl uppercase text-rust tracking-wide terminal-text">Bunker Basic</h3>
+                            <span class="bg-rust/20 text-rust px-2 py-0.5 text-xs font-bold border border-rust/50 font-terminal">FLAGSHIP</span>
                         </div>
-                        <p class="font-bold text-xs text-ink/70 uppercase">Swing-Top Reusable Glass Vessel</p>
+                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
                     </div>
                     
-                    <p class="text-sm font-bold text-ink/80 mb-4 border-b-2 border-ink/15 pb-3">
+                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
                         A rich, comforting spiced citrus craft cola syrup concentrate delivering festive campfire warmth and bright citrus aromatics.
                     </p>
 
                     <!-- Tasting & Mix Stats -->
-                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold">
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
                         <div class="flex items-start gap-2">
                             <i class="fa-solid fa-holly-berry text-rust mt-0.5"></i>
                             <div>
-                                <span class="text-ink/60 uppercase">Tasting Profile:</span>
-                                <span class="text-ink">Fresh hand-zested orange & lemon, warm ground cinnamon, cracked nutmeg, coriander, star anise & pure vanilla.</span>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
+                                <span class="text-[#4AF626]/90"> Fresh hand-zested orange &amp; lemon, warm ground cinnamon, cracked nutmeg, coriander, star anise &amp; pure vanilla.</span>
                             </div>
                         </div>
                         <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-flask text-atomic mt-0.5"></i>
+                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
                             <div>
-                                <span class="text-ink/60 uppercase">Recommended Ratio:</span>
-                                <span class="text-ink">1 part syrup to 5 parts sparkling water (or to taste).</span>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
+                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
                             </div>
                         </div>
                         <!-- Allergen Advice Badge -->
-                        <div class="p-2 bg-ink/5 border border-ink/20 mt-2">
-                            <span class="text-[10px] text-rust uppercase font-bold block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
-                            <span class="text-[11px] text-ink/75 font-normal block leading-tight">Gluten-Free • 100% Vegan • Caffeine-Free • Free from all 14 major allergens. Contains natural citrus & whole spices.</span>
+                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
+                            <span class="text-[10px] text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-[11px] text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
                         </div>
                     </div>
 
                     <!-- Size Selector & Dynamic Add-to-Cart -->
-                    <div class="mt-auto border-t-[3px] border-ink pt-4">
-                        <label class="block font-bold text-xs uppercase mb-2 text-ink/70">Select Ration Size:</label>
+                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
+                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
                         <div class="grid grid-cols-3 gap-1.5 mb-4">
-                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/10 transition-all text-center">
-                                250ml<br><span class="font-normal text-[10px] opacity-80">£5.50</span>
+                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
+                                250ml<br><span class="font-normal text-[10px] opacity-80">&pound;5.50</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('basic', '330ml', 6.75); playBeep();" id="btn-size-basic-330" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/10 transition-all text-center">
-                                330ml<br><span class="font-normal text-[10px] opacity-80">£6.75</span>
+                            <button type="button" onclick="selectProductSize('basic', '330ml', 6.75); playBeep();" id="btn-size-basic-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-[10px] opacity-80">&pound;6.75</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('basic', '450ml', 8.50); playBeep();" id="btn-size-basic-450" class="py-2 px-1 border-[3px] border-ink bg-rust text-parchment font-bold text-[11px] sm:text-xs uppercase transition-all shadow-sm text-center">
-                                450ml<br><span class="font-normal text-[10px] opacity-90">£8.50</span>
+                            <button type="button" onclick="selectProductSize('basic', '450ml', 8.50); playBeep();" id="btn-size-basic-450" class="py-2 px-1 border-2 border-rust bg-rust/20 text-rust font-bold text-[11px] sm:text-xs uppercase transition-all shadow-[0_0_8px_rgba(184,58,46,0.3)] text-center font-terminal">
+                                450ml<br><span class="font-normal text-[10px] opacity-90">&pound;8.50</span>
                             </button>
                         </div>
                         
                         <div class="flex items-center justify-between">
                             <div>
-                                <span class="text-xs font-bold text-ink/60 uppercase block">Ration Cost</span>
-                                <span id="price-display-basic" class="font-display text-4xl text-ink">£8.50</span>
+                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
+                                <span id="price-display-basic" class="font-display text-4xl text-rust terminal-text">&pound;8.50</span>
                             </div>
-                            <button onclick="addProductToCart('Bunker Basic', currentSizes['basic'].size, currentSizes['basic'].price); playBeep();" class="bg-ink text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-rust flex items-center gap-2">
+                            <button onclick="addProductToCart('Bunker Basic', currentSizes['basic'].size, currentSizes['basic'].price); playBeep();" class="bg-rust text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#E8C547]/40 hover:bg-rustDark flex items-center gap-2 shadow-[0_0_12px_rgba(184,58,46,0.4)] transition-all">
                                 <i class="fa-solid fa-plus text-sm"></i> Add to Crate
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Product Card 2: Bunker Scout -->
-                <div class="bg-parchment retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-2 transition-all duration-300 relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="200">
+                <!-- Product Card 2: Bunker Scout (Terminal Treatment) -->
+                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="200">
                     
                     <!-- Scout Stamp -->
-                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-atomic rounded-full flex items-center justify-center retro-border transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-md">
+                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-atomic border-2 border-[#4AF626] flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-[0_0_12px_rgba(91,158,166,0.5)]">
                         <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">REFRESH<br>SCOUT</span>
                     </div>
                     
                     <!-- Product Visual Stage -->
-                    <div class="bg-ink/5 p-6 retro-border mb-6 flex justify-center h-64 items-center relative overflow-hidden">
-                        <div class="absolute w-44 h-44 bg-atomic/20 rounded-full z-0 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="bg-black/60 border border-[#4AF626]/20 p-6 mb-6 flex justify-center h-64 items-center relative overflow-hidden">
+                        <div class="absolute w-44 h-44 rounded-full z-0 border border-atomic/20" style="box-shadow: 0 0 40px rgba(91,158,166,0.12)"></div>
                         
                         <!-- Stylized SVG Bottle -->
-                        <svg id="svg-bottle-scout" class="h-48 w-auto text-ink z-10 float-anim transition-all duration-300" style="animation-delay: 0.8s;" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="4">
-                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#F9F3E6"/>
-                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="5"/>
-                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="5"/>
+                        <svg id="svg-bottle-scout" class="h-48 w-auto z-10 float-anim transition-all duration-300" style="animation-delay: 0.8s;" viewBox="0 0 100 200" fill="none" stroke="#4AF626" stroke-width="3">
+                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#0e1a14"/>
+                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="4"/>
+                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="4"/>
                             <text x="40" y="80" font-family="'Bebas Neue', sans-serif" font-size="30" fill="#5B9EA6" stroke="none">B</text>
-                            <rect x="25" y="100" width="50" height="60" fill="#5B9EA6" stroke="currentColor" stroke-width="3"/>
+                            <rect x="25" y="100" width="50" height="60" fill="#5B9EA6" stroke="#4AF626" stroke-width="2"/>
                             <text x="50" y="130" font-family="'Courier Prime', monospace" font-size="11" fill="#F9F3E6" stroke="none" text-anchor="middle" font-weight="bold">SCOUT</text>
                             <text x="50" y="145" font-family="'Courier Prime', monospace" font-size="8" fill="#F9F3E6" stroke="none" text-anchor="middle">BOTANICAL COLA</text>
                         </svg>
                     </div>
                     
-                    <div class="mb-3">
+                    <div class="mb-3 relative z-10">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-display text-4xl uppercase text-atomic tracking-wide">Bunker Scout</h3>
-                            <span class="bg-atomic/15 text-atomic px-2 py-0.5 text-xs font-bold border border-atomic">BOTANICAL</span>
+                            <h3 class="font-display text-4xl uppercase text-atomic tracking-wide terminal-text">Bunker Scout</h3>
+                            <span class="bg-atomic/20 text-atomic px-2 py-0.5 text-xs font-bold border border-atomic/50 font-terminal">BOTANICAL</span>
                         </div>
-                        <p class="font-bold text-xs text-ink/70 uppercase">Swing-Top Reusable Glass Vessel</p>
+                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
                     </div>
                     
-                    <p class="text-sm font-bold text-ink/80 mb-4 border-b-2 border-ink/15 pb-3">
+                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
                         A deep, complex caramelized craft cola syrup concentrate infused with pure molasses, dried Seville orange peel, lemon, and whole spices.
                     </p>
 
                     <!-- Tasting & Mix Stats -->
-                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold">
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
                         <div class="flex items-start gap-2">
                             <i class="fa-solid fa-lemon text-atomic mt-0.5"></i>
                             <div>
-                                <span class="text-ink/60 uppercase">Tasting Profile:</span>
-                                <span class="text-ink">Caramelized demerara & molasses depth, Seville orange peel, lemon botanicals, cinnamon stick, coriander & star anise.</span>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
+                                <span class="text-[#4AF626]/90"> Caramelized demerara &amp; molasses depth, Seville orange peel, lemon botanicals, cinnamon stick, coriander &amp; star anise.</span>
                             </div>
                         </div>
                         <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-flask text-rust mt-0.5"></i>
+                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
                             <div>
-                                <span class="text-ink/60 uppercase">Recommended Ratio:</span>
-                                <span class="text-ink">1 part syrup to 5 parts sparkling water (or to taste).</span>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
+                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
                             </div>
                         </div>
                         <!-- Allergen Advice Badge -->
-                        <div class="p-2 bg-ink/5 border border-ink/20 mt-2">
-                            <span class="text-[10px] text-atomic uppercase font-bold block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
-                            <span class="text-[11px] text-ink/75 font-normal block leading-tight">Gluten-Free • 100% Vegan • Caffeine-Free • Free from all 14 major allergens. Contains natural citrus & whole spices.</span>
+                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
+                            <span class="text-[10px] text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-[11px] text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
                         </div>
                     </div>
 
                     <!-- Size Selector & Dynamic Add-to-Cart -->
-                    <div class="mt-auto border-t-[3px] border-ink pt-4">
-                        <label class="block font-bold text-xs uppercase mb-2 text-ink/70">Select Ration Size:</label>
+                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
+                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
                         <div class="grid grid-cols-3 gap-1.5 mb-4">
-                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/10 transition-all text-center">
-                                250ml<br><span class="font-normal text-[10px] opacity-80">£5.50</span>
+                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
+                                250ml<br><span class="font-normal text-[10px] opacity-80">&pound;5.50</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('scout', '330ml', 6.75); playBeep();" id="btn-size-scout-330" class="py-2 px-1 border-[3px] border-ink bg-parchment text-ink font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/10 transition-all text-center">
-                                330ml<br><span class="font-normal text-[10px] opacity-80">£6.75</span>
+                            <button type="button" onclick="selectProductSize('scout', '330ml', 6.75); playBeep();" id="btn-size-scout-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-[11px] sm:text-xs uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-[10px] opacity-80">&pound;6.75</span>
                             </button>
-                            <button type="button" onclick="selectProductSize('scout', '450ml', 8.50); playBeep();" id="btn-size-scout-450" class="py-2 px-1 border-[3px] border-ink bg-atomic text-parchment font-bold text-[11px] sm:text-xs uppercase transition-all shadow-sm text-center">
-                                450ml<br><span class="font-normal text-[10px] opacity-90">£8.50</span>
+                            <button type="button" onclick="selectProductSize('scout', '450ml', 8.50); playBeep();" id="btn-size-scout-450" class="py-2 px-1 border-2 border-atomic bg-atomic/20 text-atomic font-bold text-[11px] sm:text-xs uppercase transition-all shadow-[0_0_8px_rgba(91,158,166,0.3)] text-center font-terminal">
+                                450ml<br><span class="font-normal text-[10px] opacity-90">&pound;8.50</span>
                             </button>
                         </div>
                         
                         <div class="flex items-center justify-between">
                             <div>
-                                <span class="text-xs font-bold text-ink/60 uppercase block">Ration Cost</span>
-                                <span id="price-display-scout" class="font-display text-4xl text-ink">£8.50</span>
+                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
+                                <span id="price-display-scout" class="font-display text-4xl text-atomic terminal-text">&pound;8.50</span>
                             </div>
-                            <button onclick="addProductToCart('Bunker Scout', currentSizes['scout'].size, currentSizes['scout'].price); playBeep();" class="bg-ink text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase retro-button shadow-retro-sm hover:bg-atomic flex items-center gap-2">
+                            <button onclick="addProductToCart('Bunker Scout', currentSizes['scout'].size, currentSizes['scout'].price); playBeep();" class="bg-atomic text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#4AF626]/40 hover:bg-atomicDark flex items-center gap-2 shadow-[0_0_12px_rgba(91,158,166,0.4)] transition-all">
                                 <i class="fa-solid fa-plus text-sm"></i> Add to Crate
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Preparation Protocols & Wasteland Recipes Card -->
-                <div class="bg-atomic text-parchment retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="300">
+                <!-- Preparation Protocols Card -->
+                <div class="bg-[#1a0f00] border-2 border-[#E8C547]/50 text-parchment p-6 flex flex-col group hover:-translate-y-2 transition-transform duration-300 shadow-[4px_4px_0_0_#E8C547]" data-aos="fade-up" data-aos-delay="300">
                     <div class="mb-5 flex justify-between items-start">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-radYellow">Vault Survival Manual</span>
-                            <h3 class="font-display text-4xl uppercase leading-none mt-1">Dispenser Protocols</h3>
+                            <span class="text-xs font-terminal text-[#E8C547] uppercase tracking-wider">> Vault Survival Manual</span>
+                            <h3 class="font-display text-4xl uppercase leading-none mt-1 text-parchment">Dispenser Protocols</h3>
                         </div>
-                        <i class="fa-solid fa-clipboard-list text-3xl group-hover:text-radYellow transition-colors"></i>
+                        <i class="fa-solid fa-clipboard-list text-3xl text-[#E8C547] group-hover:text-rust transition-colors"></i>
                     </div>
                     
                     <div class="space-y-4 flex-grow text-xs font-bold">
-                        <div class="border-l-4 border-parchment pl-3.5 hover:border-radYellow transition-colors py-0.5">
-                            <h4 class="uppercase text-sm font-display tracking-wide text-radYellow">01. Standard Sparkler</h4>
-                            <p class="text-parchment/90 mt-0.5">30ml syrup + 150ml icy sparkling water. Stir gently with a spoon. Never shake!</p>
+                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">01. Standard Sparkler</h4>
+                            <p class="text-parchment/80 mt-0.5">30ml syrup + 150ml icy sparkling water. Stir gently with a spoon. Never shake!</p>
                         </div>
-                        <div class="border-l-4 border-parchment pl-3.5 hover:border-radYellow transition-colors py-0.5">
-                            <h4 class="uppercase text-sm font-display tracking-wide text-radYellow">02. The Bunker Float</h4>
-                            <p class="text-parchment/90 mt-0.5">Pour standard mix over a generous scoop of clotted vanilla bean ice cream.</p>
+                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">02. The Bunker Float</h4>
+                            <p class="text-parchment/80 mt-0.5">Pour standard mix over a generous scoop of clotted vanilla bean ice cream.</p>
                         </div>
-                        <div class="border-l-4 border-parchment pl-3.5 hover:border-radYellow transition-colors py-0.5">
-                            <h4 class="uppercase text-sm font-display tracking-wide text-radYellow">03. Survivor's Dark 'n' Stormy</h4>
-                            <p class="text-parchment/90 mt-0.5">30ml Bunker Basic, 40ml dark spiced rum, 120ml soda, scorched orange peel garnish.</p>
+                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">03. Survivor's Dark 'n' Stormy</h4>
+                            <p class="text-parchment/80 mt-0.5">30ml Bunker Basic, 40ml dark spiced rum, 120ml soda, scorched orange peel garnish.</p>
                         </div>
                     </div>
 
-                    <div class="mt-6 pt-4 border-t-2 border-parchment/30 text-center relative overflow-hidden bg-ink/10 p-2.5">
-                        <p class="font-terminal text-lg uppercase tracking-widest text-parchment">
-                            >> YIELD: ~15 SERVINGS PER 450ML BOTTLE
+                    <div class="mt-6 pt-4 border-t border-[#E8C547]/30 text-center bg-black/20 p-2.5">
+                        <p class="font-terminal text-lg uppercase tracking-widest text-[#E8C547]">
+                            &gt;&gt; YIELD: ~15 SERVINGS PER 450ML BOTTLE
                         </p>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Interactive Vault Formulation Quiz (Find Your Flavor) -->
-            <div id="flavor-quiz" class="mt-16 bg-parchmentDark p-6 sm:p-10 retro-border shadow-retro-lg max-w-4xl mx-auto" data-aos="zoom-in">
+            <!-- Vault Formulation Quiz -->
+            <div id="flavor-quiz" class="mt-16 bg-[#0a150e] p-6 sm:p-10 border-2 border-[#4AF626]/30 shadow-[8px_8px_0_0_rgba(74,246,38,0.2)] max-w-4xl mx-auto" data-aos="zoom-in">
                 <div class="text-center mb-6">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-ink text-radYellow text-xs font-bold uppercase mb-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#4AF626]/10 text-[#E8C547] text-xs font-terminal uppercase mb-2 border border-[#4AF626]/30">
                         <i class="fa-solid fa-clipboard-question"></i> Pip-Boy Diagnostic
                     </div>
-                    <h3 class="font-display text-4xl sm:text-5xl text-ink uppercase">Find Your Vault Formulation</h3>
-                    <p class="text-xs sm:text-sm font-bold text-ink/70 mt-1">
-                        Not sure which ration suits your palate? Answer 3 quick field questions for an instant recommendation.
+                    <h3 class="font-display text-4xl sm:text-5xl text-[#4AF626] uppercase phosphor-text">Find Your Vault Formulation</h3>
+                    <p class="text-xs sm:text-sm font-terminal text-[#4AF626]/70 mt-1">
+                        > Not sure which ration suits your palate? Answer 3 quick field questions.
                     </p>
                 </div>
 
                 <div id="quiz-step-container" class="space-y-6">
                     <!-- Question 1 -->
                     <div id="quiz-q1" class="space-y-3">
-                        <span class="font-display text-2xl text-ink uppercase block">> 01. What is your primary flavor craving?</span>
+                        <span class="font-terminal text-xl text-[#4AF626] block">> 01. What is your primary flavor craving?</span>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button type="button" onclick="answerQuiz(1, 'basic')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-rust hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
-                                <span><i class="fa-solid fa-fire-burner text-rust mr-2"></i> Cozy Campfire Warmth & Citrus Spices</span>
+                            <button type="button" onclick="answerQuiz(1, 'basic')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-rust/20 hover:border-rust font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                                <span><i class="fa-solid fa-fire-burner text-rust mr-2"></i> Cozy Campfire Warmth &amp; Citrus Spices</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
-                            <button type="button" onclick="answerQuiz(1, 'scout')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-atomic hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
-                                <span><i class="fa-solid fa-lemon text-atomic mr-2"></i> Dark Caramelized Molasses & Seville Botanicals</span>
+                            <button type="button" onclick="answerQuiz(1, 'scout')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-atomic/20 hover:border-atomic font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                                <span><i class="fa-solid fa-lemon text-atomic mr-2"></i> Dark Caramelized Molasses &amp; Seville Botanicals</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
                         </div>
@@ -1263,14 +1459,14 @@
 
                     <!-- Question 2 (Hidden initially) -->
                     <div id="quiz-q2" class="space-y-3 hidden">
-                        <span class="font-display text-2xl text-ink uppercase block">> 02. How do you intend to consume your syrup?</span>
+                        <span class="font-terminal text-xl text-[#4AF626] block">> 02. How do you intend to consume your syrup?</span>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button type="button" onclick="answerQuiz(2, 'basic')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-rust hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
-                                <span><i class="fa-solid fa-glass-water text-rust mr-2"></i> All-Day Sparkling Soda & Vintage Ice Cream Floats</span>
+                            <button type="button" onclick="answerQuiz(2, 'basic')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-rust/20 hover:border-rust font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                                <span><i class="fa-solid fa-glass-water text-rust mr-2"></i> All-Day Sparkling Soda &amp; Vintage Ice Cream Floats</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
-                            <button type="button" onclick="answerQuiz(2, 'scout')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-atomic hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
-                                <span><i class="fa-solid fa-martini-glass text-atomic mr-2"></i> Evening Cocktails, Spiced Rums, Espresso & BBQ Glazes</span>
+                            <button type="button" onclick="answerQuiz(2, 'scout')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-atomic/20 hover:border-atomic font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                                <span><i class="fa-solid fa-martini-glass text-atomic mr-2"></i> Evening Cocktails, Spiced Rums, Espresso &amp; BBQ Glazes</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
                         </div>
@@ -1278,29 +1474,29 @@
 
                     <!-- Question 3 (Hidden initially) -->
                     <div id="quiz-q3" class="space-y-3 hidden">
-                        <span class="font-display text-2xl text-ink uppercase block">> 03. Which sweetness and finish do you prefer?</span>
+                        <span class="font-terminal text-xl text-[#4AF626] block">> 03. Which sweetness and finish do you prefer?</span>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button type="button" onclick="answerQuiz(3, 'basic')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-rust hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
-                                <span><i class="fa-solid fa-candy-cane text-rust mr-2"></i> Bright Vanilla Bean, Lemon & Cinnamon Finish</span>
+                            <button type="button" onclick="answerQuiz(3, 'basic')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-rust/20 hover:border-rust font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                                <span><i class="fa-solid fa-candy-cane text-rust mr-2"></i> Bright Vanilla Bean, Lemon &amp; Cinnamon Finish</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
-                            <button type="button" onclick="answerQuiz(3, 'scout')" class="quiz-btn p-4 bg-parchment retro-border text-left hover:bg-atomic hover:text-parchment font-bold text-xs sm:text-sm uppercase transition-colors flex items-center justify-between">
-                                <span><i class="fa-solid fa-leaf text-atomic mr-2"></i> Rich Herbal Botanicals & Dark Cane Depth</span>
+                            <button type="button" onclick="answerQuiz(3, 'scout')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-atomic/20 hover:border-atomic font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                                <span><i class="fa-solid fa-leaf text-atomic mr-2"></i> Rich Herbal Botanicals &amp; Dark Cane Depth</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Quiz Result Display (Hidden initially) -->
-                    <div id="quiz-result" class="hidden p-6 bg-parchment retro-border space-y-4 text-center animate-in fade-in">
-                        <div id="quiz-result-badge" class="inline-block px-3 py-1 text-xs font-bold uppercase retro-border">RECOMMENDED BATCH</div>
-                        <h4 id="quiz-result-title" class="font-display text-4xl uppercase text-ink">Bunker Basic</h4>
-                        <p id="quiz-result-desc" class="text-xs sm:text-sm font-bold text-ink/80 max-w-xl mx-auto"></p>
+                    <!-- Quiz Result Display -->
+                    <div id="quiz-result" class="hidden p-6 bg-black/60 border border-[#4AF626]/40 space-y-4 text-center">
+                        <div id="quiz-result-badge" class="inline-block px-3 py-1 text-xs font-terminal uppercase border border-[#4AF626]/40 text-[#4AF626]">RECOMMENDED BATCH</div>
+                        <h4 id="quiz-result-title" class="font-display text-4xl uppercase text-[#4AF626] phosphor-text">Bunker Basic</h4>
+                        <p id="quiz-result-desc" class="text-xs sm:text-sm font-terminal text-[#4AF626]/80 max-w-xl mx-auto"></p>
                         <div class="flex flex-wrap justify-center gap-4 pt-2">
-                            <button id="quiz-add-btn" onclick="" class="bg-rust text-parchment px-6 py-3 font-display text-2xl uppercase retro-button shadow-retro hover:bg-rustDark flex items-center gap-2">
-                                <i class="fa-solid fa-plus text-sm"></i> Add Recommended Formulation to Crate
+                            <button id="quiz-add-btn" onclick="" class="bg-rust text-parchment px-6 py-3 font-display text-2xl uppercase border-2 border-[#E8C547]/40 hover:bg-rustDark flex items-center gap-2">
+                                <i class="fa-solid fa-plus text-sm"></i> Add Recommended to Crate
                             </button>
-                            <button type="button" onclick="resetQuiz()" class="bg-ink/10 px-4 py-3 font-display text-xl uppercase border-2 border-ink text-ink hover:bg-ink/20">
+                            <button type="button" onclick="resetQuiz()" class="bg-black/40 px-4 py-3 font-display text-xl uppercase border border-[#4AF626]/40 text-[#4AF626] hover:bg-[#4AF626]/10">
                                 <i class="fa-solid fa-rotate-left mr-1"></i> Retake Diagnostic
                             </button>
                         </div>
@@ -1308,57 +1504,50 @@
                 </div>
             </div>
 
-            <!-- Eco-Impact & Money-Saving Comparison Counter -->
-            <div id="eco-impact" class="mt-16 border-t-4 border-ink pt-14">
+            <!-- Eco-Impact Counter -->
+            <div id="eco-impact" class="mt-16 border-t-4 border-[#E8C547]/40 pt-14">
                 <div class="text-center max-w-2xl mx-auto mb-10">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-atomic text-parchment text-xs font-bold uppercase mb-2 retro-border">
-                        <i class="fa-solid fa-scale-balanced text-radYellow"></i> Craft Concentrate vs Industrial Big Soda
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-atomic/20 text-atomic text-xs font-terminal uppercase mb-2 border border-atomic/40">
+                        <i class="fa-solid fa-scale-balanced text-[#E8C547]"></i> Craft Concentrate vs Industrial Big Soda
                     </div>
-                    <h3 class="font-display text-4xl sm:text-5xl text-ink uppercase">Eco-Impact & Cost Breakdown</h3>
-                    <p class="text-xs sm:text-sm font-bold text-ink/75 mt-1">
-                        Handcrafted artisanal concentrate saves your wallet and eliminates single-use aluminum and plastic waste.
+                    <h3 class="font-display text-4xl sm:text-5xl text-parchment uppercase phosphor-amber">Eco-Impact &amp; Cost Breakdown</h3>
+                    <p class="text-xs sm:text-sm font-terminal text-[#4AF626]/70 mt-1">
+                        > Handcrafted artisanal concentrate saves your wallet and eliminates single-use waste.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Metric 1 -->
-                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
-                        <div class="w-14 h-14 bg-rust text-parchment retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                    <div class="bg-[#0a150e] p-6 border border-[#4AF626]/25 shadow-[4px_4px_0_0_rgba(74,246,38,0.2)] flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-rust text-parchment border border-[#E8C547]/40 flex items-center justify-center text-2xl mb-3">
                             <i class="fa-solid fa-coins"></i>
                         </div>
-                        <span class="font-display text-5xl text-ink">~46p</span>
-                        <span class="font-display text-xl uppercase text-rust mt-1">Cost Per Drink</span>
-                        <p class="text-xs font-bold text-ink/70 mt-2">Versus £2.50+ for mass-produced store craft cola cans.</p>
+                        <span class="font-display text-5xl text-parchment phosphor-amber">~46p</span>
+                        <span class="font-terminal text-xl uppercase text-[#E8C547] mt-1">Cost Per Drink</span>
+                        <p class="text-xs font-terminal text-[#4AF626]/60 mt-2">Versus &pound;2.50+ for mass-produced store craft cola cans.</p>
                     </div>
-
-                    <!-- Metric 2 -->
-                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
-                        <div class="w-14 h-14 bg-atomic text-parchment retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                    <div class="bg-[#0a150e] p-6 border border-[#4AF626]/25 shadow-[4px_4px_0_0_rgba(74,246,38,0.2)] flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-atomic text-parchment border border-[#4AF626]/40 flex items-center justify-center text-2xl mb-3">
                             <i class="fa-solid fa-piggy-bank"></i>
                         </div>
-                        <span class="font-display text-5xl text-ink">£32.50+</span>
-                        <span class="font-display text-xl uppercase text-atomic mt-1">Saved Per Bottle</span>
-                        <p class="text-xs font-bold text-ink/70 mt-2">Real cash retained in your vault canteen compared to buying individual soda cans.</p>
+                        <span class="font-display text-5xl text-parchment phosphor-amber">&pound;32.50+</span>
+                        <span class="font-terminal text-xl uppercase text-[#E8C547] mt-1">Saved Per Bottle</span>
+                        <p class="text-xs font-terminal text-[#4AF626]/60 mt-2">Real cash retained vs buying individual soda cans.</p>
                     </div>
-
-                    <!-- Metric 3 -->
-                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
-                        <div class="w-14 h-14 bg-ink text-radYellow retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                    <div class="bg-[#0a150e] p-6 border border-[#4AF626]/25 shadow-[4px_4px_0_0_rgba(74,246,38,0.2)] flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-ink text-[#E8C547] border border-[#4AF626]/40 flex items-center justify-center text-2xl mb-3">
                             <i class="fa-solid fa-recycle"></i>
                         </div>
-                        <span class="font-display text-5xl text-ink">15 Cans</span>
-                        <span class="font-display text-xl uppercase text-ink mt-1">Waste Eliminated</span>
-                        <p class="text-xs font-bold text-ink/70 mt-2">15 single-use cans / plastic bottles diverted from landfill per 450ml concentrate.</p>
+                        <span class="font-display text-5xl text-parchment phosphor-amber">15 Cans</span>
+                        <span class="font-terminal text-xl uppercase text-[#E8C547] mt-1">Waste Eliminated</span>
+                        <p class="text-xs font-terminal text-[#4AF626]/60 mt-2">Single-use waste diverted from landfill per 450ml concentrate.</p>
                     </div>
-
-                    <!-- Metric 4 -->
-                    <div class="bg-parchmentDark p-6 retro-border shadow-retro flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
-                        <div class="w-14 h-14 bg-rust text-parchment retro-border flex items-center justify-center text-2xl mb-3 shadow-retro-sm">
+                    <div class="bg-[#0a150e] p-6 border border-[#4AF626]/25 shadow-[4px_4px_0_0_rgba(74,246,38,0.2)] flex flex-col items-center text-center group hover:-translate-y-1 transition-transform">
+                        <div class="w-14 h-14 bg-rust text-parchment border border-[#E8C547]/40 flex items-center justify-center text-2xl mb-3">
                             <i class="fa-solid fa-leaf"></i>
                         </div>
-                        <span class="font-display text-5xl text-ink">0% HFCS</span>
-                        <span class="font-display text-xl uppercase text-rust mt-1">100% Pure Cane Sugar</span>
-                        <p class="text-xs font-bold text-ink/70 mt-2">Zero industrial chemical sludge, artificial preservatives, or high-fructose syrups.</p>
+                        <span class="font-display text-5xl text-parchment phosphor-amber">0% HFCS</span>
+                        <span class="font-terminal text-xl uppercase text-[#E8C547] mt-1">100% Pure Cane Sugar</span>
+                        <p class="text-xs font-terminal text-[#4AF626]/60 mt-2">Zero industrial chemical sludge or artificial preservatives.</p>
                     </div>
                 </div>
             </div>
@@ -1366,167 +1555,158 @@
         </div>
     </section>
 
-    <!-- Wasteland Recipe Book & Mixology Showcase -->
-    <section id="recipes" class="py-24 bg-parchment relative border-b-4 border-ink overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Vault Survival Manual: Recipe Book -->
+    <section id="recipes" class="py-24 bg-[#0e1209] relative border-y-4 border-[#4AF626]/20 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(74,246,38,0.025) 1px, transparent 1px); background-size: 20px 20px;"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
             <!-- Section Header -->
             <div class="text-center max-w-3xl mx-auto mb-12" data-aos="fade-up">
-                <div class="inline-flex items-center gap-2 px-3 py-1 bg-rust text-parchment text-xs font-bold uppercase mb-3 retro-border shadow-retro-sm">
-                    <i class="fa-solid fa-martini-glass-citrus text-radYellow"></i> Bunker Mixology Codex
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#E8C547]/10 text-[#E8C547] text-xs font-terminal uppercase mb-3 border border-[#E8C547]/30">
+                    <i class="fa-solid fa-martini-glass-citrus text-[#E8C547]"></i> BUNKER MIXOLOGY CODEX // CLASSIFIED RECIPES
                 </div>
-                <h2 class="font-display text-5xl sm:text-6xl text-ink uppercase leading-none">Survivor Recipe Book</h2>
-                <p class="font-bold text-sm sm:text-base text-ink/75 mt-3">
-                    Handcrafted artisanal creations you can brew in your vault kitchen. From effervescent sodas and floats to speakeasy cocktails and BBQ reductions.
+                <h2 class="font-display text-5xl sm:text-6xl text-parchment uppercase leading-none phosphor-amber">Survivor Recipe Book</h2>
+                <p class="font-terminal text-sm sm:text-base text-[#4AF626]/70 mt-3">
+                    > HANDCRAFTED ARTISANAL CREATIONS FOR YOUR VAULT KITCHEN. FROM SODAS TO SPEAKEASY COCKTAILS.
                 </p>
 
                 <!-- Filter Category Pills -->
                 <div class="flex flex-wrap justify-center gap-2 mt-6">
-                    <button type="button" onclick="filterRecipes('all'); playBeep();" id="filter-recipe-all" class="px-4 py-2 font-display text-lg uppercase bg-ink text-parchment retro-border shadow-retro-sm transition-all">All Elixirs (6)</button>
-                    <button type="button" onclick="filterRecipes('soda'); playBeep();" id="filter-recipe-soda" class="px-4 py-2 font-display text-lg uppercase bg-parchment text-ink hover:bg-ink/10 retro-border transition-all">Sodas & Floats</button>
-                    <button type="button" onclick="filterRecipes('cocktail'); playBeep();" id="filter-recipe-cocktail" class="px-4 py-2 font-display text-lg uppercase bg-parchment text-ink hover:bg-ink/10 retro-border transition-all">Cocktails</button>
-                    <button type="button" onclick="filterRecipes('culinary'); playBeep();" id="filter-recipe-culinary" class="px-4 py-2 font-display text-lg uppercase bg-parchment text-ink hover:bg-ink/10 retro-border transition-all">Culinary & Coffee</button>
+                    <button type="button" onclick="filterRecipes('all'); playBeep();" id="filter-recipe-all" class="px-4 py-2 font-terminal text-lg uppercase bg-[#4AF626] text-terminalBg border border-[#4AF626] shadow-[3px_3px_0_0_rgba(74,246,38,0.4)] transition-all">All Elixirs (6)</button>
+                    <button type="button" onclick="filterRecipes('soda'); playBeep();" id="filter-recipe-soda" class="px-4 py-2 font-terminal text-lg uppercase bg-transparent text-[#4AF626] border border-[#4AF626]/40 hover:bg-[#4AF626]/10 transition-all">Sodas &amp; Floats</button>
+                    <button type="button" onclick="filterRecipes('cocktail'); playBeep();" id="filter-recipe-cocktail" class="px-4 py-2 font-terminal text-lg uppercase bg-transparent text-[#4AF626] border border-[#4AF626]/40 hover:bg-[#4AF626]/10 transition-all">Cocktails</button>
+                    <button type="button" onclick="filterRecipes('culinary'); playBeep();" id="filter-recipe-culinary" class="px-4 py-2 font-terminal text-lg uppercase bg-transparent text-[#4AF626] border border-[#4AF626]/40 hover:bg-[#4AF626]/10 transition-all">Culinary &amp; Coffee</button>
                 </div>
             </div>
 
             <!-- Recipe Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Recipe 1: Classic Bunker Sparkler -->
-                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="soda" data-aos="fade-up">
+                <!-- Recipe 1: Classic Vault Sparkler -->
+                <div class="recipe-card manual-card p-6 flex flex-col group" data-category="soda" data-aos="fade-up">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-bold uppercase retro-border">BUNKER BASIC OR SCOUT</span>
-                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-clock mr-1"></i> 1 MIN</span>
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-terminal uppercase border border-rust/60">BUNKER BASIC OR SCOUT</span>
+                        <span class="text-xs font-terminal text-[#4AF626]/60 uppercase"><i class="fa-solid fa-clock mr-1"></i> 1 MIN</span>
                     </div>
-                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">01. The Classic Vault Sparkler</h3>
-                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                    <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">01. The Classic Vault Sparkler</h3>
+                    <p class="text-xs font-terminal text-[#4AF626]/70 my-2 leading-relaxed">
                         The definitive way to experience pure unadulterated craft cola with crisp effervescence.
                     </p>
                     
-                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
-                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Syrup:</span><span class="text-rust">30 ml</span></div>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Chilled Sparkling Water:</span><span>150 ml</span></div>
-                        <div class="flex justify-between"><span>• Garnish:</span><span>Ice + Lemon Wheel</span></div>
+                    <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
+                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Syrup:</span><span class="text-rust">30 ml</span></div>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Chilled Sparkling Water:</span><span>150 ml</span></div>
+                        <div class="flex justify-between"><span>&bull; Garnish:</span><span>Ice + Lemon Wheel</span></div>
                     </div>
 
-                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
-                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Pack a tumbler with fresh ice. Pour 30ml syrup over ice, top with icy sparkling water, and stir gently with a bar spoon. Never shake!</p>
+                    <div class="mt-auto text-xs font-terminal text-[#4AF626]/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-[#E8C547] uppercase">Protocol:</strong> Pack a tumbler with fresh ice. Pour 30ml syrup over ice, top with icy sparkling water, and stir gently. Never shake!</p>
                     </div>
                 </div>
 
-                <!-- Recipe 2: The Glowing Campfire Float -->
-                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="soda" data-aos="fade-up" data-aos-delay="100">
+                <!-- Recipe 2: Glowing Campfire Float -->
+                <div class="recipe-card manual-card p-6 flex flex-col group" data-category="soda" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-bold uppercase retro-border">BUNKER BASIC</span>
-                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-clock mr-1"></i> 2 MINS</span>
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-terminal uppercase border border-rust/60">BUNKER BASIC</span>
+                        <span class="text-xs font-terminal text-[#4AF626]/60 uppercase"><i class="fa-solid fa-clock mr-1"></i> 2 MINS</span>
                     </div>
-                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">02. Glowing Campfire Float</h3>
-                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                    <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">02. Glowing Campfire Float</h3>
+                    <p class="text-xs font-terminal text-[#4AF626]/70 my-2 leading-relaxed">
                         A nostalgic 1950s soda fountain indulgence combining velvety vanilla bean ice cream with festive spiced cola.
                     </p>
-                    
-                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
-                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Basic:</span><span class="text-rust">35 ml</span></div>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Sparkling Soda:</span><span>120 ml</span></div>
-                        <div class="flex justify-between"><span>• Topping:</span><span>1 Scoop Vanilla Bean Ice Cream + Nutmeg</span></div>
+                    <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
+                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Basic:</span><span class="text-rust">35 ml</span></div>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Sparkling Soda:</span><span>120 ml</span></div>
+                        <div class="flex justify-between"><span>&bull; Topping:</span><span>1 Scoop Vanilla Bean Ice Cream + Nutmeg</span></div>
                     </div>
-
-                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
-                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Mix syrup and soda water in a tall chilled glass. Gently lower a large scoop of clotted vanilla ice cream on top and dust with cracked nutmeg.</p>
+                    <div class="mt-auto text-xs font-terminal text-[#4AF626]/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-[#E8C547] uppercase">Protocol:</strong> Mix syrup and soda in a tall chilled glass. Gently lower a large scoop of clotted vanilla ice cream on top and dust with cracked nutmeg.</p>
                     </div>
                 </div>
 
-                <!-- Recipe 3: Wasteland Bourbon & Spiced Cola -->
-                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="cocktail" data-aos="fade-up" data-aos-delay="200">
+                <!-- Recipe 3: Wasteland Bourbon Cola -->
+                <div class="recipe-card manual-card p-6 flex flex-col group" data-category="cocktail" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-bold uppercase retro-border">BUNKER BASIC</span>
-                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-cocktail mr-1"></i> COCKTAIL</span>
+                        <span class="px-2.5 py-1 bg-rust text-parchment text-[11px] font-terminal uppercase border border-rust/60">BUNKER BASIC</span>
+                        <span class="text-xs font-terminal text-[#4AF626]/60 uppercase"><i class="fa-solid fa-cocktail mr-1"></i> COCKTAIL</span>
                     </div>
-                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">03. Wasteland Bourbon Cola</h3>
-                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                    <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">03. Wasteland Bourbon Cola</h3>
+                    <p class="text-xs font-terminal text-[#4AF626]/70 my-2 leading-relaxed">
                         An elevated campfire cocktail where oak, charred barrel warmth, and cassia cinnamon harmonise.
                     </p>
-                    
-                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
-                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Basic:</span><span class="text-rust">25 ml</span></div>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bourbon or Spiced Rum:</span><span>50 ml</span></div>
-                        <div class="flex justify-between"><span>• Club Soda & Bitters:</span><span>100 ml + 2 dashes Angostura</span></div>
+                    <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
+                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Basic:</span><span class="text-rust">25 ml</span></div>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bourbon or Spiced Rum:</span><span>50 ml</span></div>
+                        <div class="flex justify-between"><span>&bull; Club Soda &amp; Bitters:</span><span>100 ml + 2 dashes Angostura</span></div>
                     </div>
-
-                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
-                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Combine bourbon, syrup, and bitters in an Old Fashioned glass with a large ice sphere. Top with soda and express a flamed orange peel over the rim.</p>
+                    <div class="mt-auto text-xs font-terminal text-[#4AF626]/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-[#E8C547] uppercase">Protocol:</strong> Combine bourbon, syrup, and bitters in an Old Fashioned glass with a large ice sphere. Top with soda and express a flamed orange peel over the rim.</p>
                     </div>
                 </div>
 
                 <!-- Recipe 4: The Botanical Scout Mule -->
-                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="cocktail" data-aos="fade-up">
+                <div class="recipe-card manual-card p-6 flex flex-col group" data-category="cocktail" data-aos="fade-up">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-bold uppercase retro-border">BUNKER SCOUT</span>
-                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-lemon mr-1"></i> REFRESHING</span>
+                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-terminal uppercase border border-atomic/60">BUNKER SCOUT</span>
+                        <span class="text-xs font-terminal text-[#4AF626]/60 uppercase"><i class="fa-solid fa-lemon mr-1"></i> REFRESHING</span>
                     </div>
-                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-atomic transition-colors">04. The Botanical Scout Mule</h3>
-                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                    <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">04. The Botanical Scout Mule</h3>
+                    <p class="text-xs font-terminal text-[#4AF626]/70 my-2 leading-relaxed">
                         A zesty, botanical fusion pairing caramelized molasses and citrus with fiery ginger beer.
                     </p>
-                    
-                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
-                        <span class="text-[10px] text-atomic uppercase block">Ration Measurements:</span>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Scout:</span><span class="text-atomic">30 ml</span></div>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Fiery Ginger Beer:</span><span>120 ml</span></div>
-                        <div class="flex justify-between"><span>• Fresh Lime & Mint:</span><span>15ml lime juice + slapped mint</span></div>
+                    <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
+                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Scout:</span><span class="text-atomic">30 ml</span></div>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Fiery Ginger Beer:</span><span>120 ml</span></div>
+                        <div class="flex justify-between"><span>&bull; Fresh Lime &amp; Mint:</span><span>15ml lime juice + slapped mint</span></div>
                     </div>
-
-                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
-                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Pack a copper mug or highball with crushed ice. Pour Bunker Scout and fresh lime. Top with fiery ginger beer (add 50ml vodka/rum for adult ration).</p>
+                    <div class="mt-auto text-xs font-terminal text-[#4AF626]/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-[#E8C547] uppercase">Protocol:</strong> Pack a copper mug with crushed ice. Pour Scout and fresh lime. Top with fiery ginger beer (add 50ml vodka/rum for adult ration).</p>
                     </div>
                 </div>
 
-                <!-- Recipe 5: Vault Espresso Cola Tonic -->
-                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="culinary" data-aos="fade-up" data-aos-delay="100">
+                <!-- Recipe 5: Espresso Vault Tonic -->
+                <div class="recipe-card manual-card p-6 flex flex-col group" data-category="culinary" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-bold uppercase retro-border">BUNKER SCOUT</span>
-                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-mug-hot mr-1"></i> KICKSTART</span>
+                        <span class="px-2.5 py-1 bg-atomic text-parchment text-[11px] font-terminal uppercase border border-atomic/60">BUNKER SCOUT</span>
+                        <span class="text-xs font-terminal text-[#4AF626]/60 uppercase"><i class="fa-solid fa-mug-hot mr-1"></i> KICKSTART</span>
                     </div>
-                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-atomic transition-colors">05. Espresso Vault Tonic</h3>
-                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                    <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">05. Espresso Vault Tonic</h3>
+                    <p class="text-xs font-terminal text-[#4AF626]/70 my-2 leading-relaxed">
                         Rich roasted espresso meets cold sparkling botanical cola for an invigorating dark crema refresher.
                     </p>
-                    
-                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
-                        <span class="text-[10px] text-atomic uppercase block">Ration Measurements:</span>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Scout:</span><span class="text-atomic">20 ml</span></div>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Fresh Double Espresso:</span><span>1 Shot (30 ml)</span></div>
-                        <div class="flex justify-between"><span>• Sparkling Mineral Water:</span><span>120 ml + Ice</span></div>
+                    <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
+                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Scout:</span><span class="text-atomic">20 ml</span></div>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Fresh Double Espresso:</span><span>1 Shot (30 ml)</span></div>
+                        <div class="flex justify-between"><span>&bull; Sparkling Mineral Water:</span><span>120 ml + Ice</span></div>
                     </div>
-
-                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
-                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Add ice, Bunker Scout, and sparkling water into a glass. Gently float the hot espresso shot over the back of a spoon to create two striking layers.</p>
+                    <div class="mt-auto text-xs font-terminal text-[#4AF626]/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-[#E8C547] uppercase">Protocol:</strong> Add ice, Scout, and sparkling water into a glass. Float the hot espresso over the back of a spoon to create two striking layers.</p>
                     </div>
                 </div>
 
-                <!-- Recipe 6: Smoked Molasses BBQ Glaze -->
-                <div class="recipe-card bg-parchmentDark retro-border shadow-retro p-6 flex flex-col group hover:-translate-y-1.5 transition-all duration-300" data-category="culinary" data-aos="fade-up" data-aos-delay="200">
+                <!-- Recipe 6: Smoked Molasses Glaze -->
+                <div class="recipe-card manual-card p-6 flex flex-col group" data-category="culinary" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="px-2.5 py-1 bg-ink text-parchment text-[11px] font-bold uppercase retro-border">BUNKER SCOUT</span>
-                        <span class="text-xs font-bold text-ink/60 uppercase"><i class="fa-solid fa-fire mr-1"></i> CULINARY</span>
+                        <span class="px-2.5 py-1 bg-ink text-parchment text-[11px] font-terminal uppercase border border-[#4AF626]/30">BUNKER SCOUT</span>
+                        <span class="text-xs font-terminal text-[#4AF626]/60 uppercase"><i class="fa-solid fa-fire mr-1"></i> CULINARY</span>
                     </div>
-                    <h3 class="font-display text-3xl text-ink uppercase group-hover:text-rust transition-colors">06. Smoked Molasses Glaze</h3>
-                    <p class="text-xs font-bold text-ink/75 my-2 leading-relaxed">
+                    <h3 class="font-display text-3xl text-parchment uppercase group-hover:text-[#E8C547] transition-colors">06. Smoked Molasses Glaze</h3>
+                    <p class="text-xs font-terminal text-[#4AF626]/70 my-2 leading-relaxed">
                         Transform your cooking with a sticky, caramelized cola glaze for meats, grilled halloumi, or roasted root veg.
                     </p>
-                    
-                    <div class="bg-parchment p-3.5 retro-border border-2 my-3 space-y-1.5 text-xs font-bold text-ink">
-                        <span class="text-[10px] text-rust uppercase block">Ration Measurements:</span>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Bunker Scout:</span><span class="text-rust">60 ml</span></div>
-                        <div class="flex justify-between border-b border-ink/10 pb-1"><span>• Apple Cider Vinegar:</span><span>2 tbsp</span></div>
-                        <div class="flex justify-between"><span>• Mustard & Smoked Paprika:</span><span>1 tbsp Dijon + 1 tsp Paprika</span></div>
+                    <div class="bg-black/40 p-3.5 border border-[#4AF626]/20 my-3 space-y-1.5 text-xs font-terminal text-[#4AF626]">
+                        <span class="text-[10px] text-[#E8C547] uppercase block">Ration Measurements:</span>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Bunker Scout:</span><span class="text-rust">60 ml</span></div>
+                        <div class="flex justify-between border-b border-[#4AF626]/10 pb-1"><span>&bull; Apple Cider Vinegar:</span><span>2 tbsp</span></div>
+                        <div class="flex justify-between"><span>&bull; Mustard &amp; Smoked Paprika:</span><span>1 tbsp Dijon + 1 tsp Paprika</span></div>
                     </div>
-
-                    <div class="mt-auto text-xs font-bold text-ink/80 pt-2">
-                        <p class="leading-relaxed"><strong class="text-ink uppercase">Protocol:</strong> Whisk ingredients in a small pan over gentle heat for 4 minutes until thickened into a glossy syrup. Brush generously during the final 5 minutes of grilling.</p>
+                    <div class="mt-auto text-xs font-terminal text-[#4AF626]/80 pt-2">
+                        <p class="leading-relaxed"><strong class="text-[#E8C547] uppercase">Protocol:</strong> Whisk ingredients in a small pan over gentle heat for 4 minutes until thickened. Brush generously during the final 5 minutes of grilling.</p>
                     </div>
                 </div>
 
@@ -1535,24 +1715,23 @@
     </section>
 
     <!-- Interactive Mixology & Serving Calculator -->
-    <section id="mixology" class="py-20 bg-parchmentDark border-y-4 border-ink relative overflow-hidden">
+    <section id="mixology" class="py-20 bg-[#100d07] border-y-4 border-[#E8C547]/40 relative overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="bg-parchment p-8 sm:p-12 retro-border shadow-retro-lg relative" data-aos="zoom-in">
+            <div class="bg-[#0a150e] p-8 sm:p-12 border-2 border-[#4AF626]/30 shadow-[8px_8px_0_0_rgba(74,246,38,0.2)] relative" data-aos="zoom-in">
                 
                 <div class="text-center mb-8">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-ink text-radYellow text-xs font-bold uppercase mb-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#4AF626]/10 text-[#E8C547] text-xs font-terminal uppercase mb-2 border border-[#4AF626]/30">
                         <i class="fa-solid fa-calculator"></i> Wasteland Ratio Computer
                     </div>
-                    <h2 class="font-display text-4xl sm:text-6xl text-ink uppercase">Interactive Mix Calculator</h2>
-                    <p class="font-bold text-sm text-ink/70">
+                    <h2 class="font-display text-4xl sm:text-6xl text-parchment uppercase phosphor-amber">Interactive Mix Calculator</h2>
+                    <p class="font-terminal text-sm text-[#4AF626]/70">
                         Adjust the slider below to calculate exact syrup rations and carbonated water requirements for your gathering!
                     </p>
                 </div>
-
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-10">
                     <!-- Left: Slider Controls -->
-                    <div class="lg:col-span-7 bg-ink/5 p-6 retro-border space-y-6">
+                    <div class="lg:col-span-7 bg-black/40 p-6 border border-[#4AF626]/25 space-y-6">
                         <div class="flex justify-between items-center">
                             <label for="servings-slider" class="font-display text-2xl uppercase text-ink">Target Servings (Glasses):</label>
                             <span id="slider-servings-val" class="font-display text-4xl text-rust bg-parchment px-4 py-1 retro-border shadow-retro-sm">4</span>
@@ -1603,21 +1782,21 @@
 
                 <!-- Live Results Display -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                    <div class="bg-parchment p-5 retro-border border-2">
+                    <div class="bg-black/50 p-5 border border-[#4AF626]/25">
                         <i class="fa-solid fa-bottle-droplet text-3xl text-rust mb-2"></i>
                         <span class="block text-xs font-bold text-ink/60 uppercase">Craft Syrup Needed</span>
                         <span id="calc-syrup" class="font-display text-4xl text-ink block mt-1">120 ml</span>
                         <span id="calc-bottles-hint" class="text-[11px] font-bold text-rust uppercase mt-1 block">~0.27 of a 450ml bottle</span>
                     </div>
 
-                    <div class="bg-parchment p-5 retro-border border-2">
+                    <div class="bg-black/50 p-5 border border-[#4AF626]/25">
                         <i class="fa-solid fa-droplet text-3xl text-atomic mb-2"></i>
                         <span class="block text-xs font-bold text-ink/60 uppercase">Sparkling Water Needed</span>
                         <span id="calc-water" class="font-display text-4xl text-ink block mt-1">600 ml</span>
                         <span class="text-[11px] font-bold text-ink/50 uppercase mt-1 block">Chilled Soda / Seltzer</span>
                     </div>
 
-                    <div class="bg-parchment p-5 retro-border border-2">
+                    <div class="bg-black/50 p-5 border border-[#4AF626]/25">
                         <i class="fa-solid fa-glass-water text-3xl text-radYellow mb-2"></i>
                         <span class="block text-xs font-bold text-ink/60 uppercase">Total Refreshment Yield</span>
                         <span id="calc-total-liquid" class="font-display text-4xl text-ink block mt-1">720 ml</span>
@@ -1630,63 +1809,69 @@
         </div>
     </section>
 
-    <!-- Wasteland Lore & PDF Brand Story -->
-    <section id="lore" class="py-24 border-b-4 border-ink relative overflow-hidden bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjRjlGM0U2Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjMkQyRDJEIiBzdHJva2Utd2lkdGg9IjAuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMSI+PC9wYXRoPgo8L3N2Zz4=')]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Wasteland Lore & Brand Origins -->
+    <section id="lore" class="py-24 border-y-4 border-[#E8C547]/30 relative overflow-hidden bg-[#0b0d07]">
+        <!-- Terminal dot grid -->
+        <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(74,246,38,0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col lg:flex-row items-center gap-14">
                 
-                <!-- Left Content: Lore & Quote from PDF -->
-                <div class="lg:w-1/2 bg-parchment p-8 sm:p-10 retro-border shadow-[8px_8px_0_0_#B83A2E] relative group hover:shadow-[12px_12px_0_0_#B83A2E] transition-shadow duration-300" data-aos="fade-right">
+                <!-- Left Content: Lore & Quote -->
+                <div class="lg:w-1/2 bg-[#111a10] p-8 sm:p-10 border-2 border-[#4AF626]/25 shadow-[8px_8px_0_0_#B83A2E] relative group hover:shadow-[12px_12px_0_0_#B83A2E] transition-shadow duration-300" data-aos="fade-right">
                     
-                    <div class="absolute -top-3 -left-3 sm:-top-6 sm:-left-6 bg-atomic text-parchment w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center retro-border shadow-retro transform -rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                    <div class="absolute -top-3 -left-3 sm:-top-6 sm:-left-6 bg-[#E8C547] text-ink w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2 border-ink shadow-retro transform -rotate-12 group-hover:rotate-0 transition-transform duration-500">
                         <span class="font-display text-lg sm:text-2xl text-center leading-none">EST.<br>2026</span>
                     </div>
 
                     <div class="mt-3 mb-6">
-                        <span class="text-xs font-bold text-rust uppercase tracking-wider">Survivor Chronicles</span>
-                        <h2 class="font-display text-5xl sm:text-6xl text-ink uppercase leading-none mt-1">The Ultimate Contrast</h2>
+                        <span class="text-xs font-terminal text-[#4AF626]/70 uppercase tracking-wider">> Survivor Chronicles // Origin Transmission</span>
+                        <h2 class="font-display text-5xl sm:text-6xl text-parchment uppercase leading-none mt-1 phosphor-amber">The Ultimate Contrast</h2>
                     </div>
                     
-                    <div class="space-y-4 font-bold text-ink/85 leading-relaxed text-sm sm:text-base">
-                        <blockquote class="text-lg sm:text-xl text-rust italic border-l-4 border-rust pl-4 py-2 bg-rust/5">
-                            "Inspired by the immersive wastelands of the Fallout franchise, our recipes unite warm campfire spices with crisp, refreshing citrus, the ultimate contrast for exploration."
+                    <div class="space-y-4 font-bold text-[#4AF626]/80 leading-relaxed text-sm sm:text-base">
+                        <blockquote class="text-lg sm:text-xl text-[#E8C547] italic border-l-4 border-[#E8C547] pl-4 py-2 bg-[#E8C547]/5 font-normal">
+                            &ldquo;Inspired by the immersive wastelands of the Fallout franchise, our recipes unite warm campfire spices with crisp, refreshing citrus&mdash;the ultimate contrast for exploration.&rdquo;
                         </blockquote>
-                        <p>
-                            When the old world collapsed we realized that survival wasn't just about pure calories; humanity needed genuine flavor. Bunker Brews was born in Birmingham , utilizing our home kitchen we created something truely beautiful.
+                        <p class="font-terminal text-sm">
+                            When the old world collapsed we realized that survival wasn&apos;t just about pure calories; humanity needed genuine flavor. Bunker Brews was born in Birmingham, utilizing our home kitchen we created something truly beautiful.
                         </p>
-                        <p>
+                        <p class="font-terminal text-sm">
                             We flatly refuse mass-produced industrial syrup sludge. Our craft concentrate is brewed with love, extracting real essential oils from oranges and limes, cracking whole nutmeg, and infusing authentic spices and flavorings.
                         </p>
-                        <p>
+                        <p class="font-terminal text-sm">
                             No high-fructose corn syrup. No artificial preservatives. Just pure, unadulterated concentrate designed to be mixed fresh in your vault canteen.
                         </p>
                     </div>
 
-                    <div class="mt-8 pt-6 border-t-[3px] border-ink flex items-center justify-between">
+                    <div class="mt-8 pt-6 border-t border-[#4AF626]/20 flex items-center justify-between">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 rounded-full retro-border bg-rust overflow-hidden">
+                            <div class="w-14 h-14 rounded-full border border-[#4AF626]/40 bg-rust overflow-hidden shadow-[0_0_10px_rgba(74,246,38,0.15)]">
                                 <img src="https://api.dicebear.com/7.x/bottts/svg?seed=ElijahCaitlin&backgroundColor=B83A2E" alt="Elijah & Caitlin Avatar" class="w-full h-full">
                             </div>
                             <div>
-                                <p class="font-bold uppercase text-xs text-ink/60">Bunker Brews Owners</p>
-                                <p class="font-display text-2xl tracking-wide text-ink">Elijah and Caitlin</p>
+                                <p class="font-terminal text-xs text-[#4AF626]/60">> BUNKER BREWS OWNERS</p>
+                                <p class="font-display text-2xl tracking-wide text-parchment">Elijah and Caitlin</p>
                             </div>
                         </div>
-                        <i class="fa-solid fa-stamp text-4xl text-rust/40"></i>
+                        <i class="fa-solid fa-radiation text-4xl text-[#E8C547]/40 spin-slow" style="animation-duration: 8s"></i>
                     </div>
                 </div>
 
-                <!-- Right Content: Interactive PDF Badge Graphic -->
+                <!-- Right Content: Atomic Rings Graphic -->
                 <div class="lg:w-1/2 flex justify-center" data-aos="fade-left" data-aos-delay="200">
                     <div class="relative w-80 sm:w-[28rem] h-80 sm:h-[28rem] flex items-center justify-center">
-                        <div class="absolute inset-0 bg-rust/10 rounded-full scale-95 group-hover:scale-100 transition-transform duration-700"></div>
-                        <div class="absolute inset-8 rounded-full border-4 border-dashed border-ink/30 spin-slow pointer-events-none"></div>
+                        <div class="absolute inset-0 bg-[#4AF626]/5 rounded-full scale-95"></div>
+                        <div class="absolute inset-8 rounded-full border-4 border-dashed border-[#4AF626]/15 spin-slow pointer-events-none"></div>
                         
-                        <!-- Atomic Rings from PDF Logo -->
-                        <svg class="absolute inset-0 w-full h-full text-atomic spin-slow pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <!-- Atomic Rings from Logo -->
+                        <svg class="absolute inset-0 w-full h-full text-[#5B9EA6] spin-slow pointer-events-none" style="animation-duration: 28s" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2">
                             <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(30 50 50)" />
                             <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(90 50 50)" />
                             <ellipse cx="50" cy="50" rx="42" ry="14" transform="rotate(150 50 50)" />
+                        </svg>
+                        <svg class="absolute inset-0 w-full h-full text-[#E8C547]/20 orbit-counter pointer-events-none" style="animation-duration: 45s" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+                            <ellipse cx="50" cy="50" rx="36" ry="10" transform="rotate(60 50 50)" />
+                            <ellipse cx="50" cy="50" rx="36" ry="10" transform="rotate(120 50 50)" />
                         </svg>
 
                         <!-- Sparkles -->
@@ -1699,13 +1884,13 @@
 
                         <!-- Center Bottle Artwork -->
                         <div class="z-10 flex flex-col items-center float-anim" style="animation-duration: 6s;">
-                            <svg class="h-60 sm:h-72 w-auto text-ink" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="4">
-                                <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#F9F3E6" opacity="0.95"/>
-                                <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="5"/>
-                                <path d="M25 35 C15 35 15 20 30 20" stroke-width="5"/>
+                            <svg class="h-60 sm:h-72 w-auto" viewBox="0 0 100 200" fill="none" stroke="#4AF626" stroke-width="3">
+                                <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#0e1a14" opacity="0.95"/>
+                                <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="4"/>
+                                <path d="M25 35 C15 35 15 20 30 20" stroke-width="4"/>
                                 <text x="35" y="90" font-family="'Bebas Neue', sans-serif" font-size="45" fill="#B83A2E" stroke="none">B</text>
                             </svg>
-                            <div class="mt-2 font-display text-4xl sm:text-5xl text-rust tracking-wider drop-shadow-[2px_2px_0px_rgba(45,45,45,1)] rotate-[-4deg]">
+                            <div class="mt-2 font-display text-4xl sm:text-5xl text-[#E8C547] tracking-wider drop-shadow-[2px_2px_0px_rgba(0,0,0,0.8)] rotate-[-4deg] phosphor-amber">
                                 Bunker Brews
                             </div>
                         </div>
@@ -1714,21 +1899,22 @@
 
             </div>
         </div>
+    </section>
     <!-- Bottle Return Cashback Section -->
-    <section id="cashback" class="py-24 border-b-4 border-ink bg-parchment relative overflow-hidden">
+    <section id="cashback" class="py-24 border-b-4 border-[#4AF626]/20 bg-[#0f0d08] relative overflow-hidden">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
             
             <div class="text-center mb-12" data-aos="fade-up">
-                <div class="inline-flex items-center gap-2 bg-atomic/15 text-atomic px-4 py-1.5 retro-border border-2 text-xs font-bold uppercase mb-3">
+                <div class="inline-flex items-center gap-2 bg-[#4AF626]/10 text-[#4AF626] px-4 py-1.5 border border-[#4AF626]/40 text-xs font-terminal uppercase mb-3">
                     <i class="fa-solid fa-recycle text-sm pulse-glow"></i> Circular Economy Protocol
                 </div>
-                <h2 class="font-display text-5xl sm:text-6xl text-ink uppercase tracking-tight">Bottle Return Rewards</h2>
-                <p class="font-bold text-sm sm:text-base text-ink/75 max-w-2xl mx-auto mt-2">
+                <h2 class="font-display text-5xl sm:text-6xl text-parchment uppercase tracking-tight phosphor-amber">Bottle Return Rewards</h2>
+                <p class="font-terminal text-sm sm:text-base text-[#4AF626]/70 max-w-2xl mx-auto mt-2">
                     Return your empty swing-top glass bottles to any Bunker Outpost or via post. Submit your return proof and original purchase proof below to receive an official <strong class="text-rust">Bunker Brews Digital Gift Card (£1.50 per bottle)</strong> sent to your email—valid for use online or in person!
                 </p>
             </div>
 
-            <div class="bg-parchmentDark p-6 sm:p-10 retro-border shadow-[10px_10px_0_0_#5B9EA6]" data-aos="zoom-in">
+            <div class="bg-[#0a150e] p-6 sm:p-10 border-2 border-[#4AF626]/25 shadow-[10px_10px_0_0_rgba(74,246,38,0.2)]" data-aos="zoom-in">
                 
                 <!-- Outpost Drop-off Info Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-xs font-bold">
@@ -1776,12 +1962,12 @@
                     </div>
 
                     <!-- Payout Total Banner -->
-                    <div class="bg-radYellow/25 border-2 border-ink p-4 flex items-center justify-between">
+                    <div class="bg-[#E8C547]/15 border-2 border-[#E8C547]/50 p-4 flex items-center justify-between">
                         <div>
                             <span class="text-xs uppercase font-bold text-ink/75 block">Gift Card Reward Value:</span>
                             <span class="text-xs text-ink/60 font-normal">Calculated at £1.50 per verified swing-top bottle</span>
                         </div>
-                        <span id="cb-payout-total" class="font-display text-4xl text-rust">£1.50</span>
+                        <span id="cb-payout-total" class="font-display text-4xl text-[#E8C547] phosphor-amber">£1.50</span>
                     </div>
 
                     <!-- Digital Gift Card Notice (Online & In-Person) -->
@@ -1820,7 +2006,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" id="cb-submit-btn" class="w-full bg-atomic text-parchment py-4 font-display text-2xl uppercase tracking-wider retro-button shadow-retro hover:bg-atomicDark flex items-center justify-center gap-2 cursor-pointer">
+                    <button type="submit" id="cb-submit-btn" class="w-full bg-rust text-parchment py-4 font-display text-2xl uppercase tracking-wider border-2 border-[#E8C547]/40 hover:bg-rustDark flex items-center justify-center gap-2 cursor-pointer shadow-[4px_4px_0_0_rgba(232,197,71,0.3)] transition-all">
                         <i class="fa-solid fa-paper-plane"></i>
                         <span>Transmit Return Claim & Receive Gift Card >></span>
                     </button>
@@ -1903,82 +2089,82 @@
     </section>
 
     <!-- Footer Section -->
-    <footer class="bg-parchment pt-20 pb-12 border-t-8 border-rust">
+    <footer class="bg-[#0a0a08] pt-20 pb-12 border-t-4 border-[#E8C547]/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                 
                 <!-- Brand Info Column -->
                 <div class="lg:col-span-1" data-aos="fade-up">
                     <div class="flex items-center gap-3 mb-5">
-                        <img src="logo.png" alt="Bunker Brews Official Logo" class="w-12 h-12 rounded-full object-contain retro-border shadow-xs">
-                        <span class="font-display text-3xl text-rust tracking-wider mt-1 drop-shadow-[1px_1px_0px_rgba(45,45,45,0.5)]">BUNKER BREWS</span>
+                        <div class="relative">
+                            <img src="logo.png" alt="Bunker Brews Official Logo" class="w-14 h-14 rounded-full object-contain border border-[#4AF626]/40 shadow-[0_0_15px_rgba(74,246,38,0.2)]">
+                        </div>
+                        <span class="font-display text-3xl text-[#E8C547] tracking-wider mt-1 phosphor-amber">BUNKER BREWS</span>
                     </div>
-                    <p class="font-bold text-sm text-ink/75 mb-6 leading-relaxed">
-                        Handcrafted small-batch craft cola syrup concentrate for the discerning survivor. Return bottles, save caps, drink clean.
+                    <p class="font-terminal text-sm text-[#4AF626]/70 mb-6 leading-relaxed">
+                        > Handcrafted small-batch craft cola syrup concentrate for the discerning survivor. Return bottles, save caps, drink clean.
                     </p>
                     <div class="flex space-x-2.5">
-                        <a href="https://www.instagram.com/thebunkerbrews?igsi=cG1mZ3ZldHM3Mmw3" target="_blank" title="Instagram" class="w-10 h-10 retro-border flex items-center justify-center hover:bg-atomic hover:text-parchment transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
-                        <a href="https://www.tiktok.com/@the.bunker.brews?_r=1&_t=ZN-992yawQnzcM" target="_blank" title="TikTok" class="w-10 h-10 retro-border flex items-center justify-center hover:bg-ink hover:text-parchment transition-colors"><i class="fa-brands fa-tiktok text-lg"></i></a>
-                        <a href="https://www.facebook.com/thebunkerbrews" target="_blank" title="Facebook" class="w-10 h-10 retro-border flex items-center justify-center hover:bg-rust hover:text-parchment transition-colors"><i class="fa-brands fa-facebook-f text-lg"></i></a>
-                        <a href="mailto:thebunkerbrews@gmail.com" title="Email Us" class="w-10 h-10 retro-border flex items-center justify-center hover:bg-radYellow hover:text-ink transition-colors"><i class="fa-solid fa-envelope text-lg"></i></a>
+                        <a href="https://www.instagram.com/thebunkerbrews?igsi=cG1mZ3ZldHM3Mmw3" target="_blank" title="Instagram" class="w-10 h-10 border border-[#4AF626]/30 flex items-center justify-center hover:bg-[#4AF626] hover:text-terminalBg text-[#4AF626] transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                        <a href="https://www.tiktok.com/@the.bunker.brews?_r=1&_t=ZN-992yawQnzcM" target="_blank" title="TikTok" class="w-10 h-10 border border-[#4AF626]/30 flex items-center justify-center hover:bg-[#4AF626] hover:text-terminalBg text-[#4AF626] transition-colors"><i class="fa-brands fa-tiktok text-lg"></i></a>
+                        <a href="https://www.facebook.com/thebunkerbrews" target="_blank" title="Facebook" class="w-10 h-10 border border-[#4AF626]/30 flex items-center justify-center hover:bg-rust hover:text-parchment text-[#4AF626] transition-colors"><i class="fa-brands fa-facebook-f text-lg"></i></a>
+                        <a href="mailto:thebunkerbrews@gmail.com" title="Email Us" class="w-10 h-10 border border-[#4AF626]/30 flex items-center justify-center hover:bg-[#E8C547] hover:text-ink text-[#4AF626] transition-colors"><i class="fa-solid fa-envelope text-lg"></i></a>
                     </div>
                 </div>
 
                 <!-- Navigation Directives -->
                 <div data-aos="fade-up" data-aos-delay="100">
-                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-ink inline-block pr-8">Directives</h4>
-                    <ul class="space-y-3 font-bold text-sm">
-                        <li><a href="#rations" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Supply Requisition (Shop)</a></li>
-                        <li><a href="#mixology" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Mixology Calculator</a></li>
-                        <li><a href="javascript:void(0)" onclick="openAuthModal()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Terminal Profile / Account</a></li>
-                        <li><a href="#lore" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Wasteland Lore</a></li>
-                        <li><a href="#comms" onclick="playBeep()" class="hover:text-rust hover:translate-x-1.5 transition-transform inline-block">Survivor Testimonials</a></li>
+                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-[#4AF626]/30 text-[#E8C547] inline-block pr-8 phosphor-amber">Directives</h4>
+                    <ul class="space-y-3 font-terminal text-sm">
+                        <li><a href="#rations" onclick="playBeep()" class="text-[#4AF626]/70 hover:text-[#E8C547] hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5"><span class="text-[#4AF626]/40">&gt;</span> Supply Requisition</a></li>
+                        <li><a href="#mixology" onclick="playBeep()" class="text-[#4AF626]/70 hover:text-[#E8C547] hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5"><span class="text-[#4AF626]/40">&gt;</span> Mixology Calculator</a></li>
+                        <li><a href="javascript:void(0)" onclick="openAuthModal()" class="text-[#4AF626]/70 hover:text-[#E8C547] hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5"><span class="text-[#4AF626]/40">&gt;</span> Terminal Profile</a></li>
+                        <li><a href="#lore" onclick="playBeep()" class="text-[#4AF626]/70 hover:text-[#E8C547] hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5"><span class="text-[#4AF626]/40">&gt;</span> Wasteland Lore</a></li>
+                        <li><a href="#comms" onclick="playBeep()" class="text-[#4AF626]/70 hover:text-[#E8C547] hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5"><span class="text-[#4AF626]/40">&gt;</span> Survivor Testimonials</a></li>
                     </ul>
                 </div>
 
                 <!-- Bottle Return Outposts -->
                 <div data-aos="fade-up" data-aos-delay="200">
-                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-ink inline-block pr-8">Recycling Outposts</h4>
-                    <p class="font-bold text-xs mb-3 text-ink/80">
-                        Return empty bottles to claim £1.50 credit per bottle:
-                    </p>
-                    <div class="space-y-3 font-bold text-xs">
-                        <div class="p-3 bg-ink/5 retro-border border-2">
+                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-[#4AF626]/30 text-[#E8C547] inline-block pr-8 phosphor-amber">Recycling Outposts</h4>
+                    <p class="font-terminal text-xs mb-3 text-[#4AF626]/70">> Return empty bottles for &pound;1.50 gift card credit:</p>
+                    <div class="space-y-3 font-terminal text-xs">
+                        <div class="p-3 bg-[#4AF626]/5 border border-[#4AF626]/20">
                             <span class="block uppercase text-rust font-display text-lg leading-tight">1. Bunker HQ (Post / Drop)</span>
-                            <span class="text-ink/80 leading-normal block mt-1">173 Reddicap Heath Road<br>Sutton Coldfield, B75 7EN</span>
+                            <span class="text-[#4AF626]/70 leading-normal block mt-1">173 Reddicap Heath Road<br>Sutton Coldfield, B75 7EN</span>
                         </div>
-                        <div class="p-3 bg-ink/5 retro-border border-2">
-                            <span class="block uppercase text-atomic font-display text-lg leading-tight">2. Leviathan Brewery (Partner Drop-off)</span>
-                            <span class="text-ink/80 leading-normal block mt-1">Unit 4&5, 17 Reddicap Trading Est.<br>Sutton Coldfield, B75 7BU</span>
+                        <div class="p-3 bg-[#4AF626]/5 border border-[#4AF626]/20">
+                            <span class="block uppercase text-atomic font-display text-lg leading-tight">2. Leviathan Brewery (Partner)</span>
+                            <span class="text-[#4AF626]/70 leading-normal block mt-1">Unit 4&amp;5, 17 Reddicap Trading Est.<br>Sutton Coldfield, B75 7BU</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Newsletter Comms Array -->
                 <div class="lg:col-span-1" data-aos="fade-up" data-aos-delay="300">
-                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-ink inline-block pr-8">Comms Array</h4>
-                    <p class="font-bold text-xs text-ink/80 mb-4 leading-relaxed">
-                        Join the Bunker Telegram (E-Mail) for incoming frequency transmissions on fresh batch releases and secret formulas.
+                    <h4 class="font-display text-2xl uppercase mb-5 border-b-2 border-[#4AF626]/30 text-[#E8C547] inline-block pr-8 phosphor-amber">Comms Array</h4>
+                    <p class="font-terminal text-xs text-[#4AF626]/70 mb-4 leading-relaxed">
+                        > Join the Bunker Telegram (E-Mail) for incoming transmissions on fresh batch releases and secret formulas.
                     </p>
                     <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col gap-2.5">
-                        <input type="email" id="news-email" required placeholder="ENTER E-MAIL FREQUENCY..." class="bg-parchment retro-border px-3.5 py-2.5 font-bold text-xs focus:outline-none focus:ring-2 focus:ring-rust placeholder-ink/50">
-                        <button type="submit" class="bg-ink text-parchment px-4 py-3 font-display text-xl tracking-wider retro-button shadow-retro-rust hover:bg-rust transition-colors uppercase">
-                            Establish Link >>
+                        <input type="email" id="news-email" required placeholder="ENTER E-MAIL FREQUENCY..." class="bg-black/60 border border-[#4AF626]/40 px-3.5 py-2.5 font-terminal text-xs text-[#4AF626] focus:outline-none focus:border-[#4AF626] placeholder-[#4AF626]/40">
+                        <button type="submit" class="bg-rust text-parchment px-4 py-3 font-display text-xl tracking-wider border-2 border-[#E8C547]/40 hover:bg-rustDark transition-colors uppercase shadow-[3px_3px_0_0_rgba(232,197,71,0.3)]">
+                            Establish Link &gt;&gt;
                         </button>
                     </form>
                 </div>
             </div>
 
             <!-- Footer Bottom Credits -->
-            <div class="border-t-[3px] border-ink pt-8 flex flex-col md:flex-row justify-between items-center gap-4 font-bold text-xs uppercase text-ink/75">
+            <div class="border-t border-[#4AF626]/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 font-terminal text-xs uppercase text-[#4AF626]/50">
                 <p>&copy; 2026 BUNKER BREWS. ALL RIGHTS RESERVED.</p>
                 <div class="flex flex-wrap gap-4 sm:gap-6">
-                    <a href="javascript:void(0)" onclick="openLegalModal('allergens')" class="hover:text-radYellow font-bold"><i class="fa-solid fa-circle-info mr-1"></i>Allergen Advice</a>
-                    <a href="javascript:void(0)" onclick="openLegalModal('privacy')" class="hover:text-rust">Privacy Protocol</a>
-                    <a href="javascript:void(0)" onclick="openLegalModal('cookies')" class="hover:text-rust">Cookie Directives</a>
-                    <a href="javascript:void(0)" onclick="openCookiePrefsModal()" class="hover:text-atomic"><i class="fa-solid fa-cookie-bite mr-1"></i>Cookie Settings</a>
-                    <a href="javascript:void(0)" onclick="openLegalModal('terms')" class="hover:text-rust">Terms of Survival</a>
-                    <a href="javascript:void(0)" onclick="openLegalModal('contact')" class="hover:text-atomic">Outposts & Comms</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('allergens')" class="hover:text-[#E8C547] transition-colors"><i class="fa-solid fa-circle-info mr-1"></i>Allergen Advice</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('privacy')" class="hover:text-[#E8C547] transition-colors">Privacy Protocol</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('cookies')" class="hover:text-[#E8C547] transition-colors">Cookie Directives</a>
+                    <a href="javascript:void(0)" onclick="openCookiePrefsModal()" class="hover:text-[#4AF626] transition-colors"><i class="fa-solid fa-cookie-bite mr-1"></i>Cookie Settings</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('terms')" class="hover:text-[#E8C547] transition-colors">Terms of Survival</a>
+                    <a href="javascript:void(0)" onclick="openLegalModal('contact')" class="hover:text-atomic transition-colors">Outposts &amp; Comms</a>
                 </div>
             </div>
         </div>
@@ -2797,7 +2983,10 @@
         /* ------------------------------------------------------------
            GAME 1: ROBCO TERMLINK HACKING (MASTER DIFFICULTY // £2.00)
            ------------------------------------------------------------ */
-        const HACK_WORDS_POOL = ['SYRUP', 'BASIC', 'SCOUT', 'SPICE', 'CRAFT', 'VAULT', 'SUGAR', 'FLASK', 'DRINK', 'BOTLE'];
+        const HACK_WORDS_POOL = [
+            'SYRUP', 'BASIC', 'SCOUT', 'SPICE', 'CRAFT', 'VAULT', 'SUGAR', 'FLASK', 'DRINK', 'BLEND',
+            'STILL', 'GRAIN', 'HERBS', 'BRINE', 'GLAZE', 'STEEP', 'YEAST', 'MALT', 'CASKS', 'BATCH'
+        ];
         let hackSecretWord = 'SYRUP';
         let hackAttemptsLeft = 4;
         let hackWordsList = [];
@@ -2858,7 +3047,7 @@
             if (word === hackSecretWord) {
                 hackGameOver = true;
                 playBeep(980, 0.2);
-                consoleBox.innerHTML += `<p class="text-white font-bold">> [${word}] -> EXACT MATCH! ACCESS GRANTED.</p>`;
+                consoleBox.innerHTML += `<p class="text-terminalGreen font-bold animate-pulse">> ██████ ACCESS GRANTED // ${word} CONFIRMED ██████</p>`;
                 consoleBox.scrollTop = consoleBox.scrollHeight;
                 document.getElementById('hack-victory').classList.remove('hidden');
                 return;
@@ -2873,7 +3062,9 @@
             updateHackAttemptsUI();
             playBeep(350, 0.1);
 
-            consoleBox.innerHTML += `<p>> [${word}] -> ENTRY DENIED. (Likeness=${likeness}/${word.length})</p>`;
+            const likenessBar = '█'.repeat(likeness) + '░'.repeat(word.length - likeness);
+            const likenessColor = likeness === 0 ? 'text-red-400' : likeness >= 3 ? 'text-radYellow' : 'text-terminalGreen/70';
+            consoleBox.innerHTML += `<p class="${likenessColor}">> [${word}] DENIED. LIKENESS: ${likeness}/${word.length} [${likenessBar}]</p>`;
             consoleBox.scrollTop = consoleBox.scrollHeight;
 
             btn.disabled = true;
@@ -2882,13 +3073,11 @@
             if (hackAttemptsLeft <= 0) {
                 hackGameOver = true;
                 playBeep(250, 0.3);
-                consoleBox.innerHTML += `<p class="text-red-400 font-bold">> TERMINAL LOCKED. PASSWORD WAS: ${hackSecretWord}</p>`;
+                consoleBox.innerHTML += `<p class="text-red-400 font-bold">> TERMINAL LOCKED. INITIATING SECURITY WIPE...</p>`;
+                consoleBox.innerHTML += `<p class="text-red-400/70">> PASSWORD WAS: ${hackSecretWord}. SYSTEM REBOOTING IN 3s...</p>`;
                 consoleBox.scrollTop = consoleBox.scrollHeight;
-                setTimeout(() => {
-                    if (confirm("🔒 ROBCO SECURITY LOCKOUT 🔒\n\nAll attempts exhausted! Reset terminal and try again?")) {
-                        initHackGame();
-                    }
-                }, 500);
+                document.getElementById('hack-attempts-icons').innerHTML = '<span class="text-red-400 animate-pulse">⚠ LOCKED ⚠</span>';
+                setTimeout(() => initHackGame(), 3000);
             }
         }
 
@@ -2975,8 +3164,9 @@
                     const maxTurn = Math.max(5, Math.floor(75 - (diff * 1.1)));
                     cylinder.style.transform = `rotate(${maxTurn}deg)`;
                     
-                    // Bobby pin takes strain damage
-                    lockStrain += 8;
+                    // Bobby pin takes strain damage based on distance from sweet spot
+                    const strainDelta = Math.min(12, Math.max(4, Math.floor(diff / 8)));
+                    lockStrain += strainDelta;
                     playBeep(220 + lockStrain * 3, 0.04);
                     updateLockpickUI();
 
@@ -2991,10 +3181,13 @@
                         updateLockpickUI();
 
                         if (lockPinsRemaining <= 0) {
-                            setTimeout(() => {
-                                alert("🔒 OUT OF BOBBY PINS! The lock remains sealed. Resetting lock...");
-                                initLockpickGame();
-                            }, 300);
+                            const consoleEl = document.getElementById('lp-tension-text');
+                            if (consoleEl) {
+                                consoleEl.innerText = 'NO PINS REMAINING';
+                                consoleEl.className = 'text-red-400 font-bold animate-pulse';
+                            }
+                            showNotification('🔒 Out of bobby pins! Lock resetting in 3 seconds...', 'warning');
+                            setTimeout(() => initLockpickGame(), 3000);
                         }
                     }
                 }
@@ -3006,7 +3199,7 @@
             if (!lockWon) {
                 const cylinder = document.getElementById('lp-cylinder');
                 if (cylinder) cylinder.style.transform = 'rotate(0deg)';
-                lockStrain = Math.max(0, lockStrain - 25);
+                lockStrain = Math.max(0, lockStrain - 12);
                 updateLockpickUI();
             }
         }
@@ -3113,8 +3306,9 @@
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
 
-            // 1. Spawn items
-            if (Math.random() < 0.08) {
+            // 1. Spawn items — spawn rate increases as time ticks down for escalating difficulty
+            const spawnChance = 0.07 + ((30 - radTimeLeft) * 0.005);
+            if (Math.random() < spawnChance) {
                 const types = [
                     { name: 'bottle', pts: 15, rads: 0, color: '#4AF626', sym: '🍾' },
                     { name: 'lemon', pts: 10, rads: 0, color: '#FEE180', sym: '🍋' },
@@ -3125,7 +3319,7 @@
                 radItems.push({
                     x: Math.random() * (canvas.width - 30) + 15,
                     y: 0,
-                    speed: 2.2 + Math.random() * 2,
+                    speed: 2.2 + Math.random() * 2 + ((30 - radTimeLeft) * 0.04),
                     ...chosen
                 });
             }
@@ -3193,9 +3387,18 @@
                 document.getElementById('rc-victory').classList.remove('hidden');
             } else {
                 playBeep(200, 0.3);
-                const reason = radRads >= 100 ? 'Lethal Radiation Sickness (100 Rads reached)!' : `Quota not met (Score: ${radScore}/100)`;
-                alert(`💀 GAME OVER: ${reason}\n\nHit Start Game to retry!`);
-                document.getElementById('rc-start-overlay').classList.remove('hidden');
+                const reason = radRads >= 100 ? 'LETHAL RAD POISONING (100 RADS)' : `SUPPLY QUOTA NOT MET (${radScore}/100 PTS)`;
+                // Show the overlay with game-over content
+                const overlay = document.getElementById('rc-start-overlay');
+                overlay.innerHTML = `
+                    <i class="fa-solid fa-skull text-4xl text-red-400 animate-pulse"></i>
+                    <h4 class="font-display text-3xl uppercase text-red-400">GAME OVER</h4>
+                    <p class="text-xs sm:text-sm text-red-400/80 max-w-xs font-terminal">> ${reason}</p>
+                    <button type="button" onclick="initRadGame(); this.parentElement.innerHTML = '<i class=\\'fa-solid fa-radiation text-4xl text-radYellow animate-spin-slow\\'></i><h4 class=\\'font-display text-3xl uppercase text-terminalGreen\\'>WASTELAND RAD-CATCHER</h4><p class=\\'text-xs sm:text-sm text-terminalGreen/80 max-w-xs\\'>Catch pure Bunker Cola bottles (+15), Lemons (+10), and Sugar (+5). Avoid glowing green toxic Rad-Drums! Score 100+ to win 50p off!</p><button type=\\'button\\' onclick=\\'startRadGame()\\' class=\\'bg-terminalGreen text-terminalBg px-6 py-2 text-xl font-bold uppercase hover:bg-white hover:text-black cursor-pointer\\'>START GAME &gt;&gt;</button>';" class="bg-red-600 text-parchment px-6 py-2 text-xl font-bold uppercase hover:bg-red-800 cursor-pointer font-terminal">
+                        RETRY MISSION >>
+                    </button>
+                `;
+                overlay.classList.remove('hidden');
             }
         }
 
