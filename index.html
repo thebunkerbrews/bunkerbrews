@@ -287,8 +287,12 @@
             <i id="sfx-icon" class="fa-solid fa-radio text-atomic animate-pulse"></i>
             <span id="sfx-label">88.4 FM • ON</span>
         </button>
-        <button onclick="nextRadioStation()" title="Tune Next 1950s Station" class="px-2.5 py-2 hover:bg-rust hover:text-parchment transition-colors text-ink cursor-pointer">
+        <button onclick="nextRadioStation()" title="Tune Next 1950s Station" class="px-2.5 py-2 hover:bg-rust hover:text-parchment transition-colors text-ink border-r-2 border-ink cursor-pointer">
             <i class="fa-solid fa-forward-step"></i>
+        </button>
+        <button onclick="openGamesModal('hack'); playBeep();" title="Play Secret Vault Holotape Mini-Games" class="px-2.5 py-2 bg-radYellow/25 hover:bg-radYellow text-ink transition-colors cursor-pointer flex items-center gap-1.5 font-bold">
+            <i class="fa-solid fa-gamepad text-rust"></i>
+            <span>Games</span>
         </button>
     </div>
 
@@ -522,50 +526,178 @@
     </div>
 
     <!-- RobCo Vault Terminal Hacking Mini-Game Modal (Easter Egg) -->
-    <div id="terminal-hack-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[115] hidden items-center justify-center p-3 sm:p-4">
-        <div class="bg-terminalBg border-4 border-terminalGreen shadow-[0_0_40px_rgba(74,246,38,0.4)] w-full max-w-3xl flex flex-col relative font-terminal text-terminalGreen p-4 sm:p-8 animate-in zoom-in duration-200 overflow-hidden max-h-[90vh]">
+    <!-- RobCo Vault Holotape Arcade & Mini-Games Modal -->
+    <div id="terminal-hack-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[115] hidden items-center justify-center p-2.5 sm:p-4">
+        <div class="bg-terminalBg border-4 border-terminalGreen shadow-[0_0_45px_rgba(74,246,38,0.45)] w-full max-w-3xl flex flex-col relative font-terminal text-terminalGreen p-3.5 sm:p-7 animate-in zoom-in duration-200 overflow-hidden max-h-[92vh]">
             <!-- CRT Scanline Overlay -->
             <div class="scanline pointer-events-none"></div>
             
-            <!-- Terminal Header -->
-            <div class="flex justify-between items-start border-b-2 border-terminalGreen/50 pb-3 mb-4 shrink-0 relative z-20">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-terminalGreen terminal-text">ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL</h2>
-                    <p class="text-base sm:text-lg text-terminalGreen/80">> PASSWORD REQUIRED // REWARD: £2.00 SUPPLY VOUCHER</p>
+            <!-- Terminal Header & Game Switcher Tabs -->
+            <div class="border-b-2 border-terminalGreen/50 pb-3 mb-3 shrink-0 relative z-20">
+                <div class="flex justify-between items-start mb-2.5">
+                    <div>
+                        <h2 class="text-xl sm:text-3xl font-bold uppercase tracking-wider text-terminalGreen terminal-text">ROBCO INDUSTRIES (TM) HOLOTAPE ARCADE</h2>
+                        <p class="text-xs sm:text-base text-terminalGreen/80">> SELECT SIMULATION PROTOCOL // WIN CHECKOUT REWARDS</p>
+                    </div>
+                    <button type="button" onclick="closeHackModal()" class="text-terminalGreen hover:text-white text-2xl font-bold px-2 py-1 cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
-                <button type="button" onclick="closeHackModal()" class="text-terminalGreen hover:text-white text-2xl font-bold px-2 py-1 cursor-pointer">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+
+                <!-- Game Selector Tabs -->
+                <div class="grid grid-cols-3 gap-1.5 text-xs sm:text-base font-bold uppercase">
+                    <button type="button" id="tab-btn-hack" onclick="switchArcadeGame('hack')" class="py-1.5 px-2 bg-terminalGreen text-terminalBg border border-terminalGreen text-center transition-colors">
+                        <i class="fa-solid fa-terminal mr-1"></i> 1. HACK <span class="hidden sm:inline">(MASTER // £2)</span>
+                    </button>
+                    <button type="button" id="tab-btn-lockpick" onclick="switchArcadeGame('lockpick')" class="py-1.5 px-2 bg-terminalGreen/10 text-terminalGreen border border-terminalGreen/50 hover:bg-terminalGreen/20 text-center transition-colors">
+                        <i class="fa-solid fa-key mr-1"></i> 2. LOCKPICK <span class="hidden sm:inline">(ADVANCED // 50p)</span>
+                    </button>
+                    <button type="button" id="tab-btn-rad" onclick="switchArcadeGame('rad')" class="py-1.5 px-2 bg-terminalGreen/10 text-terminalGreen border border-terminalGreen/50 hover:bg-terminalGreen/20 text-center transition-colors">
+                        <i class="fa-solid fa-radiation mr-1"></i> 3. RAD-CATCHER <span class="hidden sm:inline">(REFLEX // £1)</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- Terminal Game Screen -->
-            <div class="space-y-4 text-lg sm:text-xl flex-grow overflow-y-auto relative z-20">
-                <!-- Status Row -->
-                <div class="flex justify-between items-center bg-terminalGreen/10 px-3 py-2 border border-terminalGreen/30">
+            <!-- GAME 1: TERMINAL PASSWORD HACKING -->
+            <div id="game-sec-hack" class="space-y-3.5 text-lg sm:text-xl flex-grow overflow-y-auto relative z-20">
+                <div class="flex justify-between items-center bg-terminalGreen/10 px-3 py-1.5 border border-terminalGreen/30 text-base sm:text-lg">
                     <span id="hack-attempts-label">> ATTEMPTS REMAINING:</span>
                     <span id="hack-attempts-icons" class="text-xl sm:text-2xl tracking-widest text-terminalGreen font-bold">■ ■ ■ ■</span>
                 </div>
 
-                <!-- Memory Buffer Grid -->
-                <div id="hack-memory-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 font-terminal text-lg sm:text-xl p-3 bg-black/60 border border-terminalGreen/40">
+                <div id="hack-memory-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 font-terminal text-base sm:text-lg p-3 bg-black/60 border border-terminalGreen/40">
                     <!-- Populated dynamically via initHackGame() -->
                 </div>
 
-                <!-- Console Output Log -->
-                <div id="hack-console" class="h-28 bg-black/90 border border-terminalGreen/40 p-3 overflow-y-auto font-terminal text-base sm:text-lg text-terminalGreen/90 space-y-1">
+                <div id="hack-console" class="h-24 bg-black/90 border border-terminalGreen/40 p-2.5 overflow-y-auto font-terminal text-sm sm:text-base text-terminalGreen/90 space-y-1">
                     <p>> INITIALIZING ROBCO SECURITY BYPASS...</p>
                     <p>> SELECT A HIGHLIGHTED WORD TO TEST PASSWORD LIKENESS.</p>
                 </div>
 
-                <!-- Victory Reward Banner (Hidden initially) -->
-                <div id="hack-victory" class="hidden p-4 bg-terminalGreen/20 border-2 border-terminalGreen text-center space-y-3">
-                    <p class="text-2xl sm:text-3xl text-terminalGreen terminal-text font-bold">🎉 ACCESS GRANTED! SECURITY LOCK BYPASSED!</p>
-                    <p class="text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">VAULT200</strong> (-£2.00 OFF AT CHECKOUT)</p>
+                <div id="hack-victory" class="hidden p-4 bg-terminalGreen/20 border-2 border-terminalGreen text-center space-y-2.5">
+                    <p class="text-xl sm:text-2xl text-terminalGreen terminal-text font-bold">🎉 ACCESS GRANTED! SECURITY LOCK BYPASSED!</p>
+                    <p class="text-base sm:text-lg">MASTER REWARD: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">VAULT200</strong> (-£2.00 OFF CHECKOUT)</p>
                     <div class="flex justify-center gap-3 pt-1">
-                        <button type="button" onclick="claimHackReward()" class="bg-terminalGreen text-terminalBg px-5 py-2 text-xl font-bold uppercase hover:bg-white hover:text-black transition-colors cursor-pointer">
-                            <i class="fa-solid fa-copy mr-1"></i> Copy £2 Voucher & Apply
+                        <button type="button" onclick="claimHackReward()" class="bg-terminalGreen text-terminalBg px-4 py-1.5 text-lg font-bold uppercase hover:bg-white hover:text-black transition-colors cursor-pointer">
+                            <i class="fa-solid fa-copy mr-1"></i> Copy £2 Voucher Code
                         </button>
-                        <button type="button" onclick="initHackGame()" class="border border-terminalGreen text-terminalGreen px-4 py-2 text-lg uppercase hover:bg-terminalGreen/20 cursor-pointer">
+                        <button type="button" onclick="initHackGame()" class="border border-terminalGreen text-terminalGreen px-3 py-1.5 text-base uppercase hover:bg-terminalGreen/20 cursor-pointer">
+                            Reset Lock
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME 2: VAULT LOCKPICKING SIMULATION -->
+            <div id="game-sec-lockpick" class="hidden space-y-3.5 text-lg sm:text-xl flex-grow overflow-y-auto relative z-20">
+                <div class="flex justify-between items-center bg-terminalGreen/10 px-3 py-1.5 border border-terminalGreen/30 text-sm sm:text-base">
+                    <span>> LOCK DIFFICULTY: <strong class="text-radYellow uppercase font-bold">ADVANCED</strong></span>
+                    <span>> BOBBY PINS: <strong id="lp-pins-display" class="text-terminalGreen">🔑 🔑 🔑</strong></span>
+                </div>
+
+                <!-- Lock Canvas / Visual Area -->
+                <div class="relative bg-black/80 border-2 border-terminalGreen p-4 flex flex-col items-center justify-center min-h-[220px]">
+                    <!-- Tumbler Outer Ring -->
+                    <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full border-4 border-terminalGreen/70 relative flex items-center justify-center bg-terminalGreen/5 shadow-[0_0_25px_rgba(74,246,38,0.2)]">
+                        <!-- Keyway Inner Cylinder -->
+                        <div id="lp-cylinder" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-terminalGreen flex items-center justify-center transition-transform duration-100 bg-black" style="transform: rotate(0deg);">
+                            <div class="w-3.5 h-14 bg-terminalGreen rounded-xs relative">
+                                <div class="w-2 h-2 bg-black absolute top-2 left-1/2 -translate-x-1/2 rounded-full"></div>
+                            </div>
+                        </div>
+                        <!-- Bobby Pin Needle -->
+                        <div id="lp-pin-indicator" class="absolute w-1 h-24 sm:h-28 bg-radYellow origin-bottom transition-transform pointer-events-none" style="bottom: 50%; transform: rotate(0deg); box-shadow: 0 0 8px #FFD700;">
+                            <div class="w-3 h-3 rounded-full bg-radYellow -top-1 -left-1 absolute"></div>
+                        </div>
+                    </div>
+
+                    <!-- Lock Tension & Status Meter -->
+                    <div class="w-full max-w-sm mt-3 space-y-1 text-center">
+                        <div class="flex justify-between text-xs sm:text-sm">
+                            <span>PIN ANGLE: <strong id="lp-angle-text">0°</strong></span>
+                            <span>TENSION: <strong id="lp-tension-text" class="text-terminalGreen">SAFE</strong></span>
+                        </div>
+                        <div class="w-full bg-black border border-terminalGreen/50 h-3 overflow-hidden">
+                            <div id="lp-strain-bar" class="bg-terminalGreen h-full w-0 transition-all duration-75"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lockpicking Controls -->
+                <div class="space-y-3 bg-terminalGreen/5 border border-terminalGreen/40 p-3 rounded-xs text-xs sm:text-sm">
+                    <div>
+                        <label class="block uppercase mb-1 font-bold text-terminalGreen">> 1. POSITION BOBBY PIN (SWIVEL ANGLE):</label>
+                        <input type="range" id="lp-angle-slider" min="-85" max="85" value="0" oninput="handleLockpickAngleChange(this.value)" class="w-full accent-terminalGreen cursor-pointer">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" id="lp-turn-btn" onmousedown="startLockTurning()" onmouseup="stopLockTurning()" ontouchstart="startLockTurning()" ontouchend="stopLockTurning()" class="flex-grow py-3 bg-terminalGreen text-terminalBg font-bold text-lg sm:text-xl uppercase hover:bg-white hover:text-black transition-colors select-none">
+                            <i class="fa-solid fa-wrench mr-1"></i> TURN SCREWDRIVER (HOLD OR PRESS D / SPACE)
+                        </button>
+                        <button type="button" onclick="initLockpickGame()" class="px-3 py-2 border border-terminalGreen text-terminalGreen uppercase hover:bg-terminalGreen/20">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lockpick Victory Banner -->
+                <div id="lp-victory" class="hidden p-4 bg-terminalGreen/20 border-2 border-terminalGreen text-center space-y-2.5">
+                    <p class="text-xl sm:text-2xl text-terminalGreen terminal-text font-bold">🔓 TUMBLER ENGAGED! LOCKPICK SUCCESSFUL!</p>
+                    <p class="text-base sm:text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">LOCKPICK50</strong> (-50p OFF CHECKOUT)</p>
+                    <div class="flex justify-center gap-3 pt-1">
+                        <button type="button" onclick="claimLockpickReward()" class="bg-terminalGreen text-terminalBg px-4 py-1.5 text-lg font-bold uppercase hover:bg-white hover:text-black transition-colors cursor-pointer">
+                            <i class="fa-solid fa-copy mr-1"></i> Copy 50p Voucher
+                        </button>
+                        <button type="button" onclick="initLockpickGame()" class="border border-terminalGreen text-terminalGreen px-3 py-1.5 text-base uppercase hover:bg-terminalGreen/20 cursor-pointer">
+                            Pick Another Lock
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME 3: RAD-CATCHER SUPPLY DROP ARCADE -->
+            <div id="game-sec-rad" class="hidden space-y-3.5 text-lg sm:text-xl flex-grow overflow-y-auto relative z-20">
+                <div class="flex justify-between items-center bg-terminalGreen/10 px-3 py-1.5 border border-terminalGreen/30 text-xs sm:text-base">
+                    <span>SCORE: <strong id="rc-score-display" class="text-white">0</strong> / 100 PTS</span>
+                    <span>RADIATION: <strong id="rc-rads-display" class="text-radYellow">0</strong> / 100 RADS</span>
+                    <span>TIME: <strong id="rc-timer-display" class="text-terminalGreen">30s</strong></span>
+                </div>
+
+                <!-- Canvas Stage -->
+                <div class="relative bg-black border-2 border-terminalGreen flex justify-center items-center overflow-hidden">
+                    <canvas id="rad-canvas" width="400" height="240" class="w-full max-w-md h-auto block bg-black"></canvas>
+                    
+                    <!-- Overlay Start / GameOver Screen -->
+                    <div id="rc-start-overlay" class="absolute inset-0 bg-black/85 flex flex-col items-center justify-center p-4 text-center space-y-3">
+                        <i class="fa-solid fa-radiation text-4xl text-radYellow animate-spin-slow"></i>
+                        <h4 class="font-display text-3xl uppercase text-terminalGreen">WASTELAND RAD-CATCHER</h4>
+                        <p class="text-xs sm:text-sm text-terminalGreen/80 max-w-xs">
+                            Catch pure Bunker Cola bottles (+15), Lemons (+10), and Sugar (+5). Avoid glowing green toxic Rad-Drums! Score 100+ to win £1.00 off!
+                        </p>
+                        <button type="button" onclick="startRadGame()" class="bg-terminalGreen text-terminalBg px-6 py-2 text-xl font-bold uppercase hover:bg-white hover:text-black cursor-pointer">
+                            START GAME >>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Left/Right Controls -->
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" onmousedown="moveRadPlayer('left')" ontouchstart="moveRadPlayer('left')" class="py-3 bg-terminalGreen/20 border-2 border-terminalGreen text-terminalGreen font-bold text-lg uppercase active:bg-terminalGreen active:text-terminalBg select-none">
+                        ◀ MOVE LEFT
+                    </button>
+                    <button type="button" onmousedown="moveRadPlayer('right')" ontouchstart="moveRadPlayer('right')" class="py-3 bg-terminalGreen/20 border-2 border-terminalGreen text-terminalGreen font-bold text-lg uppercase active:bg-terminalGreen active:text-terminalBg select-none">
+                        MOVE RIGHT ▶
+                    </button>
+                </div>
+
+                <!-- Rad Game Victory Banner -->
+                <div id="rc-victory" class="hidden p-4 bg-terminalGreen/20 border-2 border-terminalGreen text-center space-y-2.5">
+                    <p class="text-xl sm:text-2xl text-terminalGreen terminal-text font-bold">🏆 SUPPLY MISSION SURVIVED! QUOTA MET!</p>
+                    <p class="text-base sm:text-lg">REWARD UNLOCKED: <strong class="bg-terminalGreen text-terminalBg px-2 py-0.5 text-xl font-bold">RADFREE</strong> (-£1.00 OFF CHECKOUT)</p>
+                    <div class="flex justify-center gap-3 pt-1">
+                        <button type="button" onclick="claimRadReward()" class="bg-terminalGreen text-terminalBg px-4 py-1.5 text-lg font-bold uppercase hover:bg-white hover:text-black transition-colors cursor-pointer">
+                            <i class="fa-solid fa-copy mr-1"></i> Copy £1 Voucher
+                        </button>
+                        <button type="button" onclick="startRadGame()" class="border border-terminalGreen text-terminalGreen px-3 py-1.5 text-base uppercase hover:bg-terminalGreen/20 cursor-pointer">
                             Play Again
                         </button>
                     </div>
@@ -573,9 +705,9 @@
             </div>
 
             <!-- Terminal Footer -->
-            <div class="mt-4 pt-3 border-t border-terminalGreen/40 flex justify-between items-center text-sm text-terminalGreen/70 relative z-20">
-                <span>[ESC] TO EXIT TERMLINK</span>
-                <span class="animate-pulse">> LINK SECURE</span>
+            <div class="mt-3 pt-2.5 border-t border-terminalGreen/40 flex justify-between items-center text-xs text-terminalGreen/70 relative z-20">
+                <span>[ESC] TO EXIT ARCADE</span>
+                <span class="animate-pulse">> ROBCO OS v2.077</span>
             </div>
         </div>
     </div>
@@ -655,7 +787,11 @@
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
         <a href="#cashback" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-rust bg-rust/10 text-rust hover:bg-rust hover:text-parchment transition-colors">
-            <span><i class="fa-solid fa-recycle text-rust mr-2.5"></i> Bottle Return Cashback (£1.50 ea)</span>
+            <span><i class="fa-solid fa-recycle text-rust mr-2.5"></i> Bottle Return Rewards (£1.50 ea)</span>
+            <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
+        </a>
+        <a href="javascript:void(0)" onclick="openGamesModal('hack'); toggleMobileNav();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-terminalGreen bg-terminalBg text-terminalGreen hover:bg-terminalGreen hover:text-terminalBg transition-colors">
+            <span><i class="fa-solid fa-gamepad text-terminalGreen mr-2.5"></i> Vault Holotape Arcade (3 Games)</span>
             <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>
         </a>
         <a href="#lore" onclick="toggleMobileNav(); playBeep();" class="flex items-center justify-between py-2.5 px-3.5 border-2 border-ink/20 hover:bg-rust hover:text-parchment transition-colors">
@@ -2490,22 +2626,23 @@
         }
 
         /* ============================================================
-           6C. ROBCO VAULT TERMINAL HACKING MINI-GAME (EASTER EGG)
+           6C. ROBCO VAULT HOLOTAPE ARCADE ENGINE (3 MINI-GAMES)
            ============================================================ */
-        const HACK_WORDS_POOL = ['SYRUP', 'BASIC', 'SCOUT', 'SPICE', 'CRAFT', 'VAULT', 'SUGAR', 'FLASK', 'DRINK', 'BOTLE'];
-        let hackSecretWord = 'SYRUP';
-        let hackAttemptsLeft = 4;
-        let hackWordsList = [];
-        let hackGameOver = false;
+        let currentArcadeGame = 'hack';
 
-        function openHackModal() {
+        function openGamesModal(game = 'hack') {
             const modal = document.getElementById('terminal-hack-modal');
             if (modal) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
             }
-            initHackGame();
+            switchArcadeGame(game);
             playBeep(850, 0.08);
+        }
+
+        // Backward compatibility alias
+        function openHackModal() {
+            openGamesModal('hack');
         }
 
         function closeHackModal() {
@@ -2514,8 +2651,42 @@
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
             }
+            stopRadGame();
+            stopLockTurning();
             playBeep(500, 0.04);
         }
+
+        function switchArcadeGame(game) {
+            currentArcadeGame = game;
+            const games = ['hack', 'lockpick', 'rad'];
+            
+            games.forEach(g => {
+                const tabBtn = document.getElementById(`tab-btn-${g}`);
+                const sec = document.getElementById(`game-sec-${g}`);
+                if (tabBtn && sec) {
+                    if (g === game) {
+                        tabBtn.className = 'py-1.5 px-2 bg-terminalGreen text-terminalBg border border-terminalGreen text-center transition-colors font-bold';
+                        sec.classList.remove('hidden');
+                    } else {
+                        tabBtn.className = 'py-1.5 px-2 bg-terminalGreen/10 text-terminalGreen border border-terminalGreen/50 hover:bg-terminalGreen/20 text-center transition-colors font-bold';
+                        sec.classList.add('hidden');
+                    }
+                }
+            });
+
+            if (game === 'hack') initHackGame();
+            else if (game === 'lockpick') initLockpickGame();
+            else if (game === 'rad') initRadGame();
+        }
+
+        /* ------------------------------------------------------------
+           GAME 1: ROBCO TERMLINK HACKING (MASTER DIFFICULTY // £2.00)
+           ------------------------------------------------------------ */
+        const HACK_WORDS_POOL = ['SYRUP', 'BASIC', 'SCOUT', 'SPICE', 'CRAFT', 'VAULT', 'SUGAR', 'FLASK', 'DRINK', 'BOTLE'];
+        let hackSecretWord = 'SYRUP';
+        let hackAttemptsLeft = 4;
+        let hackWordsList = [];
+        let hackGameOver = false;
 
         function initHackGame() {
             hackAttemptsLeft = 4;
@@ -2567,7 +2738,6 @@
 
         function handleHackGuess(word, btn) {
             if (hackGameOver) return;
-
             const consoleBox = document.getElementById('hack-console');
 
             if (word === hackSecretWord) {
@@ -2576,10 +2746,6 @@
                 consoleBox.innerHTML += `<p class="text-white font-bold">> [${word}] -> EXACT MATCH! ACCESS GRANTED.</p>`;
                 consoleBox.scrollTop = consoleBox.scrollHeight;
                 document.getElementById('hack-victory').classList.remove('hidden');
-                
-                try {
-                    navigator.clipboard.writeText('VAULT200');
-                } catch(e) {}
                 return;
             }
 
@@ -2613,9 +2779,347 @@
 
         function claimHackReward() {
             navigator.clipboard.writeText('VAULT200');
-            showNotification('🎉 Code VAULT200 (-£2.00) copied! Enter it in the gift card / coupon box on the Square checkout screen.', 'success');
+            showNotification('🎉 Code VAULT200 (-£2.00) copied to clipboard! Paste it into the coupon box at Square checkout.', 'success');
             closeHackModal();
         }
+
+        /* ------------------------------------------------------------
+           GAME 2: VAULT LOCKPICKING SIMULATION (ADVANCED // 50p)
+           ------------------------------------------------------------ */
+        let lockSweetSpot = 0;
+        let lockCurrentPinAngle = 0;
+        let lockPinsRemaining = 3;
+        let lockStrain = 0;
+        let lockTurningTimer = null;
+        let lockWon = false;
+
+        function initLockpickGame() {
+            lockSweetSpot = Math.floor(Math.random() * 140) - 70; // -70 deg to +70 deg
+            lockCurrentPinAngle = 0;
+            lockPinsRemaining = 3;
+            lockStrain = 0;
+            lockWon = false;
+            
+            document.getElementById('lp-victory').classList.add('hidden');
+            document.getElementById('lp-angle-slider').value = '0';
+            updateLockpickUI();
+            playBeep(600, 0.05);
+        }
+
+        function handleLockpickAngleChange(val) {
+            if (lockWon) return;
+            lockCurrentPinAngle = parseInt(val) || 0;
+            updateLockpickUI();
+            playBeep(450 + Math.abs(lockCurrentPinAngle) * 2, 0.02);
+        }
+
+        function updateLockpickUI() {
+            const pinIndicator = document.getElementById('lp-pin-indicator');
+            const angleText = document.getElementById('lp-angle-text');
+            const pinsDisplay = document.getElementById('lp-pins-display');
+            const strainBar = document.getElementById('lp-strain-bar');
+            const tensionText = document.getElementById('lp-tension-text');
+
+            if (pinIndicator) pinIndicator.style.transform = `rotate(${lockCurrentPinAngle}deg)`;
+            if (angleText) angleText.innerText = `${lockCurrentPinAngle}°`;
+            if (pinsDisplay) pinsDisplay.innerText = '🔑 '.repeat(lockPinsRemaining).trim();
+
+            if (strainBar) {
+                strainBar.style.width = `${lockStrain}%`;
+                strainBar.className = lockStrain > 75 ? 'bg-red-500 h-full transition-all' : 
+                                      lockStrain > 40 ? 'bg-radYellow h-full transition-all' : 
+                                      'bg-terminalGreen h-full transition-all';
+            }
+            if (tensionText) {
+                tensionText.innerText = lockStrain > 75 ? 'DANGER: SNAPPING!' : 
+                                        lockStrain > 40 ? 'HIGH STRAIN' : 'SAFE';
+                tensionText.className = lockStrain > 75 ? 'text-red-500 font-bold' : 
+                                        lockStrain > 40 ? 'text-radYellow font-bold' : 'text-terminalGreen';
+            }
+        }
+
+        function startLockTurning() {
+            if (lockWon || lockPinsRemaining <= 0) return;
+            if (lockTurningTimer) clearInterval(lockTurningTimer);
+
+            lockTurningTimer = setInterval(() => {
+                const diff = Math.abs(lockCurrentPinAngle - lockSweetSpot);
+                const tolerance = 9; // sweet spot tolerance window
+                const cylinder = document.getElementById('lp-cylinder');
+
+                if (diff <= tolerance) {
+                    // Sweet spot! Turn completely to 90 degrees and unlock
+                    lockWon = true;
+                    clearInterval(lockTurningTimer);
+                    cylinder.style.transform = 'rotate(90deg)';
+                    playBeep(920, 0.25);
+                    document.getElementById('lp-victory').classList.remove('hidden');
+                } else {
+                    // Off target: can only turn partially based on closeness
+                    const maxTurn = Math.max(5, Math.floor(75 - (diff * 1.1)));
+                    cylinder.style.transform = `rotate(${maxTurn}deg)`;
+                    
+                    // Bobby pin takes strain damage
+                    lockStrain += 8;
+                    playBeep(220 + lockStrain * 3, 0.04);
+                    updateLockpickUI();
+
+                    if (lockStrain >= 100) {
+                        // Pin snaps!
+                        clearInterval(lockTurningTimer);
+                        lockPinsRemaining--;
+                        lockStrain = 0;
+                        cylinder.style.transform = 'rotate(0deg)';
+                        playBeep(150, 0.2);
+                        showNotification('💥 SNAP! Bobby pin broke under extreme tension!', 'warning');
+                        updateLockpickUI();
+
+                        if (lockPinsRemaining <= 0) {
+                            setTimeout(() => {
+                                alert("🔒 OUT OF BOBBY PINS! The lock remains sealed. Resetting lock...");
+                                initLockpickGame();
+                            }, 300);
+                        }
+                    }
+                }
+            }, 60);
+        }
+
+        function stopLockTurning() {
+            if (lockTurningTimer) clearInterval(lockTurningTimer);
+            if (!lockWon) {
+                const cylinder = document.getElementById('lp-cylinder');
+                if (cylinder) cylinder.style.transform = 'rotate(0deg)';
+                lockStrain = Math.max(0, lockStrain - 25);
+                updateLockpickUI();
+            }
+        }
+
+        function claimLockpickReward() {
+            navigator.clipboard.writeText('LOCKPICK50');
+            showNotification('🎉 Code LOCKPICK50 (-50p) copied to clipboard! Enter it at Square checkout.', 'success');
+            closeHackModal();
+        }
+
+        /* ------------------------------------------------------------
+           GAME 3: WASTELAND RAD-CATCHER (REFLEX // £1.00)
+           ------------------------------------------------------------ */
+        let radScore = 0;
+        let radRads = 0;
+        let radTimeLeft = 30;
+        let radGameRunning = false;
+        let radPlayerX = 175;
+        let radItems = [];
+        let radTimerInterval = null;
+        let radAnimFrame = null;
+
+        function initRadGame() {
+            radGameRunning = false;
+            radScore = 0;
+            radRads = 0;
+            radTimeLeft = 30;
+            radItems = [];
+            
+            if (radTimerInterval) clearInterval(radTimerInterval);
+            if (radAnimFrame) cancelAnimationFrame(radAnimFrame);
+
+            document.getElementById('rc-start-overlay').classList.remove('hidden');
+            document.getElementById('rc-victory').classList.add('hidden');
+            updateRadUI();
+
+            const canvas = document.getElementById('rad-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#0F1A12';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#4AF626';
+                ctx.font = '16px "Courier Prime", monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('PRESS START GAME TO BEGIN', canvas.width / 2, canvas.height / 2);
+            }
+        }
+
+        function startRadGame() {
+            radScore = 0;
+            radRads = 0;
+            radTimeLeft = 30;
+            radPlayerX = 175;
+            radItems = [];
+            radGameRunning = true;
+
+            document.getElementById('rc-start-overlay').classList.add('hidden');
+            document.getElementById('rc-victory').classList.add('hidden');
+            updateRadUI();
+
+            if (radTimerInterval) clearInterval(radTimerInterval);
+            radTimerInterval = setInterval(() => {
+                if (!radGameRunning) return;
+                radTimeLeft--;
+                updateRadUI();
+
+                if (radTimeLeft <= 0) {
+                    finishRadGame();
+                }
+            }, 1000);
+
+            runRadLoop();
+            playBeep(700, 0.08);
+        }
+
+        function stopRadGame() {
+            radGameRunning = false;
+            if (radTimerInterval) clearInterval(radTimerInterval);
+            if (radAnimFrame) cancelAnimationFrame(radAnimFrame);
+        }
+
+        function moveRadPlayer(dir) {
+            if (!radGameRunning) return;
+            if (dir === 'left') radPlayerX = Math.max(10, radPlayerX - 35);
+            if (dir === 'right') radPlayerX = Math.min(330, radPlayerX + 35);
+            playBeep(500, 0.02);
+        }
+
+        function updateRadUI() {
+            const scoreEl = document.getElementById('rc-score-display');
+            const radsEl = document.getElementById('rc-rads-display');
+            const timerEl = document.getElementById('rc-timer-display');
+
+            if (scoreEl) scoreEl.innerText = radScore;
+            if (radsEl) radsEl.innerText = radRads;
+            if (timerEl) timerEl.innerText = `${radTimeLeft}s`;
+        }
+
+        function runRadLoop() {
+            if (!radGameRunning) return;
+
+            const canvas = document.getElementById('rad-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            // 1. Spawn items
+            if (Math.random() < 0.08) {
+                const types = [
+                    { name: 'bottle', pts: 15, rads: 0, color: '#4AF626', sym: '🍾' },
+                    { name: 'lemon', pts: 10, rads: 0, color: '#FEE180', sym: '🍋' },
+                    { name: 'sugar', pts: 5, rads: 0, color: '#FFFFFF', sym: '🌾' },
+                    { name: 'toxic', pts: -20, rads: 25, color: '#39FF14', sym: '☢️' }
+                ];
+                const chosen = types[Math.floor(Math.random() * types.length)];
+                radItems.push({
+                    x: Math.random() * (canvas.width - 30) + 15,
+                    y: 0,
+                    speed: 2.2 + Math.random() * 2,
+                    ...chosen
+                });
+            }
+
+            // 2. Clear canvas
+            ctx.fillStyle = '#09120B';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // CRT Scanline effect on canvas
+            ctx.fillStyle = 'rgba(74, 246, 38, 0.04)';
+            for (let y = 0; y < canvas.height; y += 4) {
+                ctx.fillRect(0, y, canvas.width, 2);
+            }
+
+            // 3. Draw player crate
+            ctx.fillStyle = '#4AF626';
+            ctx.fillRect(radPlayerX, canvas.height - 24, 60, 16);
+            ctx.fillStyle = '#09120B';
+            ctx.font = 'bold 10px "Courier Prime", monospace';
+            ctx.fillText('CRATE', radPlayerX + 14, canvas.height - 12);
+
+            // 4. Update & Draw Items
+            for (let i = radItems.length - 1; i >= 0; i--) {
+                const item = radItems[i];
+                item.y += item.speed;
+
+                ctx.font = '16px serif';
+                ctx.fillText(item.sym, item.x - 8, item.y);
+
+                // Collision check with player crate
+                if (item.y >= canvas.height - 28 && item.y <= canvas.height - 8 && item.x >= radPlayerX - 8 && item.x <= radPlayerX + 68) {
+                    radScore = Math.max(0, radScore + item.pts);
+                    radRads += item.rads;
+                    updateRadUI();
+
+                    if (item.rads > 0) {
+                        playBeep(180, 0.15); // rad buzz
+                    } else {
+                        playBeep(750 + item.pts * 20, 0.04);
+                    }
+
+                    radItems.splice(i, 1);
+
+                    if (radRads >= 100) {
+                        finishRadGame();
+                        return;
+                    }
+                    continue;
+                }
+
+                // Off screen
+                if (item.y > canvas.height) {
+                    radItems.splice(i, 1);
+                }
+            }
+
+            radAnimFrame = requestAnimationFrame(runRadLoop);
+        }
+
+        function finishRadGame() {
+            stopRadGame();
+
+            if (radScore >= 100 && radRads < 100) {
+                playBeep(990, 0.3);
+                document.getElementById('rc-victory').classList.remove('hidden');
+            } else {
+                playBeep(200, 0.3);
+                const reason = radRads >= 100 ? 'Lethal Radiation Sickness (100 Rads reached)!' : `Quota not met (Score: ${radScore}/100)`;
+                alert(`💀 GAME OVER: ${reason}\n\nHit Start Game to retry!`);
+                document.getElementById('rc-start-overlay').classList.remove('hidden');
+            }
+        }
+
+        function claimRadReward() {
+            navigator.clipboard.writeText('RADFREE');
+            showNotification('🎉 Code RADFREE (-£1.00) copied to clipboard! Enter it at Square checkout.', 'success');
+            closeHackModal();
+        }
+
+        // Global Keyboard Controls for Lockpick & Rad Games
+        window.addEventListener('keydown', (e) => {
+            if (document.getElementById('terminal-hack-modal').classList.contains('hidden')) return;
+
+            if (e.key === 'Escape') closeHackModal();
+
+            if (currentArcadeGame === 'lockpick') {
+                if (e.key === ' ' || e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') {
+                    startLockTurning();
+                }
+                if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+                    const slider = document.getElementById('lp-angle-slider');
+                    if (slider) {
+                        slider.value = Math.max(-85, parseInt(slider.value) - 5);
+                        handleLockpickAngleChange(slider.value);
+                    }
+                }
+            }
+
+            if (currentArcadeGame === 'rad') {
+                if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') moveRadPlayer('left');
+                if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') moveRadPlayer('right');
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (currentArcadeGame === 'lockpick') {
+                if (e.key === ' ' || e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') {
+                    stopLockTurning();
+                }
+            }
+        });
 
         /* ============================================================
            7. SUPABASE CLOUD AUTH & TERMINAL PROFILE LOGIC
