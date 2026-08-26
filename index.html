@@ -461,12 +461,10 @@
     <!-- Pip-Boy 1950s Radio Widget (Floating Desktop & Mobile Pill) -->
     <div class="fixed bottom-4 left-4 z-40 hidden sm:flex items-center bg-parchment retro-border shadow-retro-sm text-xs font-bold uppercase overflow-hidden">
         <button id="sfx-toggle" onclick="toggleAudioSFX()" class="px-3 py-2 hover:bg-parchmentDark flex items-center gap-2 border-r-2 border-ink cursor-pointer">
-            <i id="sfx-icon" class="fa-solid fa-radio text-atomic animate-pulse"></i>
+            <i id="sfx-icon" class="fa-solid fa-bolt text-atomic animate-pulse"></i>
             <span id="sfx-label">88.4 FM • ON</span>
         </button>
-        <button onclick="nextRadioStation()" title="Tune Next 1950s Station" class="px-2.5 py-2 hover:bg-rust hover:text-parchment transition-colors text-ink border-r-2 border-ink cursor-pointer">
-            <i class="fa-solid fa-forward-step"></i>
-        </button>
+        
         <button onclick="openGamesModal('hack'); playBeep();" title="Play Secret Vault Holotape Mini-Games" class="px-2.5 py-2 bg-radYellow/25 hover:bg-radYellow text-ink transition-colors cursor-pointer flex items-center gap-1.5 font-bold">
             <i class="fa-solid fa-gamepad text-rust"></i>
             <span>Games</span>
@@ -774,7 +772,7 @@
                 <div class="p-3.5 bg-black/40 border border-[#E8C547]/20 rounded-lg flex items-start justify-between gap-3">
                     <div>
                         <span class="font-display text-lg text-[#E8C547] uppercase block">1. Essential Operations</span>
-                        <p class="font-terminal text-xs sm:text-sm text-[#5B9EA6]/75 font-normal mt-1">Shopping crate persistence, 1950s radio state, theme settings, and authentication session tokens. Cannot be disabled.</p>
+                        <p class="font-terminal text-xs sm:text-sm text-[#5B9EA6]/75 font-normal mt-1">Shopping crate persistence, CRT audio state, theme settings, and authentication session tokens. Cannot be disabled.</p>
                     </div>
                     <span class="px-2 py-1 bg-rust/20 border border-rust text-rust text-xs uppercase font-terminal rounded shrink-0">Always Active</span>
                 </div>
@@ -1089,11 +1087,9 @@
         <div class="grid grid-cols-2 gap-2 pt-1">
             <div class="flex border border-[#4AF626]/30 bg-terminalBg overflow-hidden">
                 <button type="button" onclick="toggleAudioSFX();" class="flex-1 py-2.5 px-2 text-[#4AF626] font-bold uppercase text-xs sm:text-sm flex items-center justify-center gap-1 font-terminal">
-                    <i class="fa-solid fa-radio text-[#E8C547]"></i> <span id="mobile-sfx-label">RADIO: ON</span>
+                    <i class="fa-solid fa-bolt text-[#E8C547]"></i> <span id="mobile-sfx-label">CRT AUDIO: ON</span>
                 </button>
-                <button type="button" onclick="nextRadioStation();" title="Next Station" class="px-2.5 bg-rust text-parchment text-xs font-bold hover:bg-rustDark flex items-center justify-center">
-                    <i class="fa-solid fa-forward-step"></i>
-                </button>
+                
             </div>
             <a href="javascript:void(0)" onclick="openAuthModal(); toggleMobileNav();" class="py-2.5 px-3 bg-terminalBg border border-[#4AF626]/30 text-[#4AF626] hover:bg-[#4AF626] hover:text-terminalBg transition-colors text-center text-xs flex items-center justify-center gap-1.5 font-terminal">
                 <i class="fa-solid fa-user-shield text-[#E8C547]"></i> Account
@@ -2179,166 +2175,91 @@
         AOS.init({ once: true, offset: 40, duration: 750, easing: 'ease-out-cubic' });
 
         /* ============================================================
-           1. AUDIO SFX & PIP-BOY 1950s COUNTRY & POP RADIO (ROYALTY FREE)
-           ============================================================ */
+          1. AUDIO SFX & CRT BUZZ AMBIENCE
+          ============================================================ */
         let sfxEnabled = true;
         let radioPlaying = false;
         let audioCtx = null;
-        let radioTimer = null;
-        let currentStationIdx = 0;
-        let radioMeasure = 0;
-
-        const RADIO_STATIONS = [
-            {
-                name: '1950s Country Honky-Tonk',
-                freq: '88.4 FM',
-                tempo: 280, // ms per 8th note
-                genre: 'country',
-                chords: [
-                    { root: 261.63, third: 329.63, fifth: 392.00, bass: 130.81 }, // C
-                    { root: 261.63, third: 329.63, fifth: 392.00, bass: 130.81 }, // C
-                    { root: 349.23, third: 440.00, fifth: 523.25, bass: 174.61 }, // F
-                    { root: 261.63, third: 329.63, fifth: 392.00, bass: 130.81 }, // C
-                    { root: 392.00, third: 493.88, fifth: 587.33, bass: 196.00 }, // G
-                    { root: 349.23, third: 440.00, fifth: 523.25, bass: 174.61 }, // F
-                    { root: 261.63, third: 329.63, fifth: 392.00, bass: 130.81 }, // C
-                    { root: 392.00, third: 493.88, fifth: 587.33, bass: 196.00 }  // G turnaround
-                ],
-                scale: [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33] // C Major Pentatonic Country Twang
-            },
-            {
-                name: '1950s Atomic Doo-Wop & Pop',
-                freq: '94.2 FM',
-                tempo: 360,
-                genre: 'pop',
-                chords: [
-                    { root: 261.63, third: 329.63, fifth: 392.00, bass: 130.81 }, // C
-                    { root: 220.00, third: 261.63, fifth: 329.63, bass: 110.00 }, // Am
-                    { root: 174.61, third: 220.00, fifth: 261.63, bass: 87.31 },  // F
-                    { root: 196.00, third: 246.94, fifth: 293.66, bass: 98.00 }   // G
-                ],
-                scale: [261.63, 329.63, 392.00, 440.00, 493.88, 523.25]
-            },
-            {
-                name: 'Wasteland Bluegrass Jamboree',
-                freq: '102.7 FM',
-                tempo: 210,
-                genre: 'bluegrass',
-                chords: [
-                    { root: 392.00, third: 493.88, fifth: 587.33, bass: 196.00 }, // G
-                    { root: 392.00, third: 493.88, fifth: 587.33, bass: 196.00 }, // G
-                    { root: 261.63, third: 329.63, fifth: 392.00, bass: 130.81 }, // C
-                    { root: 392.00, third: 493.88, fifth: 587.33, bass: 196.00 }, // G
-                    { root: 293.66, third: 369.99, fifth: 440.00, bass: 146.83 }, // D
-                    { root: 392.00, third: 493.88, fifth: 587.33, bass: 196.00 }  // G
-                ],
-                scale: [392.00, 440.00, 493.88, 587.33, 659.25, 783.99]
-            }
-        ];
-
-        function playCountryNote(freq, type = 'sawtooth', duration = 0.25, gainLevel = 0.02, lowpass = 950) {
-            if (!audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                const filter = audioCtx.createBiquadFilter();
-
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(lowpass, audioCtx.currentTime);
-
-                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(gainLevel, audioCtx.currentTime + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-
-                osc.connect(filter);
-                filter.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch (e) {}
-        }
-
-        function radioTick() {
-            if (!sfxEnabled || !radioPlaying || !audioCtx) return;
-
-            const st = RADIO_STATIONS[currentStationIdx];
-            const chordIndex = Math.floor(radioMeasure / 4) % st.chords.length;
-            const currentChord = st.chords[chordIndex];
-            const beatInMeasure = radioMeasure % 4;
-
-            // 1. Country Boom-Chic Bass & Rhythm
-            if (beatInMeasure === 0) {
-                // Root Bass
-                playCountryNote(currentChord.bass, 'triangle', 0.35, 0.045, 450);
-            } else if (beatInMeasure === 2) {
-                // Alternating Fifth Bass (Classic Country Boom-Chic)
-                playCountryNote(currentChord.bass * 1.5, 'triangle', 0.35, 0.04, 450);
-            } else {
-                // Acoustic Rhythm Strum / Chop
-                playCountryNote(currentChord.root, 'sawtooth', 0.12, 0.015, 800);
-                playCountryNote(currentChord.third, 'sawtooth', 0.12, 0.015, 800);
-            }
-
-            // 2. Melody Lead Twang (Random melodic walking riff in key)
-            if (Math.random() > 0.35) {
-                const randomNote = st.scale[Math.floor(Math.random() * st.scale.length)];
-                playCountryNote(randomNote, 'sawtooth', 0.18, 0.02, 1100);
-            }
-
-            radioMeasure++;
-            radioTimer = setTimeout(radioTick, st.tempo);
-        }
+        
+        let crtOsc1 = null; 
+        let crtOsc2 = null; 
+        let crtNoise = null; 
+        let crtGain = null;
 
         function startVaultRadio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (radioPlaying) return;
             radioPlaying = true;
-            if (radioTimer) clearTimeout(radioTimer);
-            radioMeasure = 0;
-            radioTick();
+
+            crtGain = audioCtx.createGain();
+            crtGain.gain.value = 0.05;
+            crtGain.connect(audioCtx.destination);
+
+            // 50Hz mains hum (sawtooth with lowpass for grit)
+            crtOsc1 = audioCtx.createOscillator();
+            crtOsc1.type = 'sawtooth';
+            crtOsc1.frequency.value = 50;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 150;
+            crtOsc1.connect(filter);
+            filter.connect(crtGain);
+            crtOsc1.start();
+
+            // 15kHz flyback transformer whine
+            crtOsc2 = audioCtx.createOscillator();
+            crtOsc2.type = 'sine';
+            crtOsc2.frequency.value = 15625;
+            const whineGain = audioCtx.createGain();
+            whineGain.gain.value = 0.02;
+            crtOsc2.connect(whineGain);
+            whineGain.connect(crtGain);
+            crtOsc2.start();
+
+            // Subtle static noise
+            const bufferSize = audioCtx.sampleRate * 2;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+            crtNoise = audioCtx.createBufferSource();
+            crtNoise.buffer = buffer;
+            crtNoise.loop = true;
+            const noiseFilter = audioCtx.createBiquadFilter();
+            noiseFilter.type = 'highpass';
+            noiseFilter.frequency.value = 4000;
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.value = 0.01;
+            crtNoise.connect(noiseFilter);
+            noiseFilter.connect(noiseGain);
+            noiseGain.connect(crtGain);
+            crtNoise.start();
+
             updateRadioUI();
         }
 
         function stopVaultRadio() {
             radioPlaying = false;
-            if (radioTimer) clearTimeout(radioTimer);
+            if (crtOsc1) { crtOsc1.stop(); crtOsc1 = null; }
+            if (crtOsc2) { crtOsc2.stop(); crtOsc2 = null; }
+            if (crtNoise) { crtNoise.stop(); crtNoise = null; }
+            if (crtGain) { crtGain.disconnect(); crtGain = null; }
             updateRadioUI();
-        }
-
-        function nextRadioStation() {
-            currentStationIdx = (currentStationIdx + 1) % RADIO_STATIONS.length;
-            playBeep(750, 0.06);
-            if (radioPlaying) {
-                stopVaultRadio();
-                startVaultRadio();
-            } else {
-                updateRadioUI();
-            }
-            showNotification(`📻 Tuned to: ${RADIO_STATIONS[currentStationIdx].name} (${RADIO_STATIONS[currentStationIdx].freq})`, 'info');
         }
 
         function updateRadioUI() {
             const icon = document.getElementById('sfx-icon');
             const label = document.getElementById('sfx-label');
             const mobileLabel = document.getElementById('mobile-sfx-label');
-            const st = RADIO_STATIONS[currentStationIdx];
 
             if (radioPlaying && sfxEnabled) {
-                if (icon) icon.className = 'fa-solid fa-radio text-atomic animate-pulse';
-                if (label) label.innerText = `${st.freq} • ON`;
-                if (mobileLabel) mobileLabel.innerText = `${st.name.slice(0, 14)} • ON`;
+                if (icon) icon.className = 'fa-solid fa-bolt text-atomic animate-pulse';
+                if (label) label.innerText = `CRT AUDIO • ON`;
+                if (mobileLabel) mobileLabel.innerText = `CRT AUDIO: ON`;
             } else {
                 if (icon) icon.className = 'fa-solid fa-volume-xmark text-rust';
-                if (label) label.innerText = 'RADIO: OFF';
-                if (mobileLabel) mobileLabel.innerText = 'RADIO: OFF';
+                if (label) label.innerText = 'CRT AUDIO: OFF';
+                if (mobileLabel) mobileLabel.innerText = 'CRT AUDIO: OFF';
             }
         }
 
@@ -2346,10 +2267,10 @@
             sfxEnabled = !sfxEnabled;
             if (sfxEnabled) {
                 startVaultRadio();
-                showNotification(`📻 1950s Pip-Boy Radio: ${RADIO_STATIONS[currentStationIdx].name} (${RADIO_STATIONS[currentStationIdx].freq})`, 'info');
+                showNotification(`⚡ CRT Audio Ambience Enabled`, 'info');
             } else {
                 stopVaultRadio();
-                showNotification('📻 Vault Radio muted.', 'info');
+                showNotification('⚡ CRT Audio Muted.', 'info');
             }
         }
 
