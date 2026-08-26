@@ -1733,26 +1733,26 @@
                     <!-- Left: Slider Controls -->
                     <div class="lg:col-span-7 bg-black/40 p-6 border border-[#4AF626]/25 space-y-6">
                         <div class="flex justify-between items-center">
-                            <label for="servings-slider" class="font-display text-2xl uppercase text-ink">Target Servings (Glasses):</label>
-                            <span id="slider-servings-val" class="font-display text-4xl text-rust bg-parchment px-4 py-1 retro-border shadow-retro-sm">4</span>
+                            <label for="servings-slider" class="font-display text-2xl uppercase text-[#E8C547]">Target Servings (Glasses):</label>
+                            <span id="slider-servings-val" class="font-display text-4xl text-[#E8C547] bg-[#131a16] border border-[#E8C547]/50 px-4 py-1 shadow-[0_0_10px_rgba(232,197,71,0.2)] rounded-lg">4</span>
                         </div>
                         <input type="range" id="servings-slider" min="1" max="20" value="4" oninput="calculateMixology()" class="w-full">
-                        <div class="flex justify-between text-[11px] font-bold text-ink/50 uppercase">
+                        <div class="flex justify-between text-[11px] font-bold text-[#E8C547]/50 uppercase">
                             <span>1 Solo Dweller</span>
                             <span>10 Settlement Party</span>
                             <span>20 Bunker Gathering</span>
                         </div>
 
                         <!-- Mix Ratio Badge -->
-                        <div class="p-3 bg-parchment retro-border flex items-center justify-between text-xs font-bold uppercase">
-                            <span class="text-rust"><i class="fa-solid fa-droplet mr-1.5"></i> Vault Ratio Formula:</span>
-                            <span class="bg-ink text-parchment px-2 py-0.5 text-[11px]">1 : 5 (Syrup : Water)</span>
+                        <div class="p-3 bg-[#131a16] border border-[#5B9EA6]/40 rounded-lg flex items-center justify-between text-xs font-bold uppercase">
+                            <span class="text-[#5B9EA6]"><i class="fa-solid fa-droplet mr-1.5"></i> Vault Ratio Formula:</span>
+                            <span class="bg-[#5B9EA6]/20 text-[#5B9EA6] border border-[#5B9EA6]/40 px-2 py-0.5 rounded text-[11px]">1 : 5 (Syrup : Water)</span>
                         </div>
                     </div>
 
                     <!-- Right: Interactive Live Fizz & Pour Glass Visualizer -->
-                    <div class="lg:col-span-5 bg-parchment retro-border p-6 flex flex-col items-center justify-center relative overflow-hidden shadow-retro">
-                        <span class="text-[10px] font-bold uppercase text-ink/60 mb-3 tracking-widest"><i class="fa-solid fa-flask text-atomic mr-1"></i> Live Pour Visualizer</span>
+                    <div class="lg:col-span-5 bg-[#0a0f0d] border border-[#5B9EA6]/40 p-6 flex flex-col items-center justify-center relative overflow-hidden shadow-[0_0_20px_rgba(91,158,166,0.15)] rounded-2xl">
+                        <span class="text-[10px] font-bold uppercase text-[#5B9EA6] mb-3 tracking-widest"><i class="fa-solid fa-flask text-atomic mr-1"></i> Live Pour Visualizer</span>
                         
                         <!-- Vintage Glass Silhouette -->
                         <div class="w-32 h-48 border-4 border-ink rounded-b-3xl relative overflow-hidden bg-ink/5 flex flex-col justify-end shadow-inner">
@@ -1774,7 +1774,7 @@
                             </div>
                         </div>
 
-                        <span id="visualizer-caption" class="text-xs font-bold text-ink/80 mt-3 text-center uppercase">
+                        <span id="visualizer-caption" class="text-xs font-bold text-[#5B9EA6]/80 mt-3 text-center uppercase">
                             4 Glasses = 120ml Syrup + 600ml Sparkling Soda
                         </span>
                     </div>
@@ -1918,17 +1918,17 @@
                 
                 <!-- Outpost Drop-off Info Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-xs font-bold">
-                    <div class="bg-parchment p-3.5 retro-border border-2">
+                    <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
                         <span class="text-rust block uppercase font-display text-lg mb-1">1. Bunker HQ (HQ Drop)</span>
-                        <p class="text-ink/80 text-[11px]">173 Reddicap Heath Rd, Sutton Coldfield, B75 7EN</p>
+                        <p class="text-[#4AF626]/70 text-[11px] mt-1">173 Reddicap Heath Rd, Sutton Coldfield, B75 7EN</p>
                     </div>
-                    <div class="bg-parchment p-3.5 retro-border border-2">
+                    <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
                         <span class="text-atomic block uppercase font-display text-lg mb-1">2. Leviathan Brewery</span>
-                        <p class="text-ink/80 text-[11px]">Unit 4 & 5, 17 Reddicap Trading Estate, B75 7BU</p>
+                        <p class="text-[#4AF626]/70 text-[11px] mt-1">Unit 4 & 5, 17 Reddicap Trading Estate, B75 7BU</p>
                     </div>
-                    <div class="bg-parchment p-3.5 retro-border border-2">
+                    <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
                         <span class="text-ink block uppercase font-display text-lg mb-1">3. Postal Return</span>
-                        <p class="text-ink/80 text-[11px]">Post wrapped empties to Bunker HQ with your Callsign</p>
+                        <p class="text-[#4AF626]/70 text-[11px] mt-1">Post wrapped empties to Bunker HQ with your Callsign</p>
                     </div>
                 </div>
 
@@ -1937,27 +1937,27 @@
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block uppercase mb-1 text-ink">Survivor Callsign / Full Name <span class="text-rust">*</span></label>
-                            <input type="text" id="cb-name" required placeholder="e.g. Vault Hunter Sarah" class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Survivor Callsign / Full Name <span class="text-rust">*</span></label>
+                            <input type="text" id="cb-name" required placeholder="e.g. Vault Hunter Sarah" class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal">
                         </div>
                         <div>
-                            <label class="block uppercase mb-1 text-ink">E-Mail Address (Gift Card Destination) <span class="text-rust">*</span></label>
-                            <input type="email" id="cb-email" required placeholder="sarah@wasteland.uk" class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">E-Mail Address (Gift Card Destination) <span class="text-rust">*</span></label>
+                            <input type="email" id="cb-email" required placeholder="sarah@wasteland.uk" class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="sm:col-span-2">
-                            <label class="block uppercase mb-1 text-ink">Drop-off / Return Location <span class="text-rust">*</span></label>
-                            <select id="cb-location" required class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body">
+                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Drop-off / Return Location <span class="text-rust">*</span></label>
+                            <select id="cb-location" required class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal">
                                 <option value="Bunker HQ - 173 Reddicap Heath Road, B75 7EN">1. Bunker HQ Drop-off (173 Reddicap Heath Rd, B75 7EN)</option>
                                 <option value="Leviathan Brewery - Unit 4&5, 17 Reddicap Trading Est, B75 7BU">2. Leviathan Brewery Drop-off (Unit 4 & 5)</option>
                                 <option value="Postal Return to Bunker HQ">3. Postal Return Package to Bunker HQ</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block uppercase mb-1 text-ink">Bottles Returned <span class="text-rust">*</span></label>
-                            <input type="number" id="cb-bottle-count" min="1" max="50" value="1" oninput="updateCashbackValue()" required class="w-full bg-parchment retro-border px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body font-bold text-center">
+                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Bottles Returned <span class="text-rust">*</span></label>
+                            <input type="number" id="cb-bottle-count" min="1" max="50" value="1" oninput="updateCashbackValue()" required class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#E8C547] rounded font-terminal font-bold text-center">
                         </div>
                     </div>
 
@@ -1971,36 +1971,36 @@
                     </div>
 
                     <!-- Digital Gift Card Notice (Online & In-Person) -->
-                    <div class="p-3.5 bg-ink/5 retro-border border-2 flex items-center gap-3">
+                    <div class="p-3.5 bg-[#5B9EA6]/10 border border-[#5B9EA6]/40 rounded-lg flex items-center gap-3">
                         <i class="fa-solid fa-gift text-atomic text-2xl shrink-0"></i>
                         <div>
-                            <span class="text-xs uppercase font-bold text-ink block">Digital Gift Card Issued via Email</span>
-                            <span class="text-[11px] text-ink/70 font-normal">You will receive an official Bunker Brews Gift Card for the total amount owed directly to your email. Your gift card code can be redeemed online at checkout or presented in person at our pop-up stalls, markets, and events!</span>
+                            <span class="text-xs uppercase font-bold text-[#5B9EA6] block tracking-wide">Digital Gift Card Issued via Email</span>
+                            <span class="text-[11px] text-[#5B9EA6]/80 font-normal">You will receive an official Bunker Brews Gift Card for the total amount owed directly to your email. Your gift card code can be redeemed online at checkout or presented in person at our pop-up stalls, markets, and events!</span>
                         </div>
                     </div>
 
                     <!-- File Uploads: 1. Proof of Return, 2. Online Proof of Purchase -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                        <div class="bg-parchment p-3.5 retro-border border-2">
-                            <label class="block uppercase mb-1 text-ink">1. Proof of Bottle Return <span class="text-rust">*</span></label>
-                            <p class="text-[11px] text-ink/65 font-normal mb-2">Photo of dropped-off bottles or outpost drop-off slip</p>
-                            <input type="file" id="cb-return-proof" accept="image/*,.pdf" required class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:retro-border file:bg-ink file:text-parchment file:text-xs file:font-bold file:uppercase hover:file:bg-rust">
+                        <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
+                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">1. Proof of Bottle Return <span class="text-rust">*</span></label>
+                            <p class="text-[11px] text-[#4AF626]/60 font-terminal mb-2">Photo of dropped-off bottles or outpost drop-off slip</p>
+                            <input type="file" id="cb-return-proof" accept="image/*,.pdf" required class="w-full text-xs text-[#4AF626]/80 file:mr-2 file:py-1.5 file:px-3 file:border file:border-[#4AF626]/50 file:bg-[#4AF626]/10 file:text-[#4AF626] file:text-xs file:font-terminal file:uppercase hover:file:bg-[#4AF626]/20 file:rounded transition-colors cursor-pointer">
                         </div>
-                        <div class="bg-parchment p-3.5 retro-border border-2">
-                            <label class="block uppercase mb-1 text-ink">2. Online Proof of Purchase <span class="text-rust">*</span></label>
-                            <p class="text-[11px] text-ink/65 font-normal mb-2">Original order email, Square receipt, or invoice screenshot</p>
-                            <input type="file" id="cb-purchase-proof" accept="image/*,.pdf" required class="w-full text-xs file:mr-2 file:py-1 file:px-2.5 file:retro-border file:bg-ink file:text-parchment file:text-xs file:font-bold file:uppercase hover:file:bg-rust">
+                        <div class="bg-[#111814] p-4 border border-[#4AF626]/30 shadow-[0_0_15px_rgba(74,246,38,0.05)] rounded-lg">
+                            <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">2. Online Proof of Purchase <span class="text-rust">*</span></label>
+                            <p class="text-[11px] text-[#4AF626]/60 font-terminal mb-2">Original order email, Square receipt, or invoice screenshot</p>
+                            <input type="file" id="cb-purchase-proof" accept="image/*,.pdf" required class="w-full text-xs text-[#4AF626]/80 file:mr-2 file:py-1.5 file:px-3 file:border file:border-[#4AF626]/50 file:bg-[#4AF626]/10 file:text-[#4AF626] file:text-xs file:font-terminal file:uppercase hover:file:bg-[#4AF626]/20 file:rounded transition-colors cursor-pointer">
                         </div>
                     </div>
 
                     <!-- Notes of Return -->
                     <div>
-                        <label class="block uppercase mb-1 text-ink">Notes of Return (Optional)</label>
-                        <textarea id="cb-notes" rows="2" placeholder="e.g. Dropped off at Leviathan Brewery / Bunker HQ on Saturday afternoon..." class="w-full bg-parchment retro-border px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atomic font-body"></textarea>
+                        <label class="block uppercase mb-1 text-[#E8C547] text-[10px] tracking-wider">Notes of Return (Optional)</label>
+                        <textarea id="cb-notes" rows="2" placeholder="e.g. Dropped off at Leviathan Brewery / Bunker HQ on Saturday afternoon..." class="w-full bg-[#0a0f0d] border border-[#E8C547]/30 text-[#E8C547] placeholder-[#E8C547]/30 px-3.5 py-2 text-sm focus:outline-none focus:border-[#E8C547] rounded transition-colors font-terminal"></textarea>
                     </div>
 
                     <!-- Processing Notice Badge -->
-                    <div class="p-3 bg-ink/5 retro-border border-2 flex items-center gap-2.5 text-xs text-ink/80 font-bold">
+                    <div class="p-3 bg-rust/10 border border-rust/40 rounded-lg flex items-center gap-2.5 text-xs text-rust font-bold">
                         <i class="fa-solid fa-clock text-rust text-base shrink-0"></i>
                         <span>Processing Notice: Bottle return claims are verified and digital gift cards are issued to your email within <strong>10 working days</strong> of submission.</span>
                     </div>
@@ -2013,16 +2013,16 @@
                 </form>
 
                 <!-- Cashback Claim Success Banner -->
-                <div id="cb-success-banner" class="hidden mt-6 p-6 bg-parchment border-4 border-atomic shadow-retro text-center space-y-3">
+                <div id="cb-success-banner" class="hidden mt-6 p-6 bg-[#0a0f0d] border border-atomic shadow-[0_0_20px_rgba(91,158,166,0.3)] rounded-xl text-center space-y-3">
                     <div class="w-12 h-12 bg-atomic/20 rounded-full flex items-center justify-center mx-auto border-2 border-atomic">
                         <i class="fa-solid fa-check text-2xl text-atomic"></i>
                     </div>
-                    <h3 class="font-display text-3xl sm:text-4xl text-ink uppercase">Return Claim Logged!</h3>
-                    <p id="cb-success-msg" class="text-xs sm:text-sm font-bold text-ink/80 max-w-xl mx-auto">
+                    <h3 class="font-display text-3xl sm:text-4xl text-atomic uppercase phosphor-amber">Return Claim Logged!</h3>
+                    <p id="cb-success-msg" class="text-xs sm:text-sm font-terminal text-atomic/80 max-w-xl mx-auto">
                         Your claim has been dispatched to <strong>thebunkerbrews@gmail.com</strong>. Bunker Command will inspect the submission and email your official Bunker Brews Gift Card (valid online or in-person) within <strong>10 working days</strong>!
                     </p>
                     <div class="pt-2">
-                        <button type="button" onclick="document.getElementById('cb-success-banner').classList.add('hidden')" class="bg-ink text-parchment px-5 py-2 text-xs font-bold uppercase hover:bg-rust cursor-pointer">
+                        <button type="button" onclick="document.getElementById('cb-success-banner').classList.add('hidden')" class="bg-atomic/20 border border-atomic text-atomic px-5 py-2 text-xs font-terminal uppercase hover:bg-atomic hover:text-ink cursor-pointer rounded transition-colors">
                             Acknowledge & Close
                         </button>
                     </div>
