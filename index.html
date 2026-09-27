@@ -2570,13 +2570,18 @@
                     `Submitted: ${new Date().toLocaleString()}`;
 
                 try {
-                    if (typeof emailjs !== 'undefined') await emailjs.send('service_s3xhsab', 'template_cl84nir', {
+                    if (typeof emailjs === 'undefined') {
+                        throw new Error('EmailJS SDK not loaded');
+                    }
+                    const ejsResult = await emailjs.send('service_s3xhsab', 'template_cl84nir', {
                         name: name + ' — Bottle Return Claim ' + claimId,
                         time: new Date().toLocaleString('en-GB'),
                         message: emailMessage
                     });
+                    console.log('EmailJS bottle return success:', ejsResult);
                 } catch (emailErr) {
-                    console.warn('EmailJS send failed:', emailErr);
+                    console.error('EmailJS bottle return FAILED:', emailErr);
+                    showNotification('Email error: ' + (emailErr.text || emailErr.message || JSON.stringify(emailErr)), 'warning');
                 }
 
                 // Show on-screen confirmation banner
@@ -3761,12 +3766,17 @@
 
             // Notify via EmailJS
             try {
-                if (typeof emailjs !== 'undefined') await emailjs.send('service_s3xhsab', 'template_yfjf47f', {
+                if (typeof emailjs === 'undefined') throw new Error('EmailJS SDK not loaded');
+                const ejsResult2 = await emailjs.send('service_s3xhsab', 'template_yfjf47f', {
                     name: 'New Newsletter Signup',
                     time: new Date().toLocaleString('en-GB'),
                     message: `New Bunker Comms Array subscriber:\n\nEmail: ${email}\nSigned up: ${new Date().toLocaleString('en-GB')}`
                 });
-            } catch(e) { console.warn('EmailJS newsletter notify failed:', e); }
+                console.log('EmailJS newsletter success:', ejsResult2);
+            } catch(e) {
+                console.error('EmailJS newsletter FAILED:', e);
+                showNotification('Email error: ' + (e.text || e.message || JSON.stringify(e)), 'warning');
+            }
 
             showNotification('📡 Frequency locked! You\'re on the Bunker Comms Array.', 'success');
             playBeep(900, 0.1);
@@ -3964,13 +3974,36 @@
         // EmailJS — initialised here after all scripts are guaranteed loaded
         if (typeof emailjs !== 'undefined') {
             emailjs.init({ publicKey: '-2A9jSd38eAX_tUc1' });
+            console.log('EmailJS initialised OK');
         } else {
+            console.error('EmailJS SDK not found on page load');
             window.addEventListener('load', function() {
                 if (typeof emailjs !== 'undefined') {
                     emailjs.init({ publicKey: '-2A9jSd38eAX_tUc1' });
+                    console.log('EmailJS initialised on window.load');
+                } else {
+                    console.error('EmailJS SDK still not found after window.load');
                 }
             });
         }
+
+        // Debug helper — open browser console and run: bunkerTestEmail()
+        window.bunkerTestEmail = async function() {
+            console.log('EmailJS defined?', typeof emailjs !== 'undefined');
+            if (typeof emailjs === 'undefined') { console.error('EmailJS not loaded!'); return; }
+            try {
+                const r = await emailjs.send('service_s3xhsab', 'template_cl84nir', {
+                    name: 'TEST — Bunker Debug',
+                    time: new Date().toLocaleString('en-GB'),
+                    message: 'This is a test email from bunkerTestEmail() debug function.'
+                });
+                console.log('TEST SUCCESS:', r);
+                alert('Test email sent! Check your inbox. Status: ' + r.status + ' ' + r.text);
+            } catch(e) {
+                console.error('TEST FAILED:', e);
+                alert('Test FAILED: ' + (e.text || e.message || JSON.stringify(e)));
+            }
+        };
     </script>
 </body>
 </html>
