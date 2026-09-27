@@ -2571,10 +2571,8 @@
 
                 try {
                     if (typeof emailjs !== 'undefined') await emailjs.send('service_s3xhsab', 'template_cl84nir', {
-                        claim_id: claimId,
-                        name: name,
-                        count: count,
-                        payout: payoutAmount,
+                        name: name + ' — Bottle Return Claim ' + claimId,
+                        time: new Date().toLocaleString('en-GB'),
                         message: emailMessage
                     });
                 } catch (emailErr) {
@@ -3764,8 +3762,9 @@
             // Notify via EmailJS
             try {
                 if (typeof emailjs !== 'undefined') await emailjs.send('service_s3xhsab', 'template_yfjf47f', {
-                    email: email,
-                    message: `New Comms Array subscriber: ${email}\nSigned up: ${new Date().toLocaleString()}`
+                    name: 'New Newsletter Signup',
+                    time: new Date().toLocaleString('en-GB'),
+                    message: `New Bunker Comms Array subscriber:\n\nEmail: ${email}\nSigned up: ${new Date().toLocaleString('en-GB')}`
                 });
             } catch(e) { console.warn('EmailJS newsletter notify failed:', e); }
 
