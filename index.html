@@ -2573,14 +2573,19 @@
                     if (typeof emailjs === 'undefined') {
                         throw new Error('EmailJS SDK not loaded');
                     }
-                    const ejsResult = await emailjs.send('service_s3xhsab', 'template_cl84nir', {
-                        name: name + ' — Bottle Return Claim ' + claimId,
-                        time: new Date().toLocaleString('en-GB'),
-                        message: emailMessage
-                    });
-                    console.log('EmailJS bottle return success:', ejsResult);
+                    const ejsResult = await emailjs.send(
+                        'service_s3xhsab',
+                        'template_cl84nir',
+                        {
+                            name: name + ' — Bottle Return Claim ' + claimId,
+                            time: new Date().toLocaleString('en-GB'),
+                            message: emailMessage
+                        },
+                        { publicKey: '-2A9jSd38eAX_tUc1' }
+                    );
+                    console.log('EmailJS bottle return success:', ejsResult.status, ejsResult.text);
                 } catch (emailErr) {
-                    console.error('EmailJS bottle return FAILED:', emailErr);
+                    console.error('EmailJS bottle return FAILED:', JSON.stringify(emailErr));
                     showNotification('Email error: ' + (emailErr.text || emailErr.message || JSON.stringify(emailErr)), 'warning');
                 }
 
@@ -3767,14 +3772,19 @@
             // Notify via EmailJS
             try {
                 if (typeof emailjs === 'undefined') throw new Error('EmailJS SDK not loaded');
-                const ejsResult2 = await emailjs.send('service_s3xhsab', 'template_yfjf47f', {
-                    name: 'New Newsletter Signup',
-                    time: new Date().toLocaleString('en-GB'),
-                    message: `New Bunker Comms Array subscriber:\n\nEmail: ${email}\nSigned up: ${new Date().toLocaleString('en-GB')}`
-                });
-                console.log('EmailJS newsletter success:', ejsResult2);
+                const ejsResult2 = await emailjs.send(
+                    'service_s3xhsab',
+                    'template_yfjf47f',
+                    {
+                        name: 'New Newsletter Signup',
+                        time: new Date().toLocaleString('en-GB'),
+                        message: `New Bunker Comms Array subscriber:\n\nEmail: ${email}\nSigned up: ${new Date().toLocaleString('en-GB')}`
+                    },
+                    { publicKey: '-2A9jSd38eAX_tUc1' }
+                );
+                console.log('EmailJS newsletter success:', ejsResult2.status, ejsResult2.text);
             } catch(e) {
-                console.error('EmailJS newsletter FAILED:', e);
+                console.error('EmailJS newsletter FAILED:', JSON.stringify(e));
                 showNotification('Email error: ' + (e.text || e.message || JSON.stringify(e)), 'warning');
             }
 
@@ -3992,11 +4002,16 @@
             console.log('EmailJS defined?', typeof emailjs !== 'undefined');
             if (typeof emailjs === 'undefined') { console.error('EmailJS not loaded!'); return; }
             try {
-                const r = await emailjs.send('service_s3xhsab', 'template_cl84nir', {
-                    name: 'TEST — Bunker Debug',
-                    time: new Date().toLocaleString('en-GB'),
-                    message: 'This is a test email from bunkerTestEmail() debug function.'
-                });
+                const r = await emailjs.send(
+                    'service_s3xhsab',
+                    'template_cl84nir',
+                    {
+                        name: 'TEST — Bunker Debug',
+                        time: new Date().toLocaleString('en-GB'),
+                        message: 'This is a test email from bunkerTestEmail() debug function.'
+                    },
+                    { publicKey: '-2A9jSd38eAX_tUc1' }
+                );
                 console.log('TEST SUCCESS:', r);
                 alert('Test email sent! Check your inbox. Status: ' + r.status + ' ' + r.text);
             } catch(e) {
