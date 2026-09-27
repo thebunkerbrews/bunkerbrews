@@ -45,6 +45,8 @@
     
     <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -78,6 +80,13 @@
                 }
             }
         }
+    </script>
+
+    <script>
+        // EmailJS Initialisation — REPLACE_PUBLIC_KEY with your key
+        (function() {
+            emailjs.init({ publicKey: 'REPLACE_PUBLIC_KEY' });
+        })();
     </script>
 
     <style>
@@ -1316,19 +1325,9 @@
                     </div>
                     
                     <!-- Product Visual Stage -->
-                    <div class="bg-black/60 border border-[#4AF626]/20 p-6 mb-6 flex justify-center h-64 items-center relative overflow-hidden">
-                        <div class="absolute w-44 h-44 rounded-full z-0 border border-atomic/20" style="box-shadow: 0 0 40px rgba(91,158,166,0.12)"></div>
-                        
-                        <!-- Stylized SVG Bottle -->
-                        <svg id="svg-bottle-scout" class="h-48 w-auto z-10 float-anim transition-all duration-300" style="animation-delay: 0.8s;" viewBox="0 0 100 200" fill="none" stroke="#4AF626" stroke-width="3">
-                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#0e1a14"/>
-                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="4"/>
-                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="4"/>
-                            <text x="40" y="80" font-family="'Bebas Neue', sans-serif" font-size="30" fill="#5B9EA6" stroke="none">B</text>
-                            <rect x="25" y="100" width="50" height="60" fill="#5B9EA6" stroke="#4AF626" stroke-width="2"/>
-                            <text x="50" y="130" font-family="'Courier Prime', monospace" font-size="11" fill="#F9F3E6" stroke="none" text-anchor="middle" font-weight="bold">SCOUT</text>
-                            <text x="50" y="145" font-family="'Courier Prime', monospace" font-size="8" fill="#F9F3E6" stroke="none" text-anchor="middle">BOTANICAL COLA</text>
-                        </svg>
+                    <div class="mb-6 relative overflow-hidden rounded-lg h-64 flex items-center justify-center" style="background: radial-gradient(ellipse at center, rgba(91,158,166,0.15) 0%, #0a0f0d 70%);">
+                        <img src="scout.jpg" alt="Bunker Scout — Botanical Cola Syrup" class="h-full w-full object-cover object-center float-anim opacity-95" style="animation-delay: 0.8s;">
+                        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 60%, #0a0f0d 100%);"></div>
                     </div>
                     
                     <div class="mb-3 relative z-10">
@@ -2562,30 +2561,35 @@
                 localClaims.unshift(claimData);
                 localStorage.setItem('bunker_cashback_claims', JSON.stringify(localClaims));
 
-                // 3. Prepare email dispatch link to thebunkerbrews@gmail.com
-                const subject = encodeURIComponent(`[BUNKER BOTTLE RETURN GIFT CARD] ${claimId} - ${name} (${count} Bottles / £${payoutAmount})`);
-                const body = encodeURIComponent(
-                    `⚡ BUNKER BREWS - BOTTLE RETURN GIFT CARD CLAIM ⚡\n\n` +
+                // 3. Send email via EmailJS
+                const emailMessage =
+                    `BUNKER BREWS - BOTTLE RETURN CLAIM\n\n` +
                     `Claim ID: ${claimId}\n` +
-                    `Survivor Callsign: ${name}\n` +
-                    `Customer Email (Send Gift Card Here): ${email}\n` +
+                    `Name: ${name}\n` +
+                    `Customer Email: ${email}\n` +
                     `Drop-off Location: ${location}\n` +
                     `Bottles Returned: ${count}\n` +
                     `Gift Card Value Due: £${payoutAmount}\n` +
-                    `Action Required: Issue a £${payoutAmount} Square Digital Gift Card to ${email} (usable online or in person)\n` +
                     `Return Proof File: ${returnProofName}\n` +
                     `Purchase Proof File: ${purchaseProofName}\n` +
-                    `Survivor Notes: ${notes}\n\n` +
-                    `Submitted: ${new Date().toLocaleString()}\n`
-                );
+                    `Notes: ${notes}\n` +
+                    `Submitted: ${new Date().toLocaleString()}`;
+
+                try {
+                    await emailjs.send('service_s3xhsab', 'template_cl84nir', {
+                        claim_id: claimId,
+                        name: name,
+                        count: count,
+                        payout: payoutAmount,
+                        message: emailMessage
+                    });
+                } catch (emailErr) {
+                    console.warn('EmailJS send failed:', emailErr);
+                }
 
                 // Show on-screen confirmation banner
                 document.getElementById('cb-success-msg').innerHTML = `
-                    Claim <strong>${claimId}</strong> for <strong>£${payoutAmount}</strong> (${count} bottles) recorded! Transmission dispatched to <strong>thebunkerbrews@gmail.com</strong>.<br><br>
-                    Your official Bunker Brews Digital Gift Card (usable online or in person) will be emailed to <strong>${email}</strong> within <strong>10 working days</strong>.<br><br>
-                    <a href="mailto:thebunkerbrews@gmail.com?subject=${subject}&body=${body}" class="inline-block bg-rust text-parchment px-4 py-1.5 retro-border text-xs uppercase font-bold hover:bg-rustDark mt-2">
-                        <i class="fa-solid fa-envelope mr-1"></i> Send Backup Verification Email
-                    </a>
+                    Claim <strong>${claimId}</strong> for <strong>£${payoutAmount}</strong> (${count} bottles) received! We have been notified and will email your official Gift Card to <strong>${email}</strong> within <strong>10 working days</strong>.
                 `;
                 document.getElementById('cb-success-banner').classList.remove('hidden');
                 
@@ -3750,33 +3754,31 @@
             event.preventDefault();
             const emailInput = document.getElementById('news-email');
             const email = emailInput.value.trim();
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            
-            if (submitBtn) submitBtn.innerText = 'LINKING...';
+            if (!email) return;
+            const btn = event.target.querySelector('button[type="submit"]');
+            if (btn) { btn.disabled = true; btn.innerText = 'TRANSMITTING...'; }
 
-            try {
-                if (supabaseClient) {
+            // Save to Supabase
+            if (supabaseClient) {
+                try {
                     await supabaseClient
-                        .from('subscribers')
-                        .insert([{ email: email, created_at: new Date().toISOString() }]);
-                }
-                
-                // Also save to local registry
-                const localSubs = JSON.parse(localStorage.getItem('bunker_subscribers') || '[]');
-                if (!localSubs.includes(email)) {
-                    localSubs.push(email);
-                    localStorage.setItem('bunker_subscribers', JSON.stringify(localSubs));
-                }
-
-                showNotification(`Frequency synchronized for ${email}. Standby for telegrams!`, 'success');
-                emailInput.value = '';
-                playBeep(850, 0.08);
-            } catch (e) {
-                showNotification(`Frequency synchronized for ${email}!`, 'success');
-                emailInput.value = '';
-            } finally {
-                if (submitBtn) submitBtn.innerText = 'ESTABLISH LINK >>';
+                        .from('newsletter_signups')
+                        .upsert([{ email, signed_up_at: new Date().toISOString() }], { onConflict: 'email' });
+                } catch(e) {}
             }
+
+            // Notify via EmailJS
+            try {
+                await emailjs.send('service_s3xhsab', 'template_yfjf47f', {
+                    email: email,
+                    message: `New Comms Array subscriber: ${email}\nSigned up: ${new Date().toLocaleString()}`
+                });
+            } catch(e) { console.warn('EmailJS newsletter notify failed:', e); }
+
+            showNotification('📡 Frequency locked! You're on the Bunker Comms Array.', 'success');
+            playBeep(900, 0.1);
+            emailInput.value = '';
+            if (btn) { btn.disabled = false; btn.innerText = 'TRANSMIT'; }
         }
 
         /* ============================================================
