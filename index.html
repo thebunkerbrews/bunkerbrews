@@ -82,12 +82,6 @@
         }
     </script>
 
-    <script>
-        // EmailJS Initialisation — -2A9jSd38eAX_tUc1 with your key
-        (function() {
-            emailjs.init({ publicKey: '-2A9jSd38eAX_tUc1' });
-        })();
-    </script>
 
     <style>
         :root {
@@ -2576,7 +2570,7 @@
                     `Submitted: ${new Date().toLocaleString()}`;
 
                 try {
-                    await emailjs.send('service_s3xhsab', 'template_cl84nir', {
+                    if (typeof emailjs !== 'undefined') await emailjs.send('service_s3xhsab', 'template_cl84nir', {
                         claim_id: claimId,
                         name: name,
                         count: count,
@@ -3769,13 +3763,13 @@
 
             // Notify via EmailJS
             try {
-                await emailjs.send('service_s3xhsab', 'template_yfjf47f', {
+                if (typeof emailjs !== 'undefined') await emailjs.send('service_s3xhsab', 'template_yfjf47f', {
                     email: email,
                     message: `New Comms Array subscriber: ${email}\nSigned up: ${new Date().toLocaleString()}`
                 });
             } catch(e) { console.warn('EmailJS newsletter notify failed:', e); }
 
-            showNotification('📡 Frequency locked! You're on the Bunker Comms Array.', 'success');
+            showNotification('📡 Frequency locked! You\'re on the Bunker Comms Array.', 'success');
             playBeep(900, 0.1);
             emailInput.value = '';
             if (btn) { btn.disabled = false; btn.innerText = 'TRANSMIT'; }
@@ -3967,6 +3961,17 @@
         calculateMixology();
         loadReviews();
         initCookieConsent();
+
+        // EmailJS — initialised here after all scripts are guaranteed loaded
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init({ publicKey: '-2A9jSd38eAX_tUc1' });
+        } else {
+            window.addEventListener('load', function() {
+                if (typeof emailjs !== 'undefined') {
+                    emailjs.init({ publicKey: '-2A9jSd38eAX_tUc1' });
+                }
+            });
+        }
     </script>
 </body>
 </html>
