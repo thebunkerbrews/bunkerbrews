@@ -3146,6 +3146,8 @@
         let radScore = 0;
         let radRads = 0;
         let radTimeLeft = 30;
+        let radMovePressing = false;
+        let radMoveDir = null;
         let radGameRunning = false;
         let radPlayerX = 175;
         let radItems = [];
@@ -3185,6 +3187,8 @@
             radPlayerX = 175;
             radItems = [];
             radGameRunning = true;
+            radMovePressing = false;
+            radMoveDir = null;
 
             document.getElementById('rc-start-overlay').classList.add('hidden');
             document.getElementById('rc-victory').classList.add('hidden');
