@@ -3149,166 +3149,156 @@
         let radMovePressing = false;
         let radMoveDir = null;
         let radGameRunning = false;
-        let radPlayerX = 175;
+        let radPlayerX = 170;
         let radItems = [];
         let radTimerInterval = null;
         let radAnimFrame = null;
 
         function initRadGame() {
             radGameRunning = false;
-            radScore = 0;
-            radRads = 0;
-            radTimeLeft = 30;
-            radItems = [];
-            
+            radScore = 0; radRads = 0; radTimeLeft = 30;
+            radItems = []; radPlayerX = 170;
+            radMovePressing = false; radMoveDir = null;
             if (radTimerInterval) clearInterval(radTimerInterval);
-            if (radAnimFrame) cancelAnimationFrame(radAnimFrame);
-
-            document.getElementById('rc-start-overlay').classList.remove('hidden');
-            document.getElementById('rc-victory').classList.add('hidden');
+            if (radAnimFrame) { cancelAnimationFrame(radAnimFrame); radAnimFrame = null; }
+            const el = document.getElementById('rc-start-overlay');
+            if (el) el.classList.remove('hidden');
+            const v = document.getElementById('rc-victory');
+            if (v) v.classList.add('hidden');
             updateRadUI();
-
             const canvas = document.getElementById('rad-canvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                ctx.fillStyle = '#0F1A12';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#4AF626';
-                ctx.font = '16px "Courier Prime", monospace';
-                ctx.textAlign = 'center';
-                ctx.fillText('PRESS START GAME TO BEGIN', canvas.width / 2, canvas.height / 2);
-            }
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#09120B';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#4AF626';
+            ctx.font = 'bold 14px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('PRESS START GAME TO BEGIN', canvas.width / 2, canvas.height / 2);
+            ctx.textAlign = 'left';
         }
 
         function startRadGame() {
-            radScore = 0;
-            radRads = 0;
-            radTimeLeft = 30;
-            radPlayerX = 175;
-            radItems = [];
+            radScore = 0; radRads = 0; radTimeLeft = 30;
+            radPlayerX = 170; radItems = [];
+            radMovePressing = false; radMoveDir = null;
             radGameRunning = true;
-            radMovePressing = false;
-            radMoveDir = null;
-
-            document.getElementById('rc-start-overlay').classList.add('hidden');
-            document.getElementById('rc-victory').classList.add('hidden');
-            updateRadUI();
-
             if (radTimerInterval) clearInterval(radTimerInterval);
-            radTimerInterval = setInterval(() => {
+            if (radAnimFrame) { cancelAnimationFrame(radAnimFrame); radAnimFrame = null; }
+            const el = document.getElementById('rc-start-overlay');
+            if (el) el.classList.add('hidden');
+            const v = document.getElementById('rc-victory');
+            if (v) v.classList.add('hidden');
+            updateRadUI();
+            radTimerInterval = setInterval(function() {
                 if (!radGameRunning) return;
                 radTimeLeft--;
                 updateRadUI();
-
-                if (radTimeLeft <= 0) {
-                    finishRadGame();
-                }
+                if (radTimeLeft <= 0) finishRadGame();
             }, 1000);
-
+            try { playBeep(700, 0.08); } catch(e) {}
             runRadLoop();
-            playBeep(700, 0.08);
         }
 
         function stopRadGame() {
             radGameRunning = false;
-            if (radTimerInterval) clearInterval(radTimerInterval);
-            if (radAnimFrame) cancelAnimationFrame(radAnimFrame);
+            if (radTimerInterval) { clearInterval(radTimerInterval); radTimerInterval = null; }
+            if (radAnimFrame) { cancelAnimationFrame(radAnimFrame); radAnimFrame = null; }
         }
 
         function moveRadPlayer(dir) {
-            if (!radGameRunning) return;
-            if (dir === 'left') radPlayerX = Math.max(10, radPlayerX - 35);
-            if (dir === 'right') radPlayerX = Math.min(330, radPlayerX + 35);
-            playBeep(500, 0.02);
+            const canvas = document.getElementById('rad-canvas');
+            if (!canvas || !radGameRunning) return;
+            const step = 22;
+            if (dir === 'left') radPlayerX = Math.max(0, radPlayerX - step);
+            if (dir === 'right') radPlayerX = Math.min(canvas.width - 60, radPlayerX + step);
         }
 
         function updateRadUI() {
-            const scoreEl = document.getElementById('rc-score-display');
-            const radsEl = document.getElementById('rc-rads-display');
-            const timerEl = document.getElementById('rc-timer-display');
-
-            if (scoreEl) scoreEl.innerText = radScore;
-            if (radsEl) radsEl.innerText = radRads;
-            if (timerEl) timerEl.innerText = `${radTimeLeft}s`;
+            const s = document.getElementById('rc-score-display');
+            const r = document.getElementById('rc-rads-display');
+            const t = document.getElementById('rc-timer-display');
+            if (s) s.innerText = radScore;
+            if (r) r.innerText = radRads;
+            if (t) t.innerText = radTimeLeft + 's';
         }
 
         function runRadLoop() {
             if (!radGameRunning) return;
+
             // Continuous touch movement
             if (radMovePressing && radMoveDir) moveRadPlayer(radMoveDir);
 
             const canvas = document.getElementById('rad-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
+            if (!ctx) return;
 
-            // 1. Spawn items — spawn rate increases as time ticks down for escalating difficulty
-            const spawnChance = 0.07 + ((30 - radTimeLeft) * 0.005);
+            const W = canvas.width;
+            const H = canvas.height;
+
+            // Spawn items
+            const spawnChance = 0.06 + ((30 - radTimeLeft) * 0.004);
             if (Math.random() < spawnChance) {
                 const types = [
-                    { name: 'bottle', pts: 15, rads: 0, color: '#4AF626', sym: '🍾' },
-                    { name: 'lemon', pts: 10, rads: 0, color: '#FEE180', sym: '🍋' },
-                    { name: 'sugar', pts: 5, rads: 0, color: '#FFFFFF', sym: '🌾' },
-                    { name: 'toxic', pts: -20, rads: 25, color: '#39FF14', sym: '☢️' }
+                    { name: 'bottle', pts: 15, rads: 0,  label: 'COLA', color: '#4AF626' },
+                    { name: 'lemon',  pts: 10, rads: 0,  label: 'LEMON', color: '#FEE180' },
+                    { name: 'sugar',  pts: 5,  rads: 0,  label: 'SUGAR', color: '#FFFFFF' },
+                    { name: 'toxic',  pts: -20, rads: 25, label: 'RAD!', color: '#39FF14' }
                 ];
                 const chosen = types[Math.floor(Math.random() * types.length)];
                 radItems.push({
-                    x: Math.random() * (canvas.width - 30) + 15,
+                    x: Math.random() * (W - 40) + 20,
                     y: 0,
-                    speed: 2.2 + Math.random() * 2 + ((30 - radTimeLeft) * 0.04),
+                    speed: 2.0 + Math.random() * 1.5 + ((30 - radTimeLeft) * 0.03),
                     ...chosen
                 });
             }
 
-            // 2. Clear canvas
+            // Clear canvas
             ctx.fillStyle = '#09120B';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, W, H);
 
-            // CRT Scanline effect on canvas
-            ctx.fillStyle = 'rgba(74, 246, 38, 0.04)';
-            for (let y = 0; y < canvas.height; y += 4) {
-                ctx.fillRect(0, y, canvas.width, 2);
-            }
+            // CRT scanlines
+            ctx.fillStyle = 'rgba(74,246,38,0.03)';
+            for (let y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 2);
 
-            // 3. Draw player crate
+            // Draw player crate
             ctx.fillStyle = '#4AF626';
-            ctx.fillRect(radPlayerX, canvas.height - 24, 60, 16);
+            ctx.fillRect(radPlayerX, H - 22, 60, 16);
             ctx.fillStyle = '#09120B';
-            ctx.font = 'bold 10px "Courier Prime", monospace';
-            ctx.fillText('CRATE', radPlayerX + 14, canvas.height - 12);
+            ctx.font = 'bold 9px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText('CRATE', radPlayerX + 30, H - 11);
+            ctx.textAlign = 'left';
 
-            // 4. Update & Draw Items
+            // Draw & update items
             for (let i = radItems.length - 1; i >= 0; i--) {
                 const item = radItems[i];
                 item.y += item.speed;
 
-                ctx.font = '16px serif';
-                ctx.fillText(item.sym, item.x - 8, item.y);
+                // Draw item as colored rectangle + label
+                ctx.fillStyle = item.color;
+                ctx.fillRect(item.x - 15, item.y - 10, 30, 14);
+                ctx.fillStyle = '#09120B';
+                ctx.font = 'bold 8px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.label, item.x, item.y);
+                ctx.textAlign = 'left';
 
-                // Collision check with player crate
-                if (item.y >= canvas.height - 28 && item.y <= canvas.height - 8 && item.x >= radPlayerX - 8 && item.x <= radPlayerX + 68) {
+                // Collision with crate
+                if (item.y >= H - 28 && item.y <= H - 6 && item.x >= radPlayerX - 10 && item.x <= radPlayerX + 70) {
                     radScore = Math.max(0, radScore + item.pts);
-                    radRads += item.rads;
+                    radRads = Math.min(100, radRads + item.rads);
                     updateRadUI();
-
-                    if (item.rads > 0) {
-                        playBeep(180, 0.15); // rad buzz
-                    } else {
-                        playBeep(750 + item.pts * 20, 0.04);
-                    }
-
+                    try { playBeep(item.rads > 0 ? 180 : 750, 0.04); } catch(e) {}
                     radItems.splice(i, 1);
-
-                    if (radRads >= 100) {
-                        finishRadGame();
-                        return;
-                    }
+                    if (radRads >= 100) { finishRadGame(); return; }
                     continue;
                 }
 
                 // Off screen
-                if (item.y > canvas.height) {
-                    radItems.splice(i, 1);
-                }
+                if (item.y > H) radItems.splice(i, 1);
             }
 
             radAnimFrame = requestAnimationFrame(runRadLoop);
