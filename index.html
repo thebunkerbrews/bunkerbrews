@@ -1222,8 +1222,286 @@
                 <div class="w-28 h-[4px] bg-[#E8C547]/60 mx-auto mt-4"></div>
             </div>
 
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+                
+                <!-- Product Card 1: Bunker Basic (Terminal Treatment) -->
+                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="100">
+                    
+                    <!-- Classification Stamp -->
+                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-rust border-2 border-[#E8C547] flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-[0_0_12px_rgba(184,58,46,0.5)]">
+                        <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">BEST<br>SELLER</span>
+                    </div>
+                    
+                    <!-- Product Visual Stage -->
+                    <div class="bg-black/60 border border-[#4AF626]/20 p-6 mb-6 flex justify-center h-64 items-center relative overflow-hidden">
+                        <div class="absolute w-44 h-44 rounded-full z-0 border border-rust/20" style="box-shadow: 0 0 40px rgba(184,58,46,0.15)"></div>
+                        
+                        <!-- Stylized SVG Bottle -->
+                        <svg id="svg-bottle-basic" class="h-48 w-auto z-10 float-anim transition-all duration-300" viewBox="0 0 100 200" fill="none" stroke="#4AF626" stroke-width="3">
+                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#0e1a14"/>
+                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="4"/>
+                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="4"/>
+                            <text x="40" y="80" font-family="'Bebas Neue', sans-serif" font-size="30" fill="#B83A2E" stroke="none">B</text>
+                            <rect x="25" y="100" width="50" height="60" fill="#B83A2E" stroke="#4AF626" stroke-width="2"/>
+                            <text x="50" y="130" font-family="'Courier Prime', monospace" font-size="11" fill="#F9F3E6" stroke="none" text-anchor="middle" font-weight="bold">BASIC</text>
+                            <text x="50" y="145" font-family="'Courier Prime', monospace" font-size="8" fill="#F9F3E6" stroke="none" text-anchor="middle">SPICED CITRUS</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="mb-3 relative z-10">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-4xl uppercase text-rust tracking-wide terminal-text">Bunker Basic</h3>
+                            <span class="bg-rust/20 text-rust px-2 py-0.5 text-xs font-bold border border-rust/50 font-terminal">FLAGSHIP</span>
+                        </div>
+                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
+                    </div>
+                    
+                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
+                        A rich, comforting spiced citrus craft cola syrup concentrate delivering festive campfire warmth and bright citrus aromatics.
+                    </p>
+
+                    <!-- Tasting & Mix Stats -->
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-holly-berry text-rust mt-0.5"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
+                                <span class="text-[#4AF626]/90"> Fresh hand-zested orange &amp; lemon, warm ground cinnamon, cracked nutmeg, coriander, star anise &amp; pure vanilla.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
+                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
+                            </div>
+                        </div>
+                        <!-- Allergen Advice Badge -->
+                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
+                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector & Dynamic Add-to-Cart -->
+                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
+                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
+                        <div class="grid grid-cols-3 gap-1.5 mb-4">
+                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
+                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('basic', '330ml', 6.75); playBeep();" id="btn-size-basic-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('basic', '450ml', 8.50); playBeep();" id="btn-size-basic-450" class="py-2 px-1 border-2 border-rust bg-rust/20 text-rust font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(184,58,46,0.3)] text-center font-terminal">
+                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
+                                <span id="price-display-basic" class="font-display text-4xl text-rust terminal-text">&pound;8.50</span>
+                            </div>
+                            <button onclick="addProductToCart('Bunker Basic', currentSizes['basic'].size, currentSizes['basic'].price); playBeep();" class="bg-rust text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#E8C547]/40 hover:bg-rustDark flex items-center gap-2 shadow-[0_0_12px_rgba(184,58,46,0.4)] transition-all">
+                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2: Bunker Scout (Terminal Treatment) -->
+                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="200">
+                    
+                    <!-- Scout Stamp -->
+                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-atomic border-2 border-[#4AF626] flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-[0_0_12px_rgba(91,158,166,0.5)]">
+                        <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">REFRESH<br>SCOUT</span>
+                    </div>
+                    
+                    <!-- Product Visual Stage -->
+                    <div class="mb-6 relative overflow-hidden rounded-lg h-64 flex items-center justify-center" style="background: radial-gradient(ellipse at center, rgba(91,158,166,0.15) 0%, #0a0f0d 70%);">
+                        <img src="scout.jpg" alt="Bunker Scout — Botanical Cola Syrup" class="h-full w-full object-cover object-center float-anim opacity-95" style="animation-delay: 0.8s;">
+                        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 60%, #0a0f0d 100%);"></div>
+                    </div>
+                    
+                    <div class="mb-3 relative z-10">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-4xl uppercase text-atomic tracking-wide terminal-text">Bunker Scout</h3>
+                            <span class="bg-atomic/20 text-atomic px-2 py-0.5 text-xs font-bold border border-atomic/50 font-terminal">BOTANICAL</span>
+                        </div>
+                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
+                    </div>
+                    
+                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
+                        A deep, complex caramelized craft cola syrup concentrate infused with pure molasses, dried Seville orange peel, lemon, and whole spices.
+                    </p>
+
+                    <!-- Tasting & Mix Stats -->
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-lemon text-atomic mt-0.5"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
+                                <span class="text-[#4AF626]/90"> Caramelized demerara &amp; molasses depth, Seville orange peel, lemon botanicals, cinnamon stick, coriander &amp; star anise.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
+                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
+                            </div>
+                        </div>
+                        <!-- Allergen Advice Badge -->
+                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
+                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector & Dynamic Add-to-Cart -->
+                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
+                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
+                        <div class="grid grid-cols-3 gap-1.5 mb-4">
+                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
+                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('scout', '330ml', 6.75); playBeep();" id="btn-size-scout-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('scout', '450ml', 8.50); playBeep();" id="btn-size-scout-450" class="py-2 px-1 border-2 border-atomic bg-atomic/20 text-atomic font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(91,158,166,0.3)] text-center font-terminal">
+                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
+                                <span id="price-display-scout" class="font-display text-4xl text-atomic terminal-text">&pound;8.50</span>
+                            </div>
+                            <button onclick="addProductToCart('Bunker Scout', currentSizes['scout'].size, currentSizes['scout'].price); playBeep();" class="bg-atomic text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#4AF626]/40 hover:bg-atomicDark flex items-center gap-2 shadow-[0_0_12px_rgba(91,158,166,0.4)] transition-all">
+                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Product Card 3: Bunker Botanist -->
+                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="300" style="border-color: #9B59B6; box-shadow: 6px 6px 0px 0px #9B59B6;">
+
+                    <!-- Botanist Stamp -->
+                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform" style="background:#9B59B6; border: 2px solid #4AF626; box-shadow: 0 0 12px rgba(155,89,182,0.5);">
+                        <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">NEW<br>BREW</span>
+                    </div>
+
+                    <!-- Product Photo -->
+                    <div class="mb-6 relative overflow-hidden rounded-lg h-64 flex items-center justify-center" style="background: radial-gradient(ellipse at center, rgba(155,89,182,0.2) 0%, #0a0f0d 70%);">
+                        <img src="botanist.jpg" alt="Bunker Botanist — Lavender Lemonade Syrup" class="h-full w-full object-cover object-center float-anim opacity-95" style="animation-delay: 1.2s;">
+                        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 60%, #0a0f0d 100%);"></div>
+                    </div>
+
+                    <div class="mb-3 relative z-10">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-4xl uppercase tracking-wide terminal-text" style="color:#C39BD3;">Bunker Botanist</h3>
+                            <span class="px-2 py-0.5 text-xs font-bold border font-terminal" style="background:rgba(155,89,182,0.2); color:#C39BD3; border-color:rgba(155,89,182,0.5);">LEMONADE</span>
+                        </div>
+                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
+                    </div>
+
+                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
+                        A delicate, floral lemonade syrup concentrate crafted with fragrant lavender, aromatic rosemary, and warm vanilla.
+                    </p>
+
+                    <!-- Tasting & Mix Stats -->
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-seedling mt-0.5" style="color:#C39BD3;"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
+                                <span class="text-[#4AF626]/90"> Bright hand-pressed lemon, fragrant lavender blossom, fresh rosemary, and creamy vanilla.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
+                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
+                            </div>
+                        </div>
+                        <!-- Allergen Advice Badge -->
+                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
+                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector & Dynamic Add-to-Cart -->
+                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
+                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
+                        <div class="grid grid-cols-3 gap-1.5 mb-4">
+                            <button type="button" onclick="selectProductSize('botanist', '250ml', 5.50); playBeep();" id="btn-size-botanist-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-purple-600/20 hover:border-purple-400 transition-all text-center font-terminal">
+                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('botanist', '330ml', 6.75); playBeep();" id="btn-size-botanist-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-purple-600/20 hover:border-purple-400 transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('botanist', '450ml', 8.50); playBeep();" id="btn-size-botanist-450" class="py-2 px-1 border-2 border-purple-500 bg-purple-600/20 text-purple-300 font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(147,51,234,0.3)] text-center font-terminal">
+                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
+                                <span id="price-display-botanist" class="font-display text-4xl terminal-text" style="color:#C39BD3;">&pound;8.50</span>
+                            </div>
+                            <button onclick="addProductToCart('Bunker Botanist', currentSizes['botanist'].size, currentSizes['botanist'].price); playBeep();" class="text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#E8C547]/40 flex items-center gap-2 transition-all" style="background:#9B59B6; box-shadow:0 0 12px rgba(155,89,182,0.4);">
+                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preparation Protocols Card -->
+                <div class="bg-[#1a0f00] border-2 border-[#E8C547]/50 text-parchment p-6 flex flex-col group hover:-translate-y-2 transition-transform duration-300 shadow-[4px_4px_0_0_#E8C547]" data-aos="fade-up" data-aos-delay="300">
+                    <div class="mb-5 flex justify-between items-start">
+                        <div>
+                            <span class="text-xs font-terminal text-[#E8C547] uppercase tracking-wider">> Vault Survival Manual</span>
+                            <h3 class="font-display text-4xl uppercase leading-none mt-1 text-parchment">Dispenser Protocols</h3>
+                        </div>
+                        <i class="fa-solid fa-clipboard-list text-3xl text-[#E8C547] group-hover:text-rust transition-colors"></i>
+                    </div>
+                    
+                    <div class="space-y-4 flex-grow text-xs font-bold">
+                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">01. Standard Sparkler</h4>
+                            <p class="text-parchment/80 mt-0.5">30ml syrup + 150ml icy sparkling water. Stir gently with a spoon. Never shake!</p>
+                        </div>
+                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">02. The Bunker Float</h4>
+                            <p class="text-parchment/80 mt-0.5">Pour standard mix over a generous scoop of clotted vanilla bean ice cream.</p>
+                        </div>
+                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
+                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">03. Survivor's Dark 'n' Stormy</h4>
+                            <p class="text-parchment/80 mt-0.5">30ml Bunker Basic, 40ml dark spiced rum, 120ml soda, scorched orange peel garnish.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-[#E8C547]/30 text-center bg-black/20 p-2.5">
+                        <p class="font-terminal text-lg uppercase tracking-widest text-[#E8C547]">
+                            &gt;&gt; YIELD: ~15 SERVINGS PER 450ML BOTTLE
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+
+
             <!-- Vault Formulation Quiz -->
-            <div id="flavor-quiz" class="mt-16 bg-[#0a150e] p-6 sm:p-10 border-2 border-[#4AF626]/30 shadow-[8px_8px_0_0_rgba(74,246,38,0.2)] max-w-4xl mx-auto" data-aos="zoom-in">
+            <div id="flavor-quiz" class="mt-16 max-w-4xl mx-auto" data-aos="zoom-in">
                 <div class="text-center mb-6">
                     <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#4AF626]/10 text-[#E8C547] text-xs font-terminal uppercase mb-2 border border-[#4AF626]/30">
                         <i class="fa-solid fa-clipboard-question"></i> Pip-Boy Diagnostic
@@ -3866,279 +4144,3 @@
     </script>
 </body>
 </html>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-                
-                <!-- Product Card 1: Bunker Basic (Terminal Treatment) -->
-                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="100">
-                    
-                    <!-- Classification Stamp -->
-                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-rust border-2 border-[#E8C547] flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-[0_0_12px_rgba(184,58,46,0.5)]">
-                        <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">BEST<br>SELLER</span>
-                    </div>
-                    
-                    <!-- Product Visual Stage -->
-                    <div class="bg-black/60 border border-[#4AF626]/20 p-6 mb-6 flex justify-center h-64 items-center relative overflow-hidden">
-                        <div class="absolute w-44 h-44 rounded-full z-0 border border-rust/20" style="box-shadow: 0 0 40px rgba(184,58,46,0.15)"></div>
-                        
-                        <!-- Stylized SVG Bottle -->
-                        <svg id="svg-bottle-basic" class="h-48 w-auto z-10 float-anim transition-all duration-300" viewBox="0 0 100 200" fill="none" stroke="#4AF626" stroke-width="3">
-                            <path d="M35 10 C35 5 40 5 45 5 L55 5 C60 5 65 5 65 10 L65 30 C65 40 80 50 80 70 L80 180 C80 190 70 195 50 195 C30 195 20 190 20 180 L20 70 C20 50 35 40 35 30 Z" fill="#0e1a14"/>
-                            <path d="M30 20 L70 20 M25 35 L75 35" stroke-width="4"/>
-                            <path d="M25 35 C15 35 15 20 30 20" stroke-width="4"/>
-                            <text x="40" y="80" font-family="'Bebas Neue', sans-serif" font-size="30" fill="#B83A2E" stroke="none">B</text>
-                            <rect x="25" y="100" width="50" height="60" fill="#B83A2E" stroke="#4AF626" stroke-width="2"/>
-                            <text x="50" y="130" font-family="'Courier Prime', monospace" font-size="11" fill="#F9F3E6" stroke="none" text-anchor="middle" font-weight="bold">BASIC</text>
-                            <text x="50" y="145" font-family="'Courier Prime', monospace" font-size="8" fill="#F9F3E6" stroke="none" text-anchor="middle">SPICED CITRUS</text>
-                        </svg>
-                    </div>
-                    
-                    <div class="mb-3 relative z-10">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-display text-4xl uppercase text-rust tracking-wide terminal-text">Bunker Basic</h3>
-                            <span class="bg-rust/20 text-rust px-2 py-0.5 text-xs font-bold border border-rust/50 font-terminal">FLAGSHIP</span>
-                        </div>
-                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
-                    </div>
-                    
-                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
-                        A rich, comforting spiced citrus craft cola syrup concentrate delivering festive campfire warmth and bright citrus aromatics.
-                    </p>
-
-                    <!-- Tasting & Mix Stats -->
-                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
-                        <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-holly-berry text-rust mt-0.5"></i>
-                            <div>
-                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
-                                <span class="text-[#4AF626]/90"> Fresh hand-zested orange &amp; lemon, warm ground cinnamon, cracked nutmeg, coriander, star anise &amp; pure vanilla.</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
-                            <div>
-                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
-                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
-                            </div>
-                        </div>
-                        <!-- Allergen Advice Badge -->
-                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
-                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
-                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
-                        </div>
-                    </div>
-
-                    <!-- Size Selector & Dynamic Add-to-Cart -->
-                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
-                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
-                        <div class="grid grid-cols-3 gap-1.5 mb-4">
-                            <button type="button" onclick="selectProductSize('basic', '250ml', 5.50); playBeep();" id="btn-size-basic-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
-                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
-                            </button>
-                            <button type="button" onclick="selectProductSize('basic', '330ml', 6.75); playBeep();" id="btn-size-basic-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-rust/20 hover:border-rust transition-all text-center font-terminal">
-                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
-                            </button>
-                            <button type="button" onclick="selectProductSize('basic', '450ml', 8.50); playBeep();" id="btn-size-basic-450" class="py-2 px-1 border-2 border-rust bg-rust/20 text-rust font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(184,58,46,0.3)] text-center font-terminal">
-                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
-                            </button>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
-                                <span id="price-display-basic" class="font-display text-4xl text-rust terminal-text">&pound;8.50</span>
-                            </div>
-                            <button onclick="addProductToCart('Bunker Basic', currentSizes['basic'].size, currentSizes['basic'].price); playBeep();" class="bg-rust text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#E8C547]/40 hover:bg-rustDark flex items-center gap-2 shadow-[0_0_12px_rgba(184,58,46,0.4)] transition-all">
-                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 2: Bunker Scout (Terminal Treatment) -->
-                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="200">
-                    
-                    <!-- Scout Stamp -->
-                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 bg-atomic border-2 border-[#4AF626] flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform shadow-[0_0_12px_rgba(91,158,166,0.5)]">
-                        <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">REFRESH<br>SCOUT</span>
-                    </div>
-                    
-                    <!-- Product Visual Stage -->
-                    <div class="mb-6 relative overflow-hidden rounded-lg h-64 flex items-center justify-center" style="background: radial-gradient(ellipse at center, rgba(91,158,166,0.15) 0%, #0a0f0d 70%);">
-                        <img src="scout.jpg" alt="Bunker Scout — Botanical Cola Syrup" class="h-full w-full object-cover object-center float-anim opacity-95" style="animation-delay: 0.8s;">
-                        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 60%, #0a0f0d 100%);"></div>
-                    </div>
-                    
-                    <div class="mb-3 relative z-10">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-display text-4xl uppercase text-atomic tracking-wide terminal-text">Bunker Scout</h3>
-                            <span class="bg-atomic/20 text-atomic px-2 py-0.5 text-xs font-bold border border-atomic/50 font-terminal">BOTANICAL</span>
-                        </div>
-                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
-                    </div>
-                    
-                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
-                        A deep, complex caramelized craft cola syrup concentrate infused with pure molasses, dried Seville orange peel, lemon, and whole spices.
-                    </p>
-
-                    <!-- Tasting & Mix Stats -->
-                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
-                        <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-lemon text-atomic mt-0.5"></i>
-                            <div>
-                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
-                                <span class="text-[#4AF626]/90"> Caramelized demerara &amp; molasses depth, Seville orange peel, lemon botanicals, cinnamon stick, coriander &amp; star anise.</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
-                            <div>
-                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
-                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
-                            </div>
-                        </div>
-                        <!-- Allergen Advice Badge -->
-                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
-                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
-                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
-                        </div>
-                    </div>
-
-                    <!-- Size Selector & Dynamic Add-to-Cart -->
-                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
-                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
-                        <div class="grid grid-cols-3 gap-1.5 mb-4">
-                            <button type="button" onclick="selectProductSize('scout', '250ml', 5.50); playBeep();" id="btn-size-scout-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
-                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
-                            </button>
-                            <button type="button" onclick="selectProductSize('scout', '330ml', 6.75); playBeep();" id="btn-size-scout-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-atomic/20 hover:border-atomic transition-all text-center font-terminal">
-                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
-                            </button>
-                            <button type="button" onclick="selectProductSize('scout', '450ml', 8.50); playBeep();" id="btn-size-scout-450" class="py-2 px-1 border-2 border-atomic bg-atomic/20 text-atomic font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(91,158,166,0.3)] text-center font-terminal">
-                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
-                            </button>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
-                                <span id="price-display-scout" class="font-display text-4xl text-atomic terminal-text">&pound;8.50</span>
-                            </div>
-                            <button onclick="addProductToCart('Bunker Scout', currentSizes['scout'].size, currentSizes['scout'].price); playBeep();" class="bg-atomic text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#4AF626]/40 hover:bg-atomicDark flex items-center gap-2 shadow-[0_0_12px_rgba(91,158,166,0.4)] transition-all">
-                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Product Card 3: Bunker Botanist -->
-                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="300" style="border-color: #9B59B6; box-shadow: 6px 6px 0px 0px #9B59B6;">
-
-                    <!-- Botanist Stamp -->
-                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform" style="background:#9B59B6; border: 2px solid #4AF626; box-shadow: 0 0 12px rgba(155,89,182,0.5);">
-                        <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">NEW<br>BREW</span>
-                    </div>
-
-                    <!-- Product Photo -->
-                    <div class="mb-6 relative overflow-hidden rounded-lg h-64 flex items-center justify-center" style="background: radial-gradient(ellipse at center, rgba(155,89,182,0.2) 0%, #0a0f0d 70%);">
-                        <img src="botanist.jpg" alt="Bunker Botanist — Lavender Lemonade Syrup" class="h-full w-full object-cover object-center float-anim opacity-95" style="animation-delay: 1.2s;">
-                        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 60%, #0a0f0d 100%);"></div>
-                    </div>
-
-                    <div class="mb-3 relative z-10">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-display text-4xl uppercase tracking-wide terminal-text" style="color:#C39BD3;">Bunker Botanist</h3>
-                            <span class="px-2 py-0.5 text-xs font-bold border font-terminal" style="background:rgba(155,89,182,0.2); color:#C39BD3; border-color:rgba(155,89,182,0.5);">LEMONADE</span>
-                        </div>
-                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
-                    </div>
-
-                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
-                        A delicate, floral lemonade syrup concentrate crafted with fragrant lavender, aromatic rosemary, and warm vanilla.
-                    </p>
-
-                    <!-- Tasting & Mix Stats -->
-                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
-                        <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-seedling mt-0.5" style="color:#C39BD3;"></i>
-                            <div>
-                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
-                                <span class="text-[#4AF626]/90"> Bright hand-pressed lemon, fragrant lavender blossom, fresh rosemary, and creamy vanilla.</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-2">
-                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
-                            <div>
-                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
-                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
-                            </div>
-                        </div>
-                        <!-- Allergen Advice Badge -->
-                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
-                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
-                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
-                        </div>
-                    </div>
-
-                    <!-- Size Selector & Dynamic Add-to-Cart -->
-                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
-                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
-                        <div class="grid grid-cols-3 gap-1.5 mb-4">
-                            <button type="button" onclick="selectProductSize('botanist', '250ml', 5.50); playBeep();" id="btn-size-botanist-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-purple-600/20 hover:border-purple-400 transition-all text-center font-terminal">
-                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
-                            </button>
-                            <button type="button" onclick="selectProductSize('botanist', '330ml', 6.75); playBeep();" id="btn-size-botanist-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase hover:bg-purple-600/20 hover:border-purple-400 transition-all text-center font-terminal">
-                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
-                            </button>
-                            <button type="button" onclick="selectProductSize('botanist', '450ml', 8.50); playBeep();" id="btn-size-botanist-450" class="py-2 px-1 border-2 border-purple-500 bg-purple-600/20 text-purple-300 font-bold text-xs sm:text-sm uppercase transition-all shadow-[0_0_8px_rgba(147,51,234,0.3)] text-center font-terminal">
-                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
-                            </button>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
-                                <span id="price-display-botanist" class="font-display text-4xl terminal-text" style="color:#C39BD3;">&pound;8.50</span>
-                            </div>
-                            <button onclick="addProductToCart('Bunker Botanist', currentSizes['botanist'].size, currentSizes['botanist'].price); playBeep();" class="text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#E8C547]/40 flex items-center gap-2 transition-all" style="background:#9B59B6; box-shadow:0 0 12px rgba(155,89,182,0.4);">
-                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Preparation Protocols Card -->
-                <div class="bg-[#1a0f00] border-2 border-[#E8C547]/50 text-parchment p-6 flex flex-col group hover:-translate-y-2 transition-transform duration-300 shadow-[4px_4px_0_0_#E8C547]" data-aos="fade-up" data-aos-delay="300">
-                    <div class="mb-5 flex justify-between items-start">
-                        <div>
-                            <span class="text-xs font-terminal text-[#E8C547] uppercase tracking-wider">> Vault Survival Manual</span>
-                            <h3 class="font-display text-4xl uppercase leading-none mt-1 text-parchment">Dispenser Protocols</h3>
-                        </div>
-                        <i class="fa-solid fa-clipboard-list text-3xl text-[#E8C547] group-hover:text-rust transition-colors"></i>
-                    </div>
-                    
-                    <div class="space-y-4 flex-grow text-xs font-bold">
-                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
-                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">01. Standard Sparkler</h4>
-                            <p class="text-parchment/80 mt-0.5">30ml syrup + 150ml icy sparkling water. Stir gently with a spoon. Never shake!</p>
-                        </div>
-                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
-                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">02. The Bunker Float</h4>
-                            <p class="text-parchment/80 mt-0.5">Pour standard mix over a generous scoop of clotted vanilla bean ice cream.</p>
-                        </div>
-                        <div class="border-l-4 border-[#E8C547] pl-3.5 hover:border-rust transition-colors py-0.5">
-                            <h4 class="uppercase text-sm font-display tracking-wide text-[#E8C547]">03. Survivor's Dark 'n' Stormy</h4>
-                            <p class="text-parchment/80 mt-0.5">30ml Bunker Basic, 40ml dark spiced rum, 120ml soda, scorched orange peel garnish.</p>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 pt-4 border-t border-[#E8C547]/30 text-center bg-black/20 p-2.5">
-                        <p class="font-terminal text-lg uppercase tracking-widest text-[#E8C547]">
-                            &gt;&gt; YIELD: ~15 SERVINGS PER 450ML BOTTLE
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
-
