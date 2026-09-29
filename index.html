@@ -1386,6 +1386,83 @@
                     </div>
                 </div>
 
+
+                <!-- Product Card 3: Bunker Botanist -->
+                <div class="terminal-card p-6 flex flex-col group relative overflow-visible z-10" data-aos="fade-up" data-aos-delay="300" style="border-color: #9B59B6; box-shadow: 6px 6px 0px 0px #9B59B6;">
+
+                    <!-- Botanist Stamp -->
+                    <div class="absolute -right-2 -top-2 sm:-right-4 sm:-top-4 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center transform rotate-12 z-20 group-hover:rotate-[20deg] transition-transform" style="background:#9B59B6; border: 2px solid #4AF626; box-shadow: 0 0 12px rgba(155,89,182,0.5);">
+                        <span class="font-display text-parchment text-sm sm:text-lg leading-none text-center">NEW<br>BREW</span>
+                    </div>
+
+                    <!-- Product Photo -->
+                    <div class="mb-6 relative overflow-hidden rounded-lg h-64 flex items-center justify-center" style="background: radial-gradient(ellipse at center, rgba(155,89,182,0.2) 0%, #0a0f0d 70%);">
+                        <img src="botanist.jpg" alt="Bunker Botanist — Lavender Lemonade Syrup" class="h-full w-full object-cover object-center float-anim opacity-95" style="animation-delay: 1.2s;">
+                        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 60%, #0a0f0d 100%);"></div>
+                    </div>
+
+                    <div class="mb-3 relative z-10">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-4xl uppercase tracking-wide terminal-text" style="color:#C39BD3;">Bunker Botanist</h3>
+                            <span class="px-2 py-0.5 text-xs font-bold border font-terminal" style="background:rgba(155,89,182,0.2); color:#C39BD3; border-color:rgba(155,89,182,0.5);">LEMONADE</span>
+                        </div>
+                        <p class="font-terminal text-[#4AF626]/70 text-xs uppercase">// Swing-Top Reusable Glass Vessel</p>
+                    </div>
+
+                    <p class="text-sm font-bold text-[#4AF626]/80 mb-4 border-b border-[#4AF626]/20 pb-3 relative z-10">
+                        A delicate, floral lemonade syrup concentrate crafted with fragrant lavender, aromatic rosemary, and warm vanilla.
+                    </p>
+
+                    <!-- Tasting & Mix Stats -->
+                    <div class="space-y-2.5 mb-5 flex-grow text-xs font-bold relative z-10">
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-seedling mt-0.5" style="color:#C39BD3;"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Tasting Profile:</span>
+                                <span class="text-[#4AF626]/90"> Bright hand-pressed lemon, fragrant lavender blossom, fresh rosemary, and creamy vanilla.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fa-solid fa-flask text-[#E8C547] mt-0.5"></i>
+                            <div>
+                                <span class="text-[#4AF626]/60 uppercase font-terminal">Ratio:</span>
+                                <span class="text-[#4AF626]/90"> 1 part syrup to 5 parts sparkling water (or to taste).</span>
+                            </div>
+                        </div>
+                        <!-- Allergen Advice Badge -->
+                        <div class="p-2 bg-black/40 border border-[#4AF626]/20 mt-2">
+                            <span class="text-xs text-[#E8C547] uppercase font-terminal block mb-0.5"><i class="fa-solid fa-circle-info"></i> Allergen Advice:</span>
+                            <span class="text-xs sm:text-sm text-[#4AF626]/70 font-normal block leading-tight">Gluten-Free &bull; 100% Vegan &bull; Caffeine-Free &bull; Free from all 14 major allergens.</span>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector & Dynamic Add-to-Cart -->
+                    <div class="mt-auto border-t border-[#4AF626]/20 pt-4 relative z-10">
+                        <label class="block font-terminal text-xs uppercase mb-2 text-[#4AF626]/70">> Select Ration Size:</label>
+                        <div class="grid grid-cols-3 gap-1.5 mb-4">
+                            <button type="button" onclick="selectProductSize('botanist', '250ml', 5.50); playBeep();" id="btn-size-botanist-250" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase transition-all text-center font-terminal" style="--hover-bg:rgba(155,89,182,0.2);">
+                                250ml<br><span class="font-normal text-xs opacity-80">&pound;5.50</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('botanist', '330ml', 6.75); playBeep();" id="btn-size-botanist-330" class="py-2 px-1 border border-[#4AF626]/40 bg-black/40 text-[#4AF626] font-bold text-xs sm:text-sm uppercase transition-all text-center font-terminal">
+                                330ml<br><span class="font-normal text-xs opacity-80">&pound;6.75</span>
+                            </button>
+                            <button type="button" onclick="selectProductSize('botanist', '450ml', 8.50); playBeep();" id="btn-size-botanist-450" class="py-2 px-1 border-2 font-bold text-xs sm:text-sm uppercase transition-all text-center font-terminal" style="border-color:#9B59B6; background:rgba(155,89,182,0.2); color:#C39BD3; box-shadow:0 0 8px rgba(155,89,182,0.3);">
+                                450ml<br><span class="font-normal text-xs opacity-90">&pound;8.50</span>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-terminal text-[#4AF626]/60 uppercase block">> Ration Cost</span>
+                                <span id="price-display-botanist" class="font-display text-4xl terminal-text" style="color:#C39BD3;">&pound;8.50</span>
+                            </div>
+                            <button onclick="addProductToCart('Bunker Botanist', currentSizes['botanist'].size, currentSizes['botanist'].price); playBeep();" class="text-parchment px-5 py-3 font-display text-2xl tracking-wider uppercase border-2 border-[#E8C547]/40 flex items-center gap-2 transition-all" style="background:#9B59B6; box-shadow:0 0 12px rgba(155,89,182,0.4);">
+                                <i class="fa-solid fa-plus text-sm"></i> Add to Crate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Preparation Protocols Card -->
                 <div class="bg-[#1a0f00] border-2 border-[#E8C547]/50 text-parchment p-6 flex flex-col group hover:-translate-y-2 transition-transform duration-300 shadow-[4px_4px_0_0_#E8C547]" data-aos="fade-up" data-aos-delay="300">
                     <div class="mb-5 flex justify-between items-start">
@@ -1442,6 +1519,7 @@
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
                             <button type="button" onclick="answerQuiz(1, 'scout')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-atomic/20 hover:border-atomic font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                            <button type="button" onclick="answerQuiz(1, 'botanist')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]" style="--tw-border-opacity:1; hover:border-color:#9B59B6;">
                                 <span><i class="fa-solid fa-lemon text-atomic mr-2"></i> Dark Caramelized Molasses &amp; Seville Botanicals</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
@@ -1457,6 +1535,7 @@
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
                             <button type="button" onclick="answerQuiz(2, 'scout')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-atomic/20 hover:border-atomic font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                            <button type="button" onclick="answerQuiz(2, 'botanist')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]" style="--tw-border-opacity:1; hover:border-color:#9B59B6;">
                                 <span><i class="fa-solid fa-martini-glass text-atomic mr-2"></i> Evening Cocktails, Spiced Rums, Espresso &amp; BBQ Glazes</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
@@ -1472,6 +1551,7 @@
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
                             <button type="button" onclick="answerQuiz(3, 'scout')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left hover:bg-atomic/20 hover:border-atomic font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]">
+                            <button type="button" onclick="answerQuiz(3, 'botanist')" class="quiz-btn p-4 bg-black/60 border border-[#4AF626]/30 text-left font-terminal text-xs sm:text-sm uppercase transition-colors flex items-center justify-between text-[#4AF626]" style="--tw-border-opacity:1; hover:border-color:#9B59B6;">
                                 <span><i class="fa-solid fa-leaf text-atomic mr-2"></i> Rich Herbal Botanicals &amp; Dark Cane Depth</span>
                                 <i class="fa-solid fa-chevron-right text-xs"></i>
                             </button>
@@ -2053,6 +2133,7 @@
                         <select id="review-product" class="bg-terminalBg border border-terminalGreen px-3 py-2 text-lg text-terminalGreen focus:outline-none">
                             <option value="Bunker Basic">FLAVOR: Bunker Basic (Spiced Citrus)</option>
                             <option value="Bunker Scout">FLAVOR: Bunker Scout (Botanical Cola)</option>
+                            <option value="Bunker Botanist">FLAVOR: Bunker Botanist (Lavender Lemonade)</option>
                         </select>
                     </div>
                     <textarea id="review-text" required rows="3" placeholder="ENTER TRANSMISSION TEXT..." class="w-full bg-terminalBg border border-terminalGreen px-3 py-2 text-lg text-terminalGreen placeholder-terminalGreen/40 focus:outline-none"></textarea>
@@ -2300,7 +2381,8 @@
            ============================================================ */
         const currentSizes = {
             basic: { size: '450ml', price: 8.50 },
-            scout: { size: '450ml', price: 8.50 }
+            scout: { size: '450ml', price: 8.50 },
+            botanist: { size: '450ml', price: 8.50 }
         };
 
         function selectProductSize(productKey, size, price) {
@@ -2311,7 +2393,7 @@
             
             // Update Toggle Button Styles for 250ml, 330ml, 450ml
             const sizeList = ['250', '330', '450'];
-            const activeColor = productKey === 'basic' ? 'bg-rust' : 'bg-atomic';
+            const activeColor = productKey === 'basic' ? 'bg-rust' : productKey === 'botanist' ? 'bg-purple-600' : 'bg-atomic';
             const selectedNum = size.replace('ml', '');
             
             sizeList.forEach(s => {
@@ -2451,6 +2533,10 @@
             'Bunker Scout_330ml': 'https://square.link/u/tVGdG5R9',
             'Bunker Scout_450ml': 'https://square.link/u/RcZKLkJN',
             'Bunker Scout_500ml': 'https://square.link/u/RcZKLkJN',
+            'Bunker Botanist_250ml': 'https://square.link/u/1wk0K6NU',
+            'Bunker Botanist_330ml': 'https://square.link/u/CvwUJp9v',
+            'Bunker Botanist_450ml': 'https://square.link/u/leYx3mon',
+            'Bunker Botanist_500ml': 'https://square.link/u/leYx3mon',
         };
 
         async function initiateCheckout() {
@@ -2814,14 +2900,19 @@
 
             let basicScore = 0;
             let scoutScore = 0;
+            let botanistScore = 0;
 
             Object.values(quizAnswers).forEach(ans => {
                 if (ans === 'basic') basicScore++;
                 if (ans === 'scout') scoutScore++;
+                if (ans === 'botanist') botanistScore++;
             });
 
-            const isBasic = basicScore >= scoutScore;
-            const matchPercent = isBasic ? (basicScore === 3 ? 99 : 75) : (scoutScore === 3 ? 98 : 72);
+            const topScore = Math.max(basicScore, scoutScore, botanistScore);
+            const winner = basicScore === topScore ? 'basic' : botanistScore === topScore ? 'botanist' : 'scout';
+            const isBasic = winner === 'basic';
+            const isBotanist = winner === 'botanist';
+            const matchPercent = topScore === 3 ? 99 : topScore === 2 ? 82 : 70;
 
             resultBox.classList.remove('hidden');
 
